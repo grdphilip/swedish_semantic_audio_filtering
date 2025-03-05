@@ -11,7 +11,7 @@
       ssl_temperature: 0.5
       ssl_projection_dim: 128          
   text: 
-    model: CLIPTextModel    # name of the textual head model. One of TextTransformer, CLIPTextModel
+    model: TextTransformer   # name of the textual head model. One of TextTransformer, CLIPTextModel
     pretrained: KBLab/sentence-bert-swedish-cased # name of the pretrained textual head model
     hidden_size: 768
   loss: weighted_clip                    

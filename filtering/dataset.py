@@ -2,10 +2,12 @@ import os
 import json
 import numpy as np
 
+
 import torch
 from torch.utils.data.dataset import Dataset
 import librosa
 from transformers.models.bert.tokenization_bert import BertTokenizer
+
 from transformers.models.clip.tokenization_clip import CLIPTokenizer
 from transformers import AutoTokenizer
 from transformers import WhisperFeatureExtractor
@@ -61,13 +63,11 @@ class AudioCaptionDataset(Dataset):
     def _build_tokenizer(self):
         # using tolenizers from pretrained models to reuse their vocab
         if self.config.text.tokenizer == "berttokenizer":
-            self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+            self.tokenizer = AutoTokenizer.from_pretrained("KBLab/sentence-bert-swedish-cased")
         elif self.config.text.tokenizer == "cliptokenizer":
             self.tokenizer = CLIPTokenizer.from_pretrained(
                 "openai/clip-vit-base-patch32"
             )
-        elif self.config.text.tokenizer == "albertinatokenizer":
-            self.tokenizer = AutoTokenizer.from_pretrained("PORTULAN/albertina-ptpt-base")
         else:
             raise ValueError(
                 "{} is not supported. Please provide a valid tokenizer.".format(
@@ -190,7 +190,7 @@ class AudioCaptionDataset(Dataset):
         return "configs/datasets/audiocaption.yaml"
     
 
-def encode_single_text(text, tokenizer_name="PORTULAN/albertina-ptpt-base", max_seq_length=128):
+def encode_single_text(text, tokenizer_name="KBLab/sentence-bert-swedish-cased", max_seq_length=128):
 
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
 

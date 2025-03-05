@@ -65,16 +65,16 @@ class MusCALL(nn.Module):
         if config.text.model == "CLIPTextModel":
             pretrained_model = config.text.pretrained
             self.textual_head = CLIPTextModel.from_pretrained(pretrained_model)
-        elif config.text.model == "Albertina":
-            pretrained_model = config.text.pretrained
-            self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
-        elif config.text.model == "AlbertinaScratch":
-            pretrained_model = config.text.pretrained
-            self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
-            for param in self.textual_head.deberta.encoder.parameters():
-                param.requires_grad = False
-            for param in self.textual_head.deberta.embeddings.parameters():
-                param.requires_grad = False
+        # elif config.text.model == "Albertina":
+        #     pretrained_model = config.text.pretrained
+        #     self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
+        # elif config.text.model == "AlbertinaScratch":
+        #     pretrained_model = config.text.pretrained
+        #     self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
+        #     for param in self.textual_head.deberta.encoder.parameters():
+        #         param.requires_grad = False
+        #     for param in self.textual_head.deberta.embeddings.parameters():
+        #         param.requires_grad = False
 
         self.audio_projection = nn.Linear(audio_dim, projection_dim, bias=False)
         self.text_projection = nn.Linear(text_dim, projection_dim, bias=False)
@@ -96,9 +96,9 @@ class MusCALL(nn.Module):
         if isinstance(self.textual_head, CLIPTextModel):
             outputs = self.textual_head(text, text_mask)
             pooled_outout = outputs.pooler_output
-        elif isinstance(self.textual_head, DebertaForSequenceClassification):
-            outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
-            pooled_outout = outputs[0]
+        # elif isinstance(self.textual_head, DebertaForSequenceClassification):
+        #     outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
+        #     pooled_outout = outputs[0]
 
         text_features = self.text_projection(pooled_outout)
 
