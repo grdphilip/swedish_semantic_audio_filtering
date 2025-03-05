@@ -1,0 +1,1 @@
+Experiments on improving Entity Recognition for Whisper by finetuning on synthetic data and filtering the synthetic audio by applying a filtering framework developed by: https://ieeexplore.ieee.org/document/10720758
