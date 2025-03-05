@@ -18,7 +18,9 @@ def main():
 
     logger = Logger(muscall_config)
 
+
     trainer = MusCALLTrainer(muscall_config, logger)
+    print("Experiment ID:", muscall_config.env.experiment_id)
 
     experiment_path = os.path.join(muscall_config.env.experiments_dir, muscall_config.env.experiment_id)
 
@@ -27,6 +29,7 @@ def main():
 
     # Start an MLflow run
     with mlflow.start_run():
+        print("Starting training...")
         trainer.train()
 
 

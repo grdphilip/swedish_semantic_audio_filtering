@@ -1,9 +1,9 @@
 dataset_config:
-  dataset_name: common_voice
+  dataset_name: common_voice_sv
   data_dir: data/
-  train_filename: common_voice_16_1_train_manifest.json
-  val_filename: common_voice_16_1_train_manifest.json
-  to_filter_filename: common_voice_16_1_train_manifest.json
+  train_filename: common_voice_sv_train_manifest.json
+  val_filename: common_voice_sv_val_manifest.json
+  to_filter_filename: common_voice_sv_to_filter_manifest.json
   # Caption configs
   text:
     max_seq_length: 256
