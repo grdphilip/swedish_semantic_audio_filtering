@@ -1,0 +1,135 @@
+import os
+import json
+import librosa
+import soundfile as sf
+from tqdm import tqdm
+from collections import defaultdict
+import re
+
+DATA_FOLDER = 'data'
+WAV_FOLDER = os.path.join(DATA_FOLDER, 'wav_data')
+MANIFEST_FOLDER = os.path.join(DATA_FOLDER, 'manifest_data')
+MANIFEST_FINETUNING_FOLDER = os.path.join(MANIFEST_FOLDER, 'finetuning')
+MANIFEST_RAW_FOLDER = os.path.join(MANIFEST_FINETUNING_FOLDER, 'raw')
+MANIFEST_PREPROCESSED_FOLDER = os.path.join(MANIFEST_FINETUNING_FOLDER, 'preprocessed')
+FILTERING_DATA_FOLDER = 'filtering_framework/data'
+
+
+def convert_hf_dataset_to_manifest(dataset, dataset_type, manifest_filename):
+
+    manifest_filepath = os.path.join(MANIFEST_RAW_FOLDER, manifest_filename)
+
+    with open(manifest_filepath, 'w') as manifest_f:
+        for sample in tqdm(dataset, desc="Converting HF Dataset to Manifest: "):
+            if dataset_type == 'mls':
+                text_column = 'text'
+            elif dataset_type == 'common_voice':
+                text_column = 'sentence'
+            elif dataset_type == 'customized':
+                text_column = 'text'
+            else:
+                raise ValueError("Dataset type not supported")
+
+            transcription = sample[text_column]
+            audio = sample['audio']
+            audio_name = None
+            
+            #Ändra detta sen när allt funkar 
+            if audio['path'] == None:
+                audio_name = os.path.splitext(os.path.basename(sample['path']))[0]
+            else:
+                audio_name = os.path.splitext(os.path.basename(audio['path']))[0]
+            
+            wav_file_path = os.path.join(WAV_FOLDER, audio_name + '.wav')
+
+            if not os.path.exists(wav_file_path):
+                try:
+                    # Resample to 16kHz
+                    audio_resampled = librosa.resample(y=audio['array'], orig_sr=audio['sampling_rate'], target_sr=16000)
+                    sf.write(wav_file_path, audio_resampled, samplerate=16000)
+                    duration = librosa.get_duration(y=audio_resampled, sr=16000)
+                except sf.LibsndfileError as e:
+                    print("Error:", e, "with audio:", audio_name)
+                    continue
+            else:
+                duration = librosa.get_duration(filename=wav_file_path)
+
+            manifest_line = {
+                'audio_filepath': wav_file_path,
+                'text': transcription,
+                'duration': duration,
+            }
+
+            json.dump(manifest_line, manifest_f, ensure_ascii=False)
+            manifest_f.write('\n')
+
+def read_manifest_file(filename, raw=True):
+    if raw:
+        file_path = os.path.join(MANIFEST_RAW_FOLDER, filename) 
+    else:
+        file_path = os.path.join(MANIFEST_PREPROCESSED_FOLDER, filename) # For finetuning
+
+    with open(file_path, 'r') as file:
+        # Read the entire file content
+        file_content = file.read()
+        
+        # Split the content by lines and process each line separately
+        json_objects = []
+        for line in file_content.splitlines():
+            if line.strip():  # Ignore empty lines
+                try:
+                    json_objects.append(json.loads(line))
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding JSON: {e}")
+    
+    return json_objects
+
+def write_manifest_file(manifest_data, filename, manifest_type='finetuning'):
+
+    if manifest_type == 'finetuning':
+        file_path = os.path.join(MANIFEST_PREPROCESSED_FOLDER, filename)
+    else: #manifest_type == 'filtering':
+        file_path = os.path.join(FILTERING_DATA_FOLDER, filename)
+
+    try:
+        with open(file_path, 'w') as file:
+            for item in manifest_data:
+                json_line = json.dumps(item)
+                file.write(json_line + '\n')
+    except IOError as e:
+        print(f"Error: I/O error occurred: {e}")
+
+
+def get_charset(manifest_data):
+    charset = defaultdict(int)
+    for row in tqdm(manifest_data, desc="Computing character set"):
+        text = row['text']
+        for character in text:
+            charset[character] += 1
+    return charset
+
+def remove_special_samples(manifest_data):
+    new_manifest_data = []
+    pattern = r"[\^¼|;‐]"
+
+    for data in manifest_data:
+        if data['duration'] > 1 and not re.search(pattern, data['text']):
+            new_manifest_data.append(data)
+
+    return new_manifest_data
+
+def convert_finetuning_manifest_to_filtering_manifest(original_manifest_data, project_path):
+    
+    # Initialize an empty list to store the new manifest lines
+    new_manifest_data = []
+
+    # Iterate over the original manifest list and create new entries in the desired format
+    for index, manifest_line in enumerate(original_manifest_data):
+        new_entry = {
+            "audio_id": index,  # Use the index as the audio_id
+            "caption": manifest_line['text'],  # Use 'text' from original manifest_line as 'caption'
+            "audio_path": os.path.join(project_path, manifest_line['audio_filepath']),  # Use 'audio_filepath' from original manifest_line as 'audio_path'
+        }
+        new_manifest_data.append(new_entry)
+
+    return new_manifest_data

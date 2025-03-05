@@ -1,0 +1,17 @@
+filtering_framework/data/
+filtering_framework/embeddings/
+filtering_framework/args/
+filtering_framework/checkpoints/
+
+*.log
+data/
+.env
+venv/
+__pycache__/
+*.wav
+*.flac
+*.mp3
+*.csv
+
+mlruns/*
+*.icloud

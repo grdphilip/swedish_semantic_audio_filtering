@@ -1,0 +1,19 @@
+dataset_config:
+  dataset_name: common_voice
+  data_dir: data/
+  train_filename: common_voice_16_1_train_manifest.json
+  val_filename: common_voice_16_1_train_manifest.json
+  to_filter_filename: common_voice_16_1_train_manifest.json
+  # Caption configs
+  text:
+    max_seq_length: 256
+    tokenizer: berttokenizer # one of berttokenizer, cliptokenizer
+  audio:
+    sr: 16000
+    crop_length: 30
+    random_crop: true
+    augment: false
+    p_noise: 0.3
+    p_pitch_shift: 0.4
+
+    
