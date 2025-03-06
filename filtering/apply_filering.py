@@ -17,7 +17,7 @@ def main(args):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("data_manifest_path", type=str, default='data/common_voice_16_1_train_manifest.json')
+    parser.add_argument("data_manifest_path", type=str, default='data/common_voice_16_0_train_manifest.json')
     args = parser.parse_args()
 
     main(args)

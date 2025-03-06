@@ -13,8 +13,9 @@ def main(args):
     os.makedirs("data/manifest_data/finetuning/raw", exist_ok=True)
     os.makedirs("data/manifest_data/finetuning/preprocessed", exist_ok=True)
 
+    # Load environment variables
     # Load dataset
-    cv_dataset = load_dataset(args.dataset_name, args.dataset_language, split=args.split)
+    cv_dataset = load_dataset(args.dataset_name, args.dataset_language, split=args.split, token=args.token)
     # Will contain the columns audio, text, duration
     
     
@@ -49,10 +50,11 @@ if __name__ == "__main__":
     parser.add_argument("split", type=str, help="Split of the dataset to use (e.g., train, test)")
     parser.add_argument("dataset_type", type=str, help="Type of dataset (e.g., common_voice)")
     parser.add_argument("manifest_filename", type=str, help="Filename for the generated manifest file")
+    parser.add_argument("token", type=str, help="Token for the dataset")
     
     args = parser.parse_args()
     
     main(args)
 
-    #python process_hf_dataset.py mozilla-foundation/common_voice_16_1 sv-SE default train common_voice common_voice_16_1_train_manifest.json
+    #python process_hf_dataset.py mozilla-foundation/common_voice_16_0 sv-SE train common_voice common_voice_16_0_train_manifest.json 
 
