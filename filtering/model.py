@@ -2,7 +2,7 @@ import numpy as np
 
 import torch
 from torch import nn
-from transformers import CLIPTextModel
+from transformers import CLIPTextModel, AutoModel
 from audio_encoder import WhisperForAudioClassification
 from text_encoder import DebertaForSequenceClassification
 
@@ -62,9 +62,12 @@ class MusCALL(nn.Module):
             self.audio_backbone.freeze_encoder()
         
       
-        if config.text.model == "CLIPTextModel":
+        if config.text.model == "BERTTextModel":
             pretrained_model = config.text.pretrained
-            self.textual_head = CLIPTextModel.from_pretrained(pretrained_model)
+            self.textual_head = AutoModel.from_pretrained(pretrained_model)
+            print(self.textual_head)
+            raise ValueError("Breakpoint")
+        
         # elif config.text.model == "Albertina":
         #     pretrained_model = config.text.pretrained
         #     self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)

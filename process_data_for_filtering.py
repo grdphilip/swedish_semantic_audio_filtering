@@ -27,5 +27,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     main(args)
-#python process_data_for_filtering.py common_voice_16_1_train_manifest.json ./
+#python process_data_for_filtering.py common_voice_16_0_train_manifest.json ./
 
