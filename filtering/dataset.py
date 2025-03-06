@@ -49,6 +49,7 @@ class AudioCaptionDataset(Dataset):
         self.random_crop = self.config.audio.random_crop
         self._build_tokenizer()
         self._load()
+        
         self.feautre_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-medium")
 
 
@@ -59,6 +60,7 @@ class AudioCaptionDataset(Dataset):
             self.audio_ids = [i["audio_id"] for i in self.samples]
             self.captions = [i["caption"].strip() for i in self.samples]
             self.audio_paths = [i["audio_path"] for i in self.samples]
+            
 
     def _build_tokenizer(self):
         # using tolenizers from pretrained models to reuse their vocab
@@ -122,6 +124,12 @@ class AudioCaptionDataset(Dataset):
 
         #return mmapped_array#, audio
 
+        print("Loading audio")
+        print(self.audio_paths[idx])
+        print(self.audio_paths)
+        print("Audio id: ", self.audio_ids[idx])
+        
+        
         audio_data, sample_rate = librosa.load(self.audio_paths[idx], sr=None, dtype=np.float32)
         if sample_rate != 16000: 
             print("Resampling audio")
