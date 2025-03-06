@@ -53,7 +53,7 @@ class AudioCaptionDataset(Dataset):
 
 
     def _load(self):
-        print(self.dataset_json)
+        print(f"Trying to load audio  from {self.dataset_json}")
         with open(self.dataset_json) as f:
             self.samples = json.load(f)
             self.audio_ids = [i["audio_id"] for i in self.samples]
