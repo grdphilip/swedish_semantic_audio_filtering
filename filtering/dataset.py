@@ -129,7 +129,7 @@ class AudioCaptionDataset(Dataset):
         print("Audio id: ", self.audio_ids[idx])
         
         
-        audio_data, sample_rate = librosa.load(self.audio_paths[idx], sr=None, dtype=np.float32)
+        audio_data, sample_rate = librosa.load(f".{self.audio_paths[idx]}", sr=None, dtype=np.float32)
         if sample_rate != 16000: 
             print("Resampling audio")
             print("Sample id: ", self.audio_paths[idx])
