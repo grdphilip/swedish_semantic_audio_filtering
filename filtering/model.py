@@ -102,7 +102,11 @@ class MusCALL(nn.Module):
         elif isinstance(self.textual_head, BertModel):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             print("Look for pooled outputs")
-            print(outputs)
+            
+            print(outputs[0].shape)
+            print("Last Hidden State Shape:", outputs[0].last_hidden_state.shape)
+            print("Pooler Output Shape:", outputs[0].pooler_output.shape)
+            
             
             raise ValueError("Breakpoint")
             
