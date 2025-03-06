@@ -28,7 +28,7 @@ class AudioCaptionDataset(Dataset):
         self._dataset_name = "audiocaption"
         self._dataset_type = dataset_type
         self._data_dir = self.config.data_dir
-        print(config)
+        print("Trying to load dataset from: ", self._data_dir)
 
         if dataset_type == "train":
             self.dataset_json = os.path.join(self._data_dir, self.config.train_filename)
