@@ -73,7 +73,7 @@ class DebertaForSequenceClassification(DebertaPreTrainedModel):
 
         return (pooled_output, )
     
-_CHECKPOINT_FOR_SEQUENCE_CLASSIFICATION = "textattack/bert-base-uncased-yelp-polarity"
+_CHECKPOINT_FOR_SEQUENCE_CLASSIFICATION = "KBLab/bert-base-swedish-cased"
 _SEQ_CLASS_EXPECTED_OUTPUT = "'LABEL_1'"
 BERT_INPUTS_DOCSTRING = r"""
 """
@@ -82,8 +82,6 @@ _SEQ_CLASS_EXPECTED_LOSS = 0.01
 
 from torch import nn
 from transformers import BertModel, BertPreTrainedModel
-
-
 
 class BertForSequenceClassification(BertPreTrainedModel):
     def __init__(self, config):
