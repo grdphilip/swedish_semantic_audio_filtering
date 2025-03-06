@@ -38,7 +38,7 @@ env:
   # Directory for storing datasets and models
   data_root: ${env.base_dir}/data
   # Directory for experiments, logs, output samples etc.
-  save_dir: ${env.base_dir}/filtering_framework/save
+  save_dir: ${env.base_dir}/filtering/save
   # Directory for saving models, logs and checkpoints for each experiment
   experiments_dir: ${env.save_dir}/experiments
   # Experiment id

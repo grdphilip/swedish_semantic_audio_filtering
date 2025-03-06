@@ -5,14 +5,14 @@ import json
 
 def main(args):
     
-    os.makedirs("filtering_framework/data", exist_ok=True)
+    os.makedirs("filtering/data", exist_ok=True)
 
     train_manifest = read_manifest_file(args.manifest_filename)
     
     # Convert the finetuning manifest to a filtering manifest without preprocessing
     filtering_data = convert_finetuning_manifest_to_filtering_manifest(train_manifest, args.project_path)
 
-    filtering_data_folder = os.path.join(args.project_path, 'filtering_framework/data')
+    filtering_data_folder = os.path.join(args.project_path, 'filtering/data')
     file_path = os.path.join(filtering_data_folder, args.manifest_filename)
     with open(file_path, "w") as json_file:
         json.dump(filtering_data, json_file, indent=4)

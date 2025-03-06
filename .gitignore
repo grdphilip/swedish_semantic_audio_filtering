@@ -1,7 +1,7 @@
-filtering_framework/data/
-filtering_framework/embeddings/
-filtering_framework/args/
-filtering_framework/checkpoints/
+filtering/data/
+filtering/embeddings/
+filtering/args/
+filtering/checkpoints/
 
 *.log
 data/

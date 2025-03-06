@@ -12,7 +12,7 @@ MANIFEST_FOLDER = os.path.join(DATA_FOLDER, 'manifest_data')
 MANIFEST_FINETUNING_FOLDER = os.path.join(MANIFEST_FOLDER, 'finetuning')
 MANIFEST_RAW_FOLDER = os.path.join(MANIFEST_FINETUNING_FOLDER, 'raw')
 MANIFEST_PREPROCESSED_FOLDER = os.path.join(MANIFEST_FINETUNING_FOLDER, 'preprocessed')
-FILTERING_DATA_FOLDER = 'filtering_framework/data'
+FILTERING_DATA_FOLDER = 'filtering/data'
 
 
 def convert_hf_dataset_to_manifest(dataset, dataset_type, manifest_filename):
