@@ -112,6 +112,7 @@ class MusCALL(nn.Module):
 
         text_features = self.text_projection(pooled_outout)
         #./data/wav_data/common_voice_sv-SE_24999028.wav
+        # find ./data/wav_data -type f -name "common_voice_sv-SE_24999028.wav"
         return text_features
 
     def forward(

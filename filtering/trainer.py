@@ -186,6 +186,7 @@ class MusCALLTrainer(BaseTrainer):
         else:
             self.model.eval()
 
+        print(data_loader)
         for i, batch in enumerate(tqdm(data_loader, desc="Processing batches")):                     
             original_mel_spectograms = batch["input_audio"]
             text_input_ids = batch["text_input_ids"]
