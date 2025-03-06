@@ -65,7 +65,7 @@ class MusCALL(nn.Module):
       
         if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
-            self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
+            self.textual_head = BertForSequenceClassification.from_pretrained(pretrained_model)
         elif config.text.model == "Albertina":
              pretrained_model = config.text.pretrained
              self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
@@ -98,10 +98,10 @@ class MusCALL(nn.Module):
         if isinstance(self.textual_head, CLIPTextModel):
             outputs = self.textual_head(text, text_mask)
             pooled_outout = outputs.pooler_output
-        elif isinstance(self.textual_head, BertModel):
+        elif isinstance(self.textual_head, BertForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
-            print("Look for pooled outputs")
-            print(outputs[0].shape)
+            pooled_outout = outputs[0]
+            print(pooled_outout.shape)
         elif isinstance(self.textual_head, DebertaForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             pooled_outout = outputs[0]
