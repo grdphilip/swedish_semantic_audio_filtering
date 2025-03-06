@@ -96,15 +96,15 @@ class MusCALL(nn.Module):
     def encode_text(self, text, text_mask):
         if isinstance(self.textual_head, CLIPTextModel):
             outputs = self.textual_head(text, text_mask)
-            pooled_output = outputs.pooler_output
+       
         elif isinstance(self.textual_head, BertForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             pooled_output = outputs[0]
-            print(pooled_output.shape)
+      
         elif isinstance(self.textual_head, DebertaForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             pooled_outout = outputs[0]
-            print(pooled_outout.shape)
+            
 
         text_features = self.text_projection(pooled_output)
         #./data/wav_data/common_voice_sv-SE_24999028.wav
@@ -128,8 +128,8 @@ class MusCALL(nn.Module):
         text_features = self.encode_text(text, text_mask)
         audio_features = self.encode_audio(original_mel_spectograms)
         
-        print("Audio Features Shape:", audio_features.shape)
-        print("Text Features Shape:", text_features.shape)
+        # print("Audio Features Shape:", audio_features.shape)
+        # print("Text Features Shape:", text_features.shape)
 
         # normalise features
         audio_features = audio_features / audio_features.norm(dim=-1, keepdim=True)
