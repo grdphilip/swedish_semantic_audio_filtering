@@ -3,6 +3,7 @@ import numpy as np
 import torch
 from torch import nn
 from transformers import CLIPTextModel, AutoModel, BertModel
+from transformers import BertForSequenceClassification  
 from audio_encoder import WhisperForAudioClassification
 from text_encoder import DebertaForSequenceClassification
 
@@ -64,13 +65,11 @@ class MusCALL(nn.Module):
       
         if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
-            self.textual_head = AutoModel.from_pretrained(pretrained_model)
-            
-
-        
-        # elif config.text.model == "Albertina":
-        #     pretrained_model = config.text.pretrained
-        #     self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
+            self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
+        elif config.text.model == "Albertina":
+             pretrained_model = config.text.pretrained
+             self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
+             
         # elif config.text.model == "AlbertinaScratch":
         #     pretrained_model = config.text.pretrained
         #     self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
@@ -103,14 +102,10 @@ class MusCALL(nn.Module):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             print("Look for pooled outputs")
             print(outputs[0].shape)
-            print("Pooler Output Shape:", outputs[0].pooler_output.shape)
-            
-            
-            
-            
-        # elif isinstance(self.textual_head, DebertaForSequenceClassification):
-        #     outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
-        #     pooled_outout = outputs[0]
+        elif isinstance(self.textual_head, DebertaForSequenceClassification):
+            outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
+            pooled_outout = outputs[0]
+            print(pooled_outout.shape)
 
         text_features = self.text_projection(pooled_outout)
         #./data/wav_data/common_voice_sv-SE_24999028.wav
