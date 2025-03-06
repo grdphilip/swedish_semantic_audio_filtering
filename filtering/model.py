@@ -5,13 +5,12 @@ from torch import nn
 from transformers import CLIPTextModel, AutoModel, BertModel
 from transformers import BertForSequenceClassification  
 from audio_encoder import WhisperForAudioClassification
-from text_encoder import DebertaForSequenceClassification
+from text_encoder import DebertaForSequenceClassification, BertForSequenceClassification
 
 
 def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     labels = torch.arange(len(logits), device=logits.device)
     return nn.functional.cross_entropy(logits, labels)
-
 
 def weighted_loss(logits, sentence_sim, k=0.01):
     batch_size = logits.size(0)
