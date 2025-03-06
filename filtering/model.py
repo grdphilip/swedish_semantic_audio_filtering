@@ -66,7 +66,7 @@ class MusCALL(nn.Module):
         if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
             self.textual_head = BertForSequenceClassification.from_pretrained(pretrained_model)
-        elif config.text.model == "Albertina":
+        elif config.text.model == "Deberta":
              pretrained_model = config.text.pretrained
              self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)
              
