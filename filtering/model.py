@@ -102,13 +102,11 @@ class MusCALL(nn.Module):
         elif isinstance(self.textual_head, BertModel):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             print("Look for pooled outputs")
-            
             print(outputs[0].shape)
-            print("Last Hidden State Shape:", outputs[0].last_hidden_state.shape)
             print("Pooler Output Shape:", outputs[0].pooler_output.shape)
             
             
-            raise ValueError("Breakpoint")
+            
             
         # elif isinstance(self.textual_head, DebertaForSequenceClassification):
         #     outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
@@ -135,6 +133,11 @@ class MusCALL(nn.Module):
   
         text_features = self.encode_text(text, text_mask)
         audio_features = self.encode_audio(original_mel_spectograms)
+        
+        print("Audio Features Shape:", audio_features.shape)
+        print("Text Features Shape:", text_features.shape)
+        
+        raise ValueError("Breakpoint")
 
         # normalise features
         audio_features = audio_features / audio_features.norm(dim=-1, keepdim=True)
