@@ -126,7 +126,6 @@ class AudioCaptionDataset(Dataset):
 
         print("Loading audio")
         print(self.audio_paths[idx])
-        print(self.audio_paths)
         print("Audio id: ", self.audio_ids[idx])
         
         
