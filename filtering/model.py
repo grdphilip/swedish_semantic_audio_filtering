@@ -96,7 +96,7 @@ class MusCALL(nn.Module):
     def encode_text(self, text, text_mask):
         if isinstance(self.textual_head, CLIPTextModel):
             outputs = self.textual_head(text, text_mask)
-            pooled_outout = outputs.pooler_output
+            pooled_output = outputs.pooler_output
         elif isinstance(self.textual_head, BertForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             pooled_output = outputs[0]
@@ -106,7 +106,7 @@ class MusCALL(nn.Module):
             pooled_outout = outputs[0]
             print(pooled_outout.shape)
 
-        text_features = self.text_projection(pooled_outout)
+        text_features = self.text_projection(pooled_output)
         #./data/wav_data/common_voice_sv-SE_24999028.wav
         # find ./data/wav_data -type f -name "common_voice_sv-SE_24999028.wav"
         # /home/ec2-user/SageMaker/swedish_semantic_audio_filtering
