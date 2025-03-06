@@ -2,7 +2,7 @@ import numpy as np
 
 import torch
 from torch import nn
-from transformers import CLIPTextModel, AutoModel
+from transformers import CLIPTextModel, AutoModel, BertModel
 from audio_encoder import WhisperForAudioClassification
 from text_encoder import DebertaForSequenceClassification
 
@@ -65,8 +65,8 @@ class MusCALL(nn.Module):
         if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
             self.textual_head = AutoModel.from_pretrained(pretrained_model)
-            print(self.textual_head)
-            raise ValueError("Breakpoint")
+            
+
         
         # elif config.text.model == "Albertina":
         #     pretrained_model = config.text.pretrained
@@ -99,6 +99,13 @@ class MusCALL(nn.Module):
         if isinstance(self.textual_head, CLIPTextModel):
             outputs = self.textual_head(text, text_mask)
             pooled_outout = outputs.pooler_output
+        elif isinstance(self.textual_head, BertModel):
+            outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
+            print("Look for pooled outputs")
+            print(outputs)
+            
+            raise ValueError("Breakpoint")
+            
         # elif isinstance(self.textual_head, DebertaForSequenceClassification):
         #     outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
         #     pooled_outout = outputs[0]
