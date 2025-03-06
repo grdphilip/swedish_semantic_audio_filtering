@@ -105,6 +105,7 @@ class BertForSequenceClassification(BertPreTrainedModel):
         self.config = config
 
         self.bert = BertModel(config)
+        print(self.bert)
         classifier_dropout = (
             config.classifier_dropout if config.classifier_dropout is not None else config.hidden_dropout_prob
         )
@@ -114,6 +115,9 @@ class BertForSequenceClassification(BertPreTrainedModel):
 
         # Initialize weights and apply final processing
         self.post_init()
+        
+        print(self.config)
+        print(self.num_labels)
         
     
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
