@@ -12,6 +12,6 @@
       ssl_projection_dim: 128          
   text: 
     model: Deberta  # name of the textual head model. One of TextTransformer, CLIPTextModel
-    pretrained: microsoft/deberta-v3-base # name of the pretrained textual head model
+    pretrained: microsoft/deberta-base # name of the pretrained textual head model
     hidden_size: 768
   loss: weighted_clip                    
