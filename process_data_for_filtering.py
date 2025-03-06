@@ -27,5 +27,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     main(args)
-#python process_data_for_filtering.py common_voice_16_1_train_manifest.json /Users/tmsantos/Documents/TTS_Augmentation/semantic_audio_filtering
+#python process_data_for_filtering.py common_voice_16_1_train_manifest.json ./
 

@@ -54,5 +54,5 @@ if __name__ == "__main__":
     
     main(args)
 
-    #python3.10 process_hf_dataset.py grdphilip/facebook_m4t_v2_syndata default train customized facebook_m4t_v2_syndata_train_manifest.json
+    #python process_hf_dataset.py mozilla-foundation/common_voice_16_1 sv-SE default train common_voice common_voice_16_1_train_manifest.json
 
