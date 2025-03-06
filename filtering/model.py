@@ -62,7 +62,7 @@ class MusCALL(nn.Module):
             self.audio_backbone.freeze_encoder()
         
       
-        if config.text.model == "BERTTextModel":
+        if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
             self.textual_head = AutoModel.from_pretrained(pretrained_model)
             print(self.textual_head)

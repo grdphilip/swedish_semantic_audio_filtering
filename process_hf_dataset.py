@@ -56,5 +56,5 @@ if __name__ == "__main__":
     
     main(args)
 
-    #python process_hf_dataset.py mozilla-foundation/common_voice_16_0 sv-SE train common_voice common_voice_16_0_train_manifest.json 
+    #python process_hf_dataset.py mozilla-foundation/common_voice_16_0 sv-SE test common_voice common_voice_test_manifest.json 
 
