@@ -37,7 +37,7 @@ class MusCALLTrainer(BaseTrainer):
 
     def collate_fn(self, batch):
         #_, input_audio, text_input_ids, original_audio, _, text_attention_mask, idx = zip(*batch)
-        print(f"Batch: {batch}")
+        self.logger.write(f"Batch: {batch}")    
         input_audio, text_input_ids, text_attention_mask, idx = zip(*batch)
         
         original_mel_spectograms = self.feature_extractor(input_audio, sampling_rate=16000, max_length=480000, return_tensors="pt").input_features
@@ -95,8 +95,8 @@ class MusCALLTrainer(BaseTrainer):
             "Number of training samples: {}".format(self.train_dataset.__len__())
         )
         
-        print(f"First row in train dataset: {self.train_dataset[0]}")
-        print(f"First row in val dataset: {self.val_dataset[0]}")
+        self.logger.write("first reow in train" + str(self.train_dataset[0]))
+        self.logger.write("first reow in val" + str(self))
 
     def build_model(self):
         self.logger.write("Building model")
