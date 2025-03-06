@@ -100,8 +100,8 @@ class MusCALL(nn.Module):
             pooled_outout = outputs.pooler_output
         elif isinstance(self.textual_head, BertForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
-            pooled_outout = outputs[0]
-            print(pooled_outout.shape)
+            pooled_output = outputs[0]
+            print(pooled_output.shape)
         elif isinstance(self.textual_head, DebertaForSequenceClassification):
             outputs = self.textual_head(input_ids=text, attention_mask=text_mask)
             pooled_outout = outputs[0]

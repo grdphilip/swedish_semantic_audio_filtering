@@ -123,10 +123,6 @@ class AudioCaptionDataset(Dataset):
         #   audio = torch.cat((audio, zeros_needed), dim=0)
 
         #return mmapped_array#, audio
-
-        print("Loading audio")
-        print(self.audio_paths[idx])
-        print("Audio id: ", self.audio_ids[idx])
         
         
         audio_data, sample_rate = librosa.load(f".{self.audio_paths[idx]}", sr=None, dtype=np.float32)

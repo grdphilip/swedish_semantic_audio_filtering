@@ -70,7 +70,6 @@ class MusCALLTrainer(BaseTrainer):
         self.logger.write("Loading dataset")
         dataset_name = self.config.dataset_config.dataset_name
         
-        print(self.config.dataset_config) 
 
         if dataset_name == "common_voice":
             self.train_dataset = AudioCaptionDataset(self.config.dataset_config)
