@@ -68,6 +68,8 @@ class MusCALLTrainer(BaseTrainer):
     def load_dataset(self):
         self.logger.write("Loading dataset")
         dataset_name = self.config.dataset_config.dataset_name
+        
+        print(self.config.dataset_config) 
 
         if dataset_name == "common_voice":
             self.train_dataset = AudioCaptionDataset(self.config.dataset_config)
@@ -186,7 +188,6 @@ class MusCALLTrainer(BaseTrainer):
         else:
             self.model.eval()
 
-        print(data_loader)
         for i, batch in enumerate(tqdm(data_loader, desc="Processing batches")):                     
             original_mel_spectograms = batch["input_audio"]
             text_input_ids = batch["text_input_ids"]
