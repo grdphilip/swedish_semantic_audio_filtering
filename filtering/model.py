@@ -131,8 +131,6 @@ class MusCALL(nn.Module):
         
         print("Audio Features Shape:", audio_features.shape)
         print("Text Features Shape:", text_features.shape)
-        
-        raise ValueError("Breakpoint")
 
         # normalise features
         audio_features = audio_features / audio_features.norm(dim=-1, keepdim=True)
