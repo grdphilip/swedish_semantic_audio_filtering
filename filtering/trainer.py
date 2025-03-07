@@ -145,7 +145,7 @@ class MusCALLTrainer(BaseTrainer):
             
             self.load_ckp(self.logger.checkpoint_path)
             self.logger.write(
-                f"Resumed training from epoch {self.start_epoch} with best val loss {best_val_loss}"
+                f"Resumed training from epoch {self.start_epoch}"
             )
         else:
             self.logger.write(

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/202046906062855219/90ba295c19554c19b4ec1a5a80e2a884/artifacts
+end_time: 1741337716305
+entry_point_name: ''
+experiment_id: '202046906062855219'
+lifecycle_stage: active
+run_id: 90ba295c19554c19b4ec1a5a80e2a884
+run_name: nimble-mouse-522
+run_uuid: 90ba295c19554c19b4ec1a5a80e2a884
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741337698272
+status: 4
+tags: []
+user_id: ec2-user

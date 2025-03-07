@@ -103,6 +103,12 @@ class BertForSequenceClassification(BertPreTrainedModel):
         print(self.config)
         print(self.num_labels)
         
+        def get_input_embeddings(self):
+            return self.bert.get_input_embeddings()
+        
+        def set_input_embeddings(self, new_embeddings):
+            self.bert.set_input_embeddings(new_embeddings)
+        
     
     @add_start_docstrings_to_model_forward(BERT_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(

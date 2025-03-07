@@ -28,7 +28,7 @@ def weighted_loss(logits, sentence_sim, k=0.01):
     return loss
 
 
-def clip_loss(similarity: torch.Tensor, sentence_sim=None, type_loss="clip") -> torch.Tensor:
+def clip_loss(similarity: torch.Tensor, sentence_sim=None, type_loss="weighted_clip") -> torch.Tensor:
     if sentence_sim is not None and type_loss == "weighted_clip":
         text_loss = weighted_loss(similarity, sentence_sim)
         audio_loss = weighted_loss(similarity.T, sentence_sim)
@@ -65,6 +65,14 @@ class MusCALL(nn.Module):
         if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
             self.textual_head = BertForSequenceClassification.from_pretrained(pretrained_model)
+            for param in self.textual_head.bert.encoder.parameters():
+                param.requires_grad = False
+            for param in self.textual_head.bert.embeddings.parameters():
+                param.requires_grad = False
+                
+            print("Textual Head:", self.textual_head)
+            raise ValueError("Textual Head")
+                
         elif config.text.model == "Deberta":
              pretrained_model = config.text.pretrained
              self.textual_head = DebertaForSequenceClassification.from_pretrained(pretrained_model)

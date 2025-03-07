@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/892692420096890154/9e684f524b1d4e1e91102fa7d023841d/artifacts
+end_time: 1741338150608
+entry_point_name: ''
+experiment_id: '892692420096890154'
+lifecycle_stage: active
+run_id: 9e684f524b1d4e1e91102fa7d023841d
+run_name: placid-flea-606
+run_uuid: 9e684f524b1d4e1e91102fa7d023841d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741337771191
+status: 3
+tags: []
+user_id: ec2-user
