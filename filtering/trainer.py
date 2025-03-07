@@ -155,7 +155,7 @@ class MusCALLTrainer(BaseTrainer):
             )
             self.start_epoch = 0
 
-        for epoch in range(tqdm(self.start_epoch, self.config.training.epochs)):
+        for epoch in range(self.start_epoch, self.config.training.epochs):
             epoch_start_time = time.time()
 
             train_loss = self.train_epoch(self.train_loader, is_training=True)
