@@ -22,7 +22,7 @@ def get_audio(self, idx):
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-checkpoint_path = "/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/save/experiments/model1/latest_checkpoint.pth.tar"
+checkpoint_path = "./save/experiments/model1/latest_checkpoint.pth.tar"
 checkpoint = torch.load(checkpoint_path, map_location=device)
 
 model = MusCALL()
