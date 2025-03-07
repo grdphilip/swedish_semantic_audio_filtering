@@ -4,7 +4,7 @@
 # 4. Check the similarity score for the data
 # 5. Heuristically evaluate the threshold for the similarity score
 
-from filtering.model import MusCALL
+from model import MusCALL
 import torch
 from transformers import AutoTokenizer
 import torchaudio
