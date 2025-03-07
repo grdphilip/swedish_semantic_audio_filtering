@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/6114ea7796b54107b3cd250e3957daa5/artifacts
+end_time: 1741271901571
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: 6114ea7796b54107b3cd250e3957daa5
+run_name: debonair-lamb-772
+run_uuid: 6114ea7796b54107b3cd250e3957daa5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741271821184
+status: 4
+tags: []
+user_id: ec2-user

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/355731260258427256/f833e4e8dedd42d1bbdc1f5af0fa2016/artifacts
+end_time: 1741257388471
+entry_point_name: ''
+experiment_id: '355731260258427256'
+lifecycle_stage: active
+run_id: f833e4e8dedd42d1bbdc1f5af0fa2016
+run_name: lyrical-fox-91
+run_uuid: f833e4e8dedd42d1bbdc1f5af0fa2016
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741257387809
+status: 4
+tags: []
+user_id: ec2-user

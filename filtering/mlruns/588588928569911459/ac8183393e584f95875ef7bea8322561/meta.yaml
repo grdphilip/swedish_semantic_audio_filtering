@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/ac8183393e584f95875ef7bea8322561/artifacts
+end_time: 1741268844494
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: ac8183393e584f95875ef7bea8322561
+run_name: magnificent-bug-254
+run_uuid: ac8183393e584f95875ef7bea8322561
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741268842426
+status: 4
+tags: []
+user_id: ec2-user

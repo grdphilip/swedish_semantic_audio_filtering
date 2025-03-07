@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/320091819720630366/efbcfacc68f740b9874a27c4d22ce0f4/artifacts
+end_time: 1741257018789
+entry_point_name: ''
+experiment_id: '320091819720630366'
+lifecycle_stage: active
+run_id: efbcfacc68f740b9874a27c4d22ce0f4
+run_name: upset-shrew-221
+run_uuid: efbcfacc68f740b9874a27c4d22ce0f4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741257018127
+status: 4
+tags: []
+user_id: ec2-user

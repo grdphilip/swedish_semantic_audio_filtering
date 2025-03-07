@@ -58,7 +58,7 @@ class Logger:
     def save_checkpoint(self, state, is_best=False):
         torch.save(state, self.checkpoint_path)
         if is_best:
-            self.write("Saving best model so far")
+            self.write(f"Saving best model so far to {self.checkpoint_path}")
             best_model_path = os.path.join(self.experiment_dir,
                                            'best_model.pth.tar')
             torch.save(state, best_model_path)

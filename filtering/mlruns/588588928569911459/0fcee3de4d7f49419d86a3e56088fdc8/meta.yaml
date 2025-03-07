@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/0fcee3de4d7f49419d86a3e56088fdc8/artifacts
+end_time: 1741264822156
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: 0fcee3de4d7f49419d86a3e56088fdc8
+run_name: sincere-crow-324
+run_uuid: 0fcee3de4d7f49419d86a3e56088fdc8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741264821494
+status: 4
+tags: []
+user_id: ec2-user

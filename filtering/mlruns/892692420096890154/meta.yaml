@@ -1,0 +1,6 @@
+artifact_location: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/892692420096890154
+creation_time: 1741257872133
+experiment_id: '892692420096890154'
+last_update_time: 1741257872133
+lifecycle_stage: active
+name: /home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/save/experiments/model1

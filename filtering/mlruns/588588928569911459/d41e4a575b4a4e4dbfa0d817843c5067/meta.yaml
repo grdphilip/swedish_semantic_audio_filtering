@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/d41e4a575b4a4e4dbfa0d817843c5067/artifacts
+end_time: 1741271618613
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: d41e4a575b4a4e4dbfa0d817843c5067
+run_name: sedate-steed-820
+run_uuid: d41e4a575b4a4e4dbfa0d817843c5067
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741271617121
+status: 4
+tags: []
+user_id: ec2-user

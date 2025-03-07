@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/a23fa18c1c3e456c870e2121485c6d9d/artifacts
+end_time: 1741272169881
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: a23fa18c1c3e456c870e2121485c6d9d
+run_name: hilarious-bass-468
+run_uuid: a23fa18c1c3e456c870e2121485c6d9d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741272138316
+status: 4
+tags: []
+user_id: ec2-user

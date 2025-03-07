@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/69461c2673a04da182753504660d059f/artifacts
+end_time: 1741264630503
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: 69461c2673a04da182753504660d059f
+run_name: righteous-bass-585
+run_uuid: 69461c2673a04da182753504660d059f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741264629839
+status: 4
+tags: []
+user_id: ec2-user

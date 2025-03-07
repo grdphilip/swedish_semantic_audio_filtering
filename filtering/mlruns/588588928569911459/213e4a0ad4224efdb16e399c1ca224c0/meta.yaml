@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/213e4a0ad4224efdb16e399c1ca224c0/artifacts
+end_time: 1741264264214
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: 213e4a0ad4224efdb16e399c1ca224c0
+run_name: receptive-fox-347
+run_uuid: 213e4a0ad4224efdb16e399c1ca224c0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741264263552
+status: 4
+tags: []
+user_id: ec2-user

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/588588928569911459/665e082a98da48bdb0c27c534f9ad19d/artifacts
+end_time: 1741269365848
+entry_point_name: ''
+experiment_id: '588588928569911459'
+lifecycle_stage: active
+run_id: 665e082a98da48bdb0c27c534f9ad19d
+run_name: victorious-worm-176
+run_uuid: 665e082a98da48bdb0c27c534f9ad19d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741268949848
+status: 4
+tags: []
+user_id: ec2-user

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/320091819720630366/0c66117e4bef4f50b3f0eaa04f2c2dfa/artifacts
+end_time: 1741256389484
+entry_point_name: ''
+experiment_id: '320091819720630366'
+lifecycle_stage: active
+run_id: 0c66117e4bef4f50b3f0eaa04f2c2dfa
+run_name: kindly-colt-915
+run_uuid: 0c66117e4bef4f50b3f0eaa04f2c2dfa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741256388825
+status: 4
+tags: []
+user_id: ec2-user

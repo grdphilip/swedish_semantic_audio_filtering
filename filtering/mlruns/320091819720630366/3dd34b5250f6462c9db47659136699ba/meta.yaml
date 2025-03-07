@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/320091819720630366/3dd34b5250f6462c9db47659136699ba/artifacts
+end_time: 1741256697765
+entry_point_name: ''
+experiment_id: '320091819720630366'
+lifecycle_stage: active
+run_id: 3dd34b5250f6462c9db47659136699ba
+run_name: powerful-goose-651
+run_uuid: 3dd34b5250f6462c9db47659136699ba
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741256697104
+status: 4
+tags: []
+user_id: ec2-user

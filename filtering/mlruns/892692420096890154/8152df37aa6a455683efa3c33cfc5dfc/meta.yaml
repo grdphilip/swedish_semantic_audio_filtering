@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/892692420096890154/8152df37aa6a455683efa3c33cfc5dfc/artifacts
+end_time: 1741264194798
+entry_point_name: ''
+experiment_id: '892692420096890154'
+lifecycle_stage: active
+run_id: 8152df37aa6a455683efa3c33cfc5dfc
+run_name: dapper-horse-382
+run_uuid: 8152df37aa6a455683efa3c33cfc5dfc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741264194138
+status: 4
+tags: []
+user_id: ec2-user
