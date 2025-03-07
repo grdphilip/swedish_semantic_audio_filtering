@@ -7,7 +7,7 @@
 from filtering.model import MusCALL
 import torch
 from transformers import AutoTokenizer
-import torchaudio
+from soundfile import SoundFile
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -30,8 +30,9 @@ text_tokens = tokenizer(
 
 audio_path = ""
 
-waveform, _ = torchaudio.load(audio_path)
-waveform = waveform.to(device)
+with SoundFile(audio_path) as audio_file:
+    waveform = torch.tensor(audio_file.read(dtype="float32")).to(device)
+    
 
 
 

@@ -7,7 +7,17 @@
 from model import MusCALL
 import torch
 from transformers import AutoTokenizer
-import torchaudio
+import librosa
+
+
+def get_audio(self, idx):
+        
+    audio_data, sample_rate = librosa.load(f".{self.audio_paths[idx]}", sr=None, dtype=np.float32)
+    if sample_rate != 16000: 
+        print("Resampling audio")
+        print("Sample id: ", self.audio_paths[idx])
+        audio_data = librosa.resample(y=audio_data, orig_sr=sample_rate, target_sr=16000)
+    return audio_data
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -30,10 +40,8 @@ text_tokens = tokenizer(
 
 audio_path = ""
 
-waveform, _ = torchaudio.load(audio_path)
+waveform = get_audio(audio_path)
 waveform = waveform.to(device)
-
-
 
 with torch.no_grad():
     print(f"Waveform shape {waveform.shape}, text shape {text_tokens['input_ids'].shape}")
