@@ -34,7 +34,7 @@ training:
 # Environment configuration
 env:
   # Base directory of the repo, populated when config is loaded
-  base_dir: '/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/'
+  base_dir: '/home/ec2-user/SageMaker/swedish_semantic_audio_filtering'
   # Directory for storing datasets and models
   data_root: ${env.base_dir}/data
   # Directory for experiments, logs, output samples etc.

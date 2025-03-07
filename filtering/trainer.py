@@ -247,7 +247,6 @@ class MusCALLTrainer(BaseTrainer):
         return loss
     
     
-    
 """
 Bridge the gap between modalities and learn joint representations.
 
@@ -280,7 +279,6 @@ The focus is on optimizing the parameters of the projection layers
 
 Traditional approaches assume that all items inside of a dataset are perfectly aligned, with each audio-text pair representing the most semantically relevant match, 
 and that all non-aligned pairs are equally dissimilar. However, in real-world datasets within a randomly sampled mini-batch, some samples will share similarities with other tracks
-
 
 This filtering process generated three distinct synthetic datasets of different sizes, each reflecting a different similarity threshold. 
 These filtered datasets were then combined with three real speech datasets (MLS, CV, and PSFB) to create three augmented training sets.
