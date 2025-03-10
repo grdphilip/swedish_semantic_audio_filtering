@@ -71,7 +71,6 @@ class MusCALL(nn.Module):
                 param.requires_grad = False
                 
             print("Textual Head:", self.textual_head)
-            raise ValueError("Textual Head")
                 
         elif config.text.model == "Deberta":
              pretrained_model = config.text.pretrained
