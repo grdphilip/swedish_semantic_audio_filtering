@@ -13,3 +13,9 @@ Similarities array elevenlabs dataset after 5 epochs of MusCALL training
 
  [0.48952502 0.4859861  0.48624974 0.48666027 0.48941118 0.47987434                                               
  0.4852461  0.48904115 0.486769   0.4880699  0.48956573]
+
+
+ Eval ideas:
+ Check Embedding Distributions with t-SNE or PCA to check if clusters are forming correctly
+
+ 
