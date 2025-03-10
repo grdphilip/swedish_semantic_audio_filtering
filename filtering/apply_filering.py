@@ -9,7 +9,7 @@ def main(args):
     model_conf_path = 'configs/model.yaml'
     config = merge_conf(base_conf_path, dataset_conf_path, model_conf_path)
 
-    filtering = FilteringFramework(config, pretrained_model_path='our_checkpoint/trained_layers.pt')
+    filtering = FilteringFramework(config, pretrained_model_path='save/experiments/model1/checkpoint.pth.tar')
 
     filtering.run(data_manifest_path=args.data_manifest_path)
 
