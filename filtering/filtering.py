@@ -51,7 +51,7 @@ class FilteringFramework:
             "best_model.pth.tar",
         )
                 
-
+        self.set_seed()
         self.load_dataset()
         self.load_model()
         self.similarities = None
@@ -98,6 +98,19 @@ class FilteringFramework:
         self.model.load_state_dict(torch.load(self.checkpoint_path), strict=False)
         self.model.to(self.device)
         self.model.eval()
+        
+
+
+
+    def set_seed(seed=42):
+        torch.manual_seed(seed)
+        np.random.seed(seed)
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+
+
 
     def extract_embeddings(self):
         # Create a directory to save the features called "embeddings"
