@@ -187,38 +187,43 @@ class FilteringFramework:
         
         
         # Save the updated data manifest
-    
 
 
+def run(self, data_manifest_path, stdev_threshold=3):
+    # Extract embeddings
+    audio_features, text_features = self.extract_embeddings()
 
+    # Compute similarities
+    self.get_similarities(audio_features, text_features)
+    print(self.similarities)
 
-    def run(self, data_manifest_path, stdev_threshold=3):
-        # Extract embeddings
-        audio_features, text_features = self.extract_embeddings()
+    # Determine the correct perplexity value
+    n_samples = min(len(audio_features), len(text_features))
+    perplexity_value = min(30, n_samples - 1)  # Ensure valid perplexity
 
-        # Compute similarities
-        self.get_similarities(audio_features, text_features)
-        print(self.similarities)
+    if n_samples < 2:
+        print("Not enough samples for t-SNE visualization.")
+        return
 
-        # Apply t-SNE
-        tsne = TSNE(n_components=2, perplexity=30, random_state=42)
-        audio_2d = tsne.fit_transform(audio_features)
-        text_2d = tsne.fit_transform(text_features)
+    # Apply t-SNE
+    tsne = TSNE(n_components=2, perplexity=perplexity_value, random_state=42)
+    audio_2d = tsne.fit_transform(audio_features)
+    text_2d = tsne.fit_transform(text_features)
 
-        # Plot
-        plt.figure(figsize=(8, 6))
-        plt.scatter(text_2d[:, 0], text_2d[:, 1], c='blue', label="Text Embeddings", alpha=0.6)
-        plt.scatter(audio_2d[:, 0], audio_2d[:, 1], c='red', label="Audio Embeddings", alpha=0.6)
-        plt.legend()
-        plt.title("t-SNE Visualization of Text & Audio Embeddings")
+    # Plot
+    plt.figure(figsize=(8, 6))
+    plt.scatter(text_2d[:, 0], text_2d[:, 1], c='blue', label="Text Embeddings", alpha=0.6)
+    plt.scatter(audio_2d[:, 0], audio_2d[:, 1], c='red', label="Audio Embeddings", alpha=0.6)
+    plt.legend()
+    plt.title("t-SNE Visualization of Text & Audio Embeddings")
 
-        # Save to the same directory as `data_manifest_path`
-        save_dir = os.path.dirname(data_manifest_path)
-        save_path = os.path.join(save_dir, "tsne_plot.png")
-        plt.savefig(save_path)
-        print(f"t-SNE plot saved to: {save_path}")
+    # Save to the same directory as `data_manifest_path`
+    save_dir = os.path.dirname(data_manifest_path)
+    save_path = os.path.join(save_dir, "tsne_plot.png")
+    plt.savefig(save_path)
+    print(f"t-SNE plot saved to: {save_path}")
 
-        plt.close()
+    plt.close()
 
         
         
