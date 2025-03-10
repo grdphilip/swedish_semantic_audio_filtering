@@ -56,5 +56,5 @@ if __name__ == "__main__":
     
     main(args)
 
-    #python process_hf_dataset.py mozilla-foundation/common_voice_16_0 sv-SE test common_voice common_voice_test_manifest.json 
+    #python process_hf_dataset.py grdphilip/elevenlabs_syndata default train customized syndata_11labs_train_manifest.json 
 
