@@ -8,3 +8,8 @@ Similarities array FB dataset after 5 epochs of MusCALL training
 
 Similarities array elevenlabs dataset after 5 epochs of MusCALL training 
 
+[0.52740175 0.5071633  0.49673933 0.5286661  0.51008785 0.4864965                                                
+ 0.52728385 0.51392716 0.49980378 0.5311351  0.5152537 ]
+
+ [0.48952502 0.4859861  0.48624974 0.48666027 0.48941118 0.47987434                                               
+ 0.4852461  0.48904115 0.486769   0.4880699  0.48956573]
