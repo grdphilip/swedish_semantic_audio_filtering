@@ -31,7 +31,7 @@ audio_folder_path = './elevenlabs_audio_files/'
 df = pd.read_csv(csv_path)
 
 # Create a new DataFrame for the manifest
-manifest = pd.DataFrame(columns=['audio', 'text', 'duration'])
+manifest = pd.DataFrame(columns=['audio', 'text', 'duration', 'path'])
 
 # Function to get duration of an audio file
 def get_audio_duration(file_path):
@@ -64,7 +64,8 @@ for index, row in df.iterrows():
                     'audio': {"array": audio_data, "sampling_rate": sr,'path': audio_path },  # This is actual audio data; for binary you may need to handle differently
                     'text': row['sentence'],
                     'duration': duration,
-   
+                    'path': audio_path
+    
                 })
                 
             except Exception as e:
@@ -79,13 +80,15 @@ with open('manifest.json', 'w') as f:
 features = Features({
     "audio": Audio(sampling_rate=16000),
     "text": Value("string"),
-    "duration": Value("float32")
+    "duration": Value("float32"),
+    "path": Value("string")
 })
 
 manifest_dict = {
     "audio": [item["audio"] for item in manifest],
     "text": [item["text"] for item in manifest],
-    "duration": [item["duration"] for item in manifest]
+    "duration": [item["duration"] for item in manifest],
+    "path": [item["path"] for item in manifest]
 }
 
 

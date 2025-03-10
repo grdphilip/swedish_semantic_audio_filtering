@@ -181,6 +181,9 @@ class FilteringFramework:
         similarities_tensor = torch.tensor(similarities)
         self.similarities = similarities_tensor.numpy()
         
+        
+        # Save the updated data manifest
+    
 
 
     def run(self, data_manifest_path, stdev_threshold=3):

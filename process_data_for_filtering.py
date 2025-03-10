@@ -27,5 +27,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     main(args)
+    
 #python process_data_for_filtering.py common_voice_test_manifest.json ./
 
