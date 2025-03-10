@@ -197,6 +197,7 @@ class FilteringFramework:
 
         # Compute similarities
         self.get_similarities(audio_features, text_features)
+        save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
         plt.savefig(save_path)
         print(self.similarities)
@@ -234,7 +235,7 @@ class FilteringFramework:
         plt.title("t-SNE Visualization of Text & Audio Embeddings")
 
         # Save to the same directory as `data_manifest_path`
-        save_dir = os.path.dirname(data_manifest_path)
+       
         save_path = os.path.join(save_dir, "tsne_plot.png")
         plt.savefig(save_path)
         print(f"t-SNE plot saved to: {save_path}")
