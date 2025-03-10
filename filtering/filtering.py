@@ -192,10 +192,15 @@ class FilteringFramework:
     def run(self, data_manifest_path, stdev_threshold=3):
         # Extract embeddings
         audio_features, text_features = self.extract_embeddings()
+        
+
 
         # Compute similarities
         self.get_similarities(audio_features, text_features)
         print(self.similarities)
+        
+        audio_features = audio_features.detach().cpu().numpy()
+        text_features = text_features.detach().cpu().numpy()
 
         # Determine the correct perplexity value
         n_samples = min(len(audio_features), len(text_features))
