@@ -21,3 +21,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
+    
+#python apply_filering.py data/syndata_fb_train_manifest.json
