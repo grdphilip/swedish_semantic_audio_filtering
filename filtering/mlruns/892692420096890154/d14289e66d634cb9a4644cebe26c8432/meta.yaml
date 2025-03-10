@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/892692420096890154/d14289e66d634cb9a4644cebe26c8432/artifacts
+end_time: 1741619446825
+entry_point_name: ''
+experiment_id: '892692420096890154'
+lifecycle_stage: active
+run_id: d14289e66d634cb9a4644cebe26c8432
+run_name: nimble-ox-164
+run_uuid: d14289e66d634cb9a4644cebe26c8432
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741608272196
+status: 3
+tags: []
+user_id: ec2-user
