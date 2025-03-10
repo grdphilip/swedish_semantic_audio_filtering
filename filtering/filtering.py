@@ -38,7 +38,7 @@ class FilteringFramework:
         super().__init__()
         self.config = config
         self.device = torch.device(self.config.training.device)
-        self.feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-medium")
+        self.feature_extractor = WhisperFeatureExtractor.from_pretrained("KBLab/kb-whisper-medium")
         self.checkpoint_path = pretrained_model_path
 
         self.path_to_model = os.path.join(
@@ -139,14 +139,7 @@ class FilteringFramework:
 
         return audio_features, text_features
 
-    
-    def get_similarities(self, audio_features, text_features):        
-        similarities = []
-        for embedding_audio, embedding_text in zip(audio_features, text_features):
-            similarities.append(compute_cosine_similarity(embedding_text.unsqueeze(0), embedding_audio.unsqueeze(0)))
-        
-        similarities_tensor = torch.tensor(similarities)
-        self.similarities = similarities_tensor.numpy()
+
     
 
     def apply_filtering(self, synthetic_data_manifest, stdev_threshold):
@@ -178,11 +171,25 @@ class FilteringFramework:
         print(f"Total audio duration to delete: {audio_durations} minutes")
 
         return samples_to_delete
+    
         
+    def get_similarities(self, audio_features, text_features):        
+        similarities = []
+        for embedding_audio, embedding_text in zip(audio_features, text_features):
+            similarities.append(compute_cosine_similarity(embedding_text.unsqueeze(0), embedding_audio.unsqueeze(0)))
+        
+        similarities_tensor = torch.tensor(similarities)
+        self.similarities = similarities_tensor.numpy()
+        
+
+
     def run(self, data_manifest_path, stdev_threshold=3):
         audio_features, text_features = self.extract_embeddings()
         self.get_similarities(audio_features, text_features)
-        self.apply_filtering(data_manifest_path, stdev_threshold)
+        print(self.similarities)
+        
+        
+        #self.apply_filtering(data_manifest_path, stdev_threshold)
 
 
 

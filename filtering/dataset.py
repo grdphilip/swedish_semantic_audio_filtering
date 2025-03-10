@@ -50,7 +50,7 @@ class AudioCaptionDataset(Dataset):
         self._build_tokenizer()
         self._load()
         
-        self.feautre_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-medium")
+        self.feature_extractor = WhisperFeatureExtractor.from_pretrained("KBLab/kb-whisper-medium")
 
 
     def _load(self):
