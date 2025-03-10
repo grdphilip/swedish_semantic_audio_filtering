@@ -194,12 +194,21 @@ class FilteringFramework:
         # Extract embeddings
         audio_features, text_features = self.extract_embeddings()
         print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
-        
-
 
         # Compute similarities
         self.get_similarities(audio_features, text_features)
+        save_path = os.path.join(save_dir, "dist_fb.png")
+        plt.savefig(save_path)
         print(self.similarities)
+
+        # Plot the distribution of similarity values
+        plt.figure(figsize=(10, 6))
+        plt.hist(self.similarities, bins=20, color='blue', alpha=0.7)
+        plt.title('Distribution of Similarity Values')
+        plt.xlabel('Similarity')
+        plt.ylabel('Frequency')
+        plt.grid(True)
+        
         
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()
