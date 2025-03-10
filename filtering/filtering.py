@@ -199,7 +199,6 @@ class FilteringFramework:
         self.get_similarities(audio_features, text_features)
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
-        plt.savefig(save_path)
         print(self.similarities)
 
         # Plot the distribution of similarity values
@@ -209,6 +208,8 @@ class FilteringFramework:
         plt.xlabel('Similarity')
         plt.ylabel('Frequency')
         plt.grid(True)
+        plt.savefig(save_path)
+        plt.close()
         
         
         audio_features = audio_features.detach().cpu().numpy()
