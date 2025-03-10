@@ -219,8 +219,8 @@ class FilteringFramework:
 
         # Plot
         plt.figure(figsize=(8, 6))
-        plt.scatter(text_2d[:, 0], text_2d[:, 1], c='blue', label="Text Embeddings", alpha=0.6)
-        plt.scatter(audio_2d[:, 0], audio_2d[:, 1], c='red', label="Audio Embeddings", alpha=0.6)
+        plt.scatter(text_2d[:, 0], text_2d[:, 1], c='blue', label="Text Embeddings", alpha=0.6, s=10)
+        plt.scatter(audio_2d[:, 0], audio_2d[:, 1], c='red', label="Audio Embeddings", alpha=0.6, s=10)
         plt.legend()
         plt.title("t-SNE Visualization of Text & Audio Embeddings")
 

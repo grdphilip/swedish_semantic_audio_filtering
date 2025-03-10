@@ -1,6 +1,6 @@
 training:
   # Maximum number of epochs
-  epochs: 5
+  epochs: 25
   # Device on which the model will be trained. Set 'cpu' to train/infer on CPU
   device: cuda
 
@@ -22,7 +22,7 @@ training:
   # Early stopping configs
   early_stop:
     # Whether to use early stopping, (Default: false)
-    enabled: false
+    enabled: true
     # Patience for early stoppings
     patience: 4000
     # Criteria to be monitored for early stopping
