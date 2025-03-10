@@ -202,15 +202,17 @@ class FilteringFramework:
         print(self.similarities)
 
         # Plot the distribution of similarity values
-        plt.figure(figsize=(10, 6))
-        plt.hist(self.similarities, bins=20, color='blue', alpha=0.7)
-        plt.title('Distribution of Similarity Values')
-        plt.xlabel('Similarity')
-        plt.ylabel('Frequency')
-        plt.grid(True)
+        plt.figure(figsize=(12, 8))
+        plt.hist(self.similarities, bins=30, color='skyblue', edgecolor='black', alpha=0.7)
+        plt.title('Distribution of Similarity Values', fontsize=16)
+        plt.xlabel('Similarity', fontsize=14)
+        plt.ylabel('Frequency', fontsize=14)
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        plt.xticks(fontsize=12)
+        plt.yticks(fontsize=12)
+        plt.tight_layout()
         plt.savefig(save_path)
         plt.close()
-        
         
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()
