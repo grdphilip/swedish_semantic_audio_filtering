@@ -192,6 +192,7 @@ class FilteringFramework:
     def run(self, data_manifest_path, stdev_threshold=3):
         # Extract embeddings
         audio_features, text_features = self.extract_embeddings()
+        print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
         
 
 
