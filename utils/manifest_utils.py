@@ -84,7 +84,7 @@ def read_manifest_file(filename, raw=True):
     
     return json_objects
 
-def write_manifest_file(manifest_data, filename, manifest_type='finetuning'):
+def write_manifest_file(manifest_data, filename, manifest_type='filtering'):
 
     if manifest_type == 'finetuning':
         file_path = os.path.join(MANIFEST_PREPROCESSED_FOLDER, filename)
