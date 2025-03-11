@@ -85,7 +85,7 @@ class FilteringFramework:
     
     def load_dataset(self):
         dataset = AudioCaptionDataset(self.config.dataset_config, dataset_type="to_filter")
-        self.batch_size = 8
+        self.batch_size = 32
         self.data_loader = DataLoader(
             dataset=dataset,
             batch_size=self.batch_size,
