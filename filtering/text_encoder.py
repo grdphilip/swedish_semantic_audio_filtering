@@ -7,6 +7,7 @@ from transformers.utils import add_code_sample_docstrings, add_start_docstrings_
 
 DEBERTA_INPUTS_DOCSTRING = r"""
 """
+#https://huggingface.co/microsoft/mdeberta-v3-base
 _CHECKPOINT_FOR_DOC = "microsoft/deberta-base"
 _CONFIG_FOR_DOC = "DebertaConfig"
 
@@ -103,10 +104,10 @@ class BertForSequenceClassification(BertPreTrainedModel):
         print(self.config)
         print(self.num_labels)
         
-        def get_input_embeddings(self):
+    def get_input_embeddings(self):
             return self.bert.get_input_embeddings()
         
-        def set_input_embeddings(self, new_embeddings):
+    def set_input_embeddings(self, new_embeddings):
             self.bert.set_input_embeddings(new_embeddings)
         
     

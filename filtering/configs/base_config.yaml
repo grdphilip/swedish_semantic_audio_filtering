@@ -1,6 +1,6 @@
 training:
   # Maximum number of epochs
-  epochs: 25
+  epochs: 60
   # Device on which the model will be trained. Set 'cpu' to train/infer on CPU
   device: cuda
 
