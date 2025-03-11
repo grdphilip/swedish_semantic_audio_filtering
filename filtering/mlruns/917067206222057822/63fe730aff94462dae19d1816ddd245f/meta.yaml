@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/917067206222057822/63fe730aff94462dae19d1816ddd245f/artifacts
+end_time: 1741691113536
+entry_point_name: ''
+experiment_id: '917067206222057822'
+lifecycle_stage: active
+run_id: 63fe730aff94462dae19d1816ddd245f
+run_name: gentle-skunk-520
+run_uuid: 63fe730aff94462dae19d1816ddd245f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741690786323
+status: 4
+tags: []
+user_id: ec2-user

@@ -44,7 +44,6 @@ class MusCALLTrainer(BaseTrainer):
         text_input_ids = torch.stack(text_input_ids)
         text_attention_mask = torch.stack(text_attention_mask)
 
-
         max_len = max([len(i) for i in input_audio])
 
         original_audio = []

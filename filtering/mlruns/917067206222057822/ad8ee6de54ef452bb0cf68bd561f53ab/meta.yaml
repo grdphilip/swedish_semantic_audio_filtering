@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/917067206222057822/ad8ee6de54ef452bb0cf68bd561f53ab/artifacts
+end_time: 1741710458988
+entry_point_name: ''
+experiment_id: '917067206222057822'
+lifecycle_stage: active
+run_id: ad8ee6de54ef452bb0cf68bd561f53ab
+run_name: abrasive-crane-647
+run_uuid: ad8ee6de54ef452bb0cf68bd561f53ab
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741691164022
+status: 3
+tags: []
+user_id: ec2-user
