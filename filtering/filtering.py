@@ -205,7 +205,7 @@ class FilteringFramework:
 
 
     def run(self, data_manifest_path, stdev_threshold=3):
-        # Extract embeddings
+    # Extract embeddings
         audio_features, text_features = self.extract_embeddings()
         print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
 
@@ -219,7 +219,7 @@ class FilteringFramework:
 
         # Unique sources and their colors
         unique_sources = list(set(sources))
-        colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Different color for each source
+        colors = plt.cm.get_cmap("tab10", len(unique_sources))  # Use tab10 for distinct colors
         source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
 
         # Plot the distribution of similarity values
@@ -248,11 +248,10 @@ class FilteringFramework:
         plt.savefig(save_path)
         plt.close()
 
-        
+        # Prepare t-SNE visualization
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()
 
-        # Determine the correct perplexity value
         n_samples = min(len(audio_features), len(text_features))
         perplexity_value = min(30, n_samples - 1)  # Ensure valid perplexity
 
@@ -265,24 +264,41 @@ class FilteringFramework:
         audio_2d = tsne.fit_transform(audio_features)
         text_2d = tsne.fit_transform(text_features)
 
-        # Plot
+        # Define marker styles for each source
+        markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'X']  # Add more if needed
+        source_markers = {src: markers[i % len(markers)] for i, src in enumerate(unique_sources)}
+
+        # Plot t-SNE results
         plt.figure(figsize=(8, 6))
-        plt.scatter(text_2d[:, 0], text_2d[:, 1], c='blue', label="Text Embeddings", alpha=0.6, s=10)
-        plt.scatter(audio_2d[:, 0], audio_2d[:, 1], c='red', label="Audio Embeddings", alpha=0.6, s=10)
+        for i, src in enumerate(unique_sources):
+            # Get indices for this source
+            idx = [j for j, s in enumerate(sources) if s == src]
+            
+            # Plot text embeddings
+            plt.scatter(
+                text_2d[idx, 0], text_2d[idx, 1], 
+                color=source_colors[src], 
+                marker=source_markers[src], 
+                label=f"Text - {src}", 
+                alpha=0.6, s=20
+            )
+
+            # Plot audio embeddings
+            plt.scatter(
+                audio_2d[idx, 0], audio_2d[idx, 1], 
+                color=source_colors[src], 
+                marker=source_markers[src], 
+                label=f"Audio - {src}", 
+                edgecolors='black', 
+                alpha=0.6, s=20
+            )
+
         plt.legend()
         plt.title("t-SNE Visualization of Text & Audio Embeddings")
 
         # Save to the same directory as `data_manifest_path`
-       
         save_path = os.path.join(save_dir, "tsne_plot.png")
         plt.savefig(save_path)
         print(f"t-SNE plot saved to: {save_path}")
 
         plt.close()
-
-        
-        
-        #self.apply_filtering(data_manifest_path, stdev_threshold)
-
-
-
