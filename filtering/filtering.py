@@ -275,7 +275,7 @@ class FilteringFramework:
                 color=source_colors[src], 
                 marker='x', 
                 label=f"Text - {src}", 
-                alpha=0.6, s=50
+                alpha=0.6, s=20
             )
 
             # Plot audio embeddings (O markers)
