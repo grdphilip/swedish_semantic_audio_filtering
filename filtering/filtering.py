@@ -219,7 +219,7 @@ class FilteringFramework:
 
         # Unique sources and their colors
         unique_sources = list(set(sources))
-        colors = plt.cm.get_cmap("tab10", len(unique_sources))  # Use tab10 for distinct colors
+        colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Use tab10 for distinct colors
         source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
 
         # Plot the distribution of similarity values
