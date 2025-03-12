@@ -28,7 +28,7 @@ target_hours_per_speaker = 0
 
 # Convert hours to seconds
 #seconds_needed_per_speaker = target_hours_per_speaker * 3600  # Convert hours to seconds
-seconds_needed_per_speaker = 10
+seconds_needed_per_speaker = 40
 generated_seconds_per_speaker = {speaker: 0 for speaker in speakers}
 
 # Initialize a variable to keep track of the starting index for the next speaker
