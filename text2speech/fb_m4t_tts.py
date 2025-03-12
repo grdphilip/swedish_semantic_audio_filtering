@@ -41,7 +41,7 @@ print("This may take a while...")
 if fbm2tts: gen_audio(speakers=speakers, target_hours_per_speaker=target_hours_per_speaker, seconds_needed_per_speaker=seconds_needed_per_speaker, generated_seconds_per_speaker=generated_seconds_per_speaker, start_index_for_next_speaker=start_index_for_next_speaker, capes=capes)
 
 
-path_LIST= get_path_list(path= "./dataset/generatedSynAudios")
+path_LIST= get_path_list(path= "./paths_dataset/updated_paths_dataset.csv")
 numbers = extract_audio_numbers(path_LIST)
 disruption_pairs = find_disruption_pairs(sorted(numbers)) 
 
@@ -49,9 +49,7 @@ disruption_pairs = find_disruption_pairs(sorted(numbers))
 index_path_map = {int(path.split('_')[-1].split('.')[0]): path for path in path_LIST}
 capes['Audio_path'] = capes.index.map(index_path_map.get)
 capes_final= capes.dropna(subset=["Audio_path"])
-save_path_audio_paths = "./paths_dataset"
-if not os.path.exists(save_path_audio_paths):
-    os.makedirs(save_path_audio_paths)
+
     
 capes_final.to_csv("./paths_dataset/dataset_final.csv", index=False)
 

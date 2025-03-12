@@ -74,6 +74,8 @@ def gen_audio(speakers, target_hours_per_speaker, seconds_needed_per_speaker, ge
                 break  # Skip to next speaker if this one has already reached the target
 
     # Save the updated dataset
+    if not os.path.exists("./paths_dataset"):
+        os.makedirs("./paths_dataset")
     capes.to_csv("./paths_dataset/updated_paths_dataset.csv", index=False)
     return capes.head()
 
