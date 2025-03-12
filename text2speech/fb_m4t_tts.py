@@ -1,6 +1,7 @@
 import pandas as pd 
 import re
 from fb_m4t_tts_utils import convert_str_to_dict,gen_audio, get_path_list, extract_audio_numbers, find_disruption_pairs
+import os
 
 #Original capes dataset https://huggingface.co/datasets/soarescmsa/capes/viewer/en-pt/train?p=1
 capes = pd.read_csv("../text_generation/dataset/utterances.csv")
@@ -48,6 +49,10 @@ disruption_pairs = find_disruption_pairs(sorted(numbers))
 index_path_map = {int(path.split('_')[-1].split('.')[0]): path for path in path_LIST}
 capes['Audio_path'] = capes.index.map(index_path_map.get)
 capes_final= capes.dropna(subset=["Audio_path"])
+save_path_audio_paths = "./paths_dataset"
+if not os.path.exists(save_path_audio_paths):
+    os.makedirs(save_path_audio_paths)
+    
 capes_final.to_csv("./paths_dataset/dataset_final.csv", index=False)
 
 ############ AT THE END A CSV FILE WITH THE PATH TO GENERATED AUDIO FILES IS CREATED ############re
