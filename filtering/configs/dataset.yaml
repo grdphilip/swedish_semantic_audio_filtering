@@ -7,18 +7,25 @@
 
 # python apply_filering.py data/syndata_11labs_train_manifest.json
 
-dataset_config:
-  dataset_name: syndata_elevenlabs
-  data_dir: data/
-  to_filter_filename: syndata_11labs_train_manifest.json
+# dataset_config:
+#   dataset_name: syndata_elevenlabs
+#   data_dir: data/
+#   to_filter_filename: syndata_11labs_train_manifest.json
 
-# python apply_filering.py data/syndata_fb_train_manifest.json
+dataset_config:
+  dataset_name: combined_data
+  data_dir: data/
+  to_filter_filename: combined_train_manifest.json
+
+# python apply_filering.py data/combined_train_manifest.json
 
 # dataset_config:
 #   dataset_name: syndata_fb
 #   data_dir: data/
 #   to_filter_filename: syndata_fb_train_manifest.json
   # Caption configs
+
+  # python apply_filering.py data/syndata_fb_train_manifest.json
   text:
     max_seq_length: 256
     tokenizer: berttokenizer # one of berttokenizer, cliptokenizer

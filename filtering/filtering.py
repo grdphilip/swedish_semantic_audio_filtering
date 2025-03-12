@@ -57,7 +57,7 @@ class FilteringFramework:
         self.similarities = None
 
     def collate_fn(self, batch):
-        input_audio, text_input_ids, text_attention_mask, idx = zip(*batch)
+        input_audio, text_input_ids, text_attention_mask, idx, sources = zip(*batch)
         
         original_mel_spectograms = self.feature_extractor(input_audio, sampling_rate=16000, max_length=480000, return_tensors="pt").input_features
 
@@ -81,7 +81,8 @@ class FilteringFramework:
                 "original_audio": original_audio, \
                 "text_input_ids": text_input_ids.to(self.device), \
                 "text_attention_mask": text_attention_mask.to(self.device),\
-                "idx": idx}
+                "idx": idx,\
+                "sources": sources}
     
     def load_dataset(self):
         dataset = AudioCaptionDataset(self.config.dataset_config, dataset_type="to_filter")
@@ -212,20 +213,41 @@ class FilteringFramework:
         self.get_similarities(audio_features, text_features)
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
-        print(self.similarities)
+
+        # Load sources
+        sources = [sample["source"] for sample in self.data_loader.dataset.samples]
+
+        # Unique sources and their colors
+        unique_sources = list(set(sources))
+        colors = plt.cm.get_cmap("tab10", len(unique_sources))  # Different color for each source
+        source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
 
         # Plot the distribution of similarity values
         plt.figure(figsize=(12, 8))
-        plt.hist(self.similarities, bins=30, color='skyblue', edgecolor='black', alpha=0.7)
-        plt.title('Distribution of Similarity Values', fontsize=16)
-        plt.xlabel('Similarity', fontsize=14)
-        plt.ylabel('Frequency', fontsize=14)
-        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        for src in unique_sources:
+            # Get similarity values for this source
+            source_similarities = [self.similarities[i] for i in range(len(sources)) if sources[i] == src]
+            
+            plt.hist(
+                source_similarities, 
+                bins=30, 
+                color=source_colors[src], 
+                edgecolor="black", 
+                alpha=0.7, 
+                label=src  # Label each source
+            )
+
+        plt.title("Distribution of Similarity Values", fontsize=16)
+        plt.xlabel("Similarity", fontsize=14)
+        plt.ylabel("Frequency", fontsize=14)
+        plt.grid(axis="y", linestyle="--", alpha=0.7)
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=12)
+        plt.legend(title="Source")  # Add legend for source categories
         plt.tight_layout()
         plt.savefig(save_path)
         plt.close()
+
         
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()
