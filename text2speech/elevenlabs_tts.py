@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from pprint import pprint
 import pandas as pd
-from text2speech.elevenlabs_tts_utils import generate_audio, get_path_list, extract_audio_numbers, find_disruption_pairs
+from elevenlabs_tts_utils import generate_audio, get_path_list, extract_audio_numbers, find_disruption_pairs
 from pydub import AudioSegment
 
 
@@ -28,7 +28,7 @@ utterances = pd.read_csv("../text_generation/dataset/utterances.csv")
 
 speakers = ["x0u3EW21dbrORJzOq1m9", "4xkUqaR9MYOJHoaC1Nak", "kkwvaJeTPw4KK0sBdyvD"]
 target_hours_per_speaker = 0
-seconds_needed_per_speaker = 15
+seconds_needed_per_speaker = 180
 generated_seconds_per_speaker = {speaker: 0 for speaker in speakers}
 start_index_for_next_speaker = 0
 
@@ -36,7 +36,7 @@ print(f"Generating {target_hours_per_speaker} hours of audio for each speaker...
 print("This may take a while...")
 
 
-generate_audio(speakers = speakers, target_hours_per_speaker = target_hours_per_speaker, seconds_needed_per_speaker = seconds_needed_per_speaker, generated_seconds_per_speaker = generated_seconds_per_speaker, start_index_for_next_speaker = start_index_for_next_speaker)
+generate_audio(speakers = speakers, target_hours_per_speaker = target_hours_per_speaker, seconds_needed_per_speaker = seconds_needed_per_speaker, generated_seconds_per_speaker = generated_seconds_per_speaker, start_index_for_next_speaker = start_index_for_next_speaker, utterances=utterances)
 path_list = get_path_list(path = "./elevenlabs_audio_files")
 numbers = extract_audio_numbers(path_list)
 disruption_pairs = find_disruption_pairs(sorted(numbers))

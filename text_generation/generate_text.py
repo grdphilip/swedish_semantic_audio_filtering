@@ -1,9 +1,9 @@
 from openai import OpenAI
 import pandas as pd
-from transformers import pipeline
+#from transformers import pipeline
 from dotenv import load_dotenv
 import os
-from transformers import AutoModel,AutoTokenizer
+#from transformers import AutoModel,AutoTokenizer
 
 # Load API key from .env file
 def get_credentials():
@@ -15,8 +15,8 @@ def get_credentials():
 
 api_key = get_credentials()
 client = OpenAI(api_key=api_key)
-tok = AutoTokenizer.from_pretrained('KBLab/bert-base-swedish-cased')
-model = AutoModel.from_pretrained('KBLab/bert-base-swedish-cased')
+# tok = AutoTokenizer.from_pretrained('KBLab/bert-base-swedish-cased')
+# model = AutoModel.from_pretrained('KBLab/bert-base-swedish-cased')
 
 # Generate multiple Swedish sentences
 def clean_sentence(sentence):
@@ -33,7 +33,7 @@ def generate_swedish_sentences(num_samples):
                 {"role": "system", "content": "You are a helpful assistant. Only return the Swedish sentence. Nothing more, nothing less."},
                 {
                     "role": "user",
-                    "content": "Generera en svensk mening innehållandes en eller flera entiteter (Person, Organization, Plats etc)."
+                    "content": "Generera en svensk mening innehållandes en eller flera entiteter (Person, Organization, Plats etc). Språket bör vara spontan-tal"
                 }
             ]
         )
@@ -45,7 +45,7 @@ def generate_swedish_sentences(num_samples):
         
     return sentences
 
-num_sentences = 20
+num_sentences = 100
 swedish_sentences = generate_swedish_sentences(num_sentences)
 
 # Function to extract entities using a Swedish NER model

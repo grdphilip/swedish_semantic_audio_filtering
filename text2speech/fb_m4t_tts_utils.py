@@ -37,6 +37,9 @@ def text_to_audio_and_save(text, speaker_id, index, save_path="./audio_files", s
     audio_data = model.generate(**processed_text, speaker_id=speaker_id,tgt_lang="swe")[0].cpu().numpy().squeeze()
     audio_filename = f"audio_speaker{speaker_id}_{index}.flac"
     full_path = os.path.join(save_path, audio_filename)
+    print(full_path)
+    print(audio_data)
+    
     sf.write(full_path, audio_data, sample_rate)
     print(f"Generated audio to {full_path}")
     return full_path
