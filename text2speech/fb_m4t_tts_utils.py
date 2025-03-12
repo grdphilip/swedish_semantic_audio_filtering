@@ -32,6 +32,9 @@ def convert_str_to_dict(string):
 
 def text_to_audio_and_save(text, speaker_id, index, save_path="./audio_files", sample_rate=16000):
     processed_text = processor(text, src_lang="swe", return_tensors="pt").to(device)
+    
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
     #The tensor format ensures that the data is compatible with the deep learning framework (like PyTorch or TensorFlow) 
     
     audio_data = model.generate(**processed_text, speaker_id=speaker_id,tgt_lang="swe")[0].cpu().numpy().squeeze()
