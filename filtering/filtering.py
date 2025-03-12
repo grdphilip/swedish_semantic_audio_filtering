@@ -248,7 +248,6 @@ class FilteringFramework:
         plt.savefig(save_path)
         plt.close()
 
-        # Prepare t-SNE visualization
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()
 
@@ -264,30 +263,26 @@ class FilteringFramework:
         audio_2d = tsne.fit_transform(audio_features)
         text_2d = tsne.fit_transform(text_features)
 
-        # Define marker styles for each source
-        markers = ['o', 's', 'D', '^', 'v', 'p', '*', 'X']  # Add more if needed
-        source_markers = {src: markers[i % len(markers)] for i, src in enumerate(unique_sources)}
-
         # Plot t-SNE results
         plt.figure(figsize=(8, 6))
-        for i, src in enumerate(unique_sources):
+        for src in unique_sources:
             # Get indices for this source
             idx = [j for j, s in enumerate(sources) if s == src]
             
-            # Plot text embeddings
+            # Plot text embeddings (X markers)
             plt.scatter(
                 text_2d[idx, 0], text_2d[idx, 1], 
                 color=source_colors[src], 
-                marker=source_markers[src], 
+                marker='x', 
                 label=f"Text - {src}", 
-                alpha=0.6, s=20
+                alpha=0.6, s=50
             )
 
-            # Plot audio embeddings
+            # Plot audio embeddings (O markers)
             plt.scatter(
                 audio_2d[idx, 0], audio_2d[idx, 1], 
                 color=source_colors[src], 
-                marker=source_markers[src], 
+                marker='o', 
                 label=f"Audio - {src}", 
                 edgecolors='black', 
                 alpha=0.6, s=20
