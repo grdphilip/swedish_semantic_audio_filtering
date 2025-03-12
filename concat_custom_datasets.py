@@ -1,5 +1,6 @@
 import json
 
+
 filepaths = [
     ("filtering/data/syndata_fb_train_manifest.json", "fb"),
     ("filtering/data/syndata_11labs_train_manifest.json", "elevenlabs"),
@@ -24,4 +25,6 @@ def concat_datasets(filepaths):
 
 # Example usage
 combined_data = concat_datasets(filepaths)
-print(combined_data)
+
+for entry in combined_data:
+    print(entry)
