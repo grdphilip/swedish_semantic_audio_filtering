@@ -162,6 +162,8 @@ class MusCALLTrainer(BaseTrainer):
 
             val_loss = self.train_epoch_val(self.val_loader)
             mlflow.log_metric("avg_val_loss", val_loss, step=epoch + 1)
+            
+            print(f"Epoch {epoch + 1}/{self.config.training.epochs} - Train Loss: {train_loss} - Val Loss: {val_loss}")
 
             checkpoint = {
                 "epoch": epoch + 1,

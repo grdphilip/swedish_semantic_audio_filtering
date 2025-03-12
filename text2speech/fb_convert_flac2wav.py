@@ -2,6 +2,9 @@ import os
 from pydub import AudioSegment
 import simpleaudio as sa
 
+# if running on sagemaker conda install ffmpeg=*=lgpl*
+
+
 # Convert FLAC to WAV
 def convert_flac_to_wav(flac_file_path, wav_file_path):
     audio = AudioSegment.from_file(flac_file_path, "flac")
