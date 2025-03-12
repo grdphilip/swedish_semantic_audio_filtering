@@ -37,7 +37,7 @@ class MusCALLTrainer(BaseTrainer):
 
     def collate_fn(self, batch):
         #_, input_audio, text_input_ids, original_audio, _, text_attention_mask, idx = zip(*batch)  
-        input_audio, text_input_ids, text_attention_mask, idx = zip(*batch)
+        input_audio, text_input_ids, text_attention_mask, idx, sources = zip(*batch)
         
         original_mel_spectograms = self.feature_extractor(input_audio, sampling_rate=16000, max_length=480000, return_tensors="pt").input_features
 
