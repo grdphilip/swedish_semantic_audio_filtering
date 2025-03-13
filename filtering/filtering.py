@@ -143,7 +143,6 @@ class FilteringFramework:
             with torch.no_grad():
                 audio_features = self.model.encode_audio(original_mel_spectograms)
                 text_features = self.model.encode_text(text_input_ids, text_attention_mask)
-                print(f"Audio features: {audio_features.shape}, Text features: {text_features.shape}")
 
             batch_size = audio_features.size(0)
             
