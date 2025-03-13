@@ -130,6 +130,9 @@ class FilteringFramework:
         total_samples_processed = 0
         
         for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
+            print(batch)
+            raise ValueError
+            
             original_mel_spectograms = batch["input_audio"].to(self.device)
             text_input_ids = batch["text_input_ids"].to(self.device)
             text_attention_mask = batch["text_attention_mask"].to(self.device)
