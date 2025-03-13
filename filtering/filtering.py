@@ -133,6 +133,8 @@ class FilteringFramework:
         
         audio_ids = []
         
+        print(self.model)
+        
         for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
             original_mel_spectograms = batch["input_audio"].to(self.device)
             text_input_ids = batch["text_input_ids"].to(self.device)
