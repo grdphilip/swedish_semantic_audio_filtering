@@ -130,7 +130,7 @@ class FilteringFramework:
         total_samples_processed = 0
         
         for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
-            print(batch)
+            print(f"Batch contains: {batch.keys()}")
             raise ValueError
             
             original_mel_spectograms = batch["input_audio"].to(self.device)
