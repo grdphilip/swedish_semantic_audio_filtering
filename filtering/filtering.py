@@ -231,8 +231,8 @@ class FilteringFramework:
         print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
         
         for i in range(5): 
-            sim = F.cosine_similarity(my_df[i]["audio_embedding"], my_df[i]["text_embedding"])# Check first 5 samples
-            print(sim)
+            sim = F.cosine_similarity(my_df[i]["audio_embedding"].unsqueeze(0), my_df[i]["text_embedding"].unsqueeze(0), dim=-1)# Check first 5 samples
+            print(f"Sample {i}: {my_df[i]['audio_id']}, {sim}")
 
         # Compute similarities
         self.get_similarities(audio_features, text_features)
