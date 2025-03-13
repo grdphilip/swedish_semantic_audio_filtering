@@ -131,6 +131,8 @@ class FilteringFramework:
 
         total_samples_processed = 0
         
+        audio_ids = []
+        
         for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
             original_mel_spectograms = batch["input_audio"].to(self.device)
             text_input_ids = batch["text_input_ids"].to(self.device)
@@ -141,6 +143,7 @@ class FilteringFramework:
                 text_features = self.model.encode_text(text_input_ids, text_attention_mask)
 
             batch_size = audio_features.size(0)
+            audio_ids.extend(batch["idx"])
 
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
@@ -150,6 +153,9 @@ class FilteringFramework:
         # Convert tensors to CPU before saving to avoid GPU-related issues in the pickle files
         audio_features = all_audio_features.cpu()
         text_features = all_text_features.cpu()
+
+        print(f"First few audio IDs: {audio_ids[:5]}")
+        print(f"First few text embeddings: {all_text_features[:5, :5]}")
 
         # Save the features to pickle files
         with open(audio_features_path, 'wb') as af_file:
@@ -219,10 +225,13 @@ class FilteringFramework:
         # Load sources
         sources = [sample["source"] for sample in self.data_loader.dataset.samples]
         
-        audio_pairs_with_embeddings = []
         
         for i in range(5):  # Check first 5 samples
             print(f"Sample {i}: {self.data_loader.dataset.samples[i]['audio_id']}, {audio_features[i][:5]}")
+            
+        for i, sample in enumerate(self.data_loader.dataset.samples):
+            assert sample["source"] == sources[i], f"Mismatch at index {i}"
+
 
         
 
