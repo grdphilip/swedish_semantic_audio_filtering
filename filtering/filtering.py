@@ -115,50 +115,50 @@ class FilteringFramework:
 
 
 
-    def extract_embeddings(self):
-        # Create a directory to save the features called "embeddings"
-        if not os.path.exists("embeddings"):
-            os.makedirs("embeddings")
+    #def extract_embeddings(self):
+        # # Create a directory to save the features called "embeddings"
+        # if not os.path.exists("embeddings"):
+        #     os.makedirs("embeddings")
 
-        audio_features_path = "embeddings/" + "synthetic_audio_features.pkl"
+        # audio_features_path = "embeddings/" + "synthetic_audio_features.pkl"
 
-        text_features_path = "embeddings/" + "synthetic_text_features.pkl"
+        # text_features_path = "embeddings/" + "synthetic_text_features.pkl"
         
-        dataset_size = len(self.data_loader.dataset)
+        # dataset_size = len(self.data_loader.dataset)
 
-        all_audio_features = torch.zeros(dataset_size, 512, device=self.device)
-        all_text_features = torch.zeros(dataset_size, 512, device=self.device)
+        # all_audio_features = torch.zeros(dataset_size, 512, device=self.device)
+        # all_text_features = torch.zeros(dataset_size, 512, device=self.device)
 
-        total_samples_processed = 0
+        # total_samples_processed = 0
         
-        for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
-            original_mel_spectograms = batch["input_audio"].to(self.device)
-            text_input_ids = batch["text_input_ids"].to(self.device)
-            text_attention_mask = batch["text_attention_mask"].to(self.device)
+        # for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
+        #     original_mel_spectograms = batch["input_audio"].to(self.device)
+        #     text_input_ids = batch["text_input_ids"].to(self.device)
+        #     text_attention_mask = batch["text_attention_mask"].to(self.device)
 
             
-            audio_features = self.model.encode_audio(original_mel_spectograms)
-            text_features = self.model.encode_text(text_input_ids, text_attention_mask)
+        #     audio_features = self.model.encode_audio(original_mel_spectograms)
+        #     text_features = self.model.encode_text(text_input_ids, text_attention_mask)
 
-            batch_size = audio_features.size(0)
+        #     batch_size = audio_features.size(0)
 
-            all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
-            all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
+        #     all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
+        #     all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
 
-            total_samples_processed += batch_size
+        #     total_samples_processed += batch_size
 
-        # Convert tensors to CPU before saving to avoid GPU-related issues in the pickle files
-        audio_features = all_audio_features.cpu()
-        text_features = all_text_features.cpu()
+        # # Convert tensors to CPU before saving to avoid GPU-related issues in the pickle files
+        # audio_features = all_audio_features.cpu()
+        # text_features = all_text_features.cpu()
 
-        # Save the features to pickle files
-        with open(audio_features_path, 'wb') as af_file:
-            pickle.dump(audio_features, af_file)
+        # # Save the features to pickle files
+        # with open(audio_features_path, 'wb') as af_file:
+        #     pickle.dump(audio_features, af_file)
 
-        with open(text_features_path, 'wb') as tf_file:
-            pickle.dump(text_features, tf_file)
+        # with open(text_features_path, 'wb') as tf_file:
+        #     pickle.dump(text_features, tf_file)
 
-        return audio_features, text_features
+        # return audio_features, text_features
 
 
     
@@ -206,72 +206,214 @@ class FilteringFramework:
         # Save the updated data manifest
 
 
+    # def run(self, data_manifest_path, stdev_threshold=3):
+    # # Extract embeddings
+    #     audio_features, text_features = self.extract_embeddings()
+    #     print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
+
+    #     # Compute similarities
+    #     self.get_similarities(audio_features, text_features)
+    #     save_dir = os.path.dirname(data_manifest_path)
+    #     save_path = os.path.join(save_dir, "dist_fb.png")
+
+    #     # Load sources
+    #     sources = [sample["source"] for sample in self.data_loader.dataset.samples]
+
+    #     # Unique sources and their colors
+    #     unique_sources = list(set(sources))
+    #     colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Use tab10 for distinct colors
+    #     source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
+
+    #     # Plot the distribution of similarity values
+    #     plt.figure(figsize=(12, 8))
+    #     for src in unique_sources:
+    #         # Get similarity values for this source
+    #         source_similarities = [self.similarities[i] for i in range(len(sources)) if sources[i] == src]
+            
+    #         plt.hist(
+    #             source_similarities, 
+    #             bins=30, 
+    #             color=source_colors[src], 
+    #             edgecolor="black", 
+    #             alpha=0.7, 
+    #             label=src  # Label each source
+    #         )
+
+    #     plt.title("Distribution of Similarity Values", fontsize=16)
+    #     plt.xlabel("Similarity", fontsize=14)
+    #     plt.ylabel("Frequency", fontsize=14)
+    #     plt.grid(axis="y", linestyle="--", alpha=0.7)
+    #     plt.xticks(fontsize=12)
+    #     plt.yticks(fontsize=12)
+    #     plt.legend(title="Source")  # Add legend for source categories
+    #     plt.tight_layout()
+    #     plt.savefig(save_path)
+    #     plt.close()
+
+    #     audio_features = audio_features.detach().cpu().numpy()
+    #     text_features = text_features.detach().cpu().numpy()
+
+    #     n_samples = min(len(audio_features), len(text_features))
+    #     perplexity_value = min(30, n_samples - 1)  # Ensure valid perplexity
+
+    #     if n_samples < 2:
+    #         print("Not enough samples for t-SNE visualization.")
+    #         return
+
+    #     # Apply t-SNE
+    #     tsne = TSNE(n_components=2, perplexity=perplexity_value, random_state=42)
+    #     audio_2d = tsne.fit_transform(audio_features)
+    #     text_2d = tsne.fit_transform(text_features)
+
+    #     # Plot t-SNE results
+    #     plt.figure(figsize=(8, 6))
+    #     for src in unique_sources:
+    #         # Get indices for this source
+    #         idx = [j for j, s in enumerate(sources) if s == src]
+            
+    #         # Plot text embeddings (X markers)
+    #         plt.scatter(
+    #             text_2d[idx, 0], text_2d[idx, 1], 
+    #             color=source_colors[src], 
+    #             marker='x', 
+    #             label=f"Text - {src}", 
+    #             alpha=0.6, s=20
+    #         )
+
+    #         # Plot audio embeddings (O markers)
+    #         plt.scatter(
+    #             audio_2d[idx, 0], audio_2d[idx, 1], 
+    #             color=source_colors[src], 
+    #             marker='o', 
+    #             label=f"Audio - {src}", 
+    #             edgecolors='black', 
+    #             alpha=0.6, s=20
+    #         )
+
+    #     plt.legend()
+    #     plt.title("t-SNE Visualization of Text & Audio Embeddings")
+
+    #     # Save to the same directory as `data_manifest_path`
+    #     save_path = os.path.join(save_dir, "tsne_plot.png")
+    #     plt.savefig(save_path)
+    #     print(f"t-SNE plot saved to: {save_path}")
+
+    #     plt.close()
+
+    def get_similarities(self, audio_features, text_features):
+        similarities = []
+        for idx, (audio_embed, text_embed) in enumerate(zip(audio_features, text_features)):
+            sim = compute_cosine_similarity(text_embed.unsqueeze(0), audio_embed.unsqueeze(0))
+            similarities.append(sim.item())
+            if idx < 5:
+                print(f"[DEBUG] Sample {idx}: similarity = {sim.item():.4f}")
+        similarities_tensor = torch.tensor(similarities)
+        self.similarities = similarities_tensor.numpy()
+        print(f"[DEBUG] Overall similarities -- mean: {self.similarities.mean():.4f}, "
+            f"std: {self.similarities.std():.4f}, min: {self.similarities.min():.4f}, "
+            f"max: {self.similarities.max():.4f}")
+
+
+    def extract_embeddings(self):
+        # Create directory for embeddings if it doesn't exist
+        if not os.path.exists("embeddings"):
+            os.makedirs("embeddings")
+        audio_features_path = os.path.join("embeddings", "synthetic_audio_features.pkl")
+        text_features_path = os.path.join("embeddings", "synthetic_text_features.pkl")
+        
+        dataset_size = len(self.data_loader.dataset)
+        all_audio_features = torch.zeros(dataset_size, 512, device=self.device)
+        all_text_features = torch.zeros(dataset_size, 512, device=self.device)
+        total_samples_processed = 0
+
+        for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
+            original_mel_spectograms = batch["input_audio"].to(self.device)
+            text_input_ids = batch["text_input_ids"].to(self.device)
+            text_attention_mask = batch["text_attention_mask"].to(self.device)
+
+            audio_features = self.model.encode_audio(original_mel_spectograms)
+            text_features = self.model.encode_text(text_input_ids, text_attention_mask)
+
+            batch_size = audio_features.size(0)
+            all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
+            all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
+            total_samples_processed += batch_size
+
+            if total_samples_processed % (batch_size * 5) == 0:
+                print(f"[DEBUG] Processed {total_samples_processed}/{dataset_size} samples")
+
+        # Move tensors to CPU and save embeddings
+        audio_features = all_audio_features.cpu()
+        text_features = all_text_features.cpu()
+        with open(audio_features_path, 'wb') as af_file:
+            pickle.dump(audio_features, af_file)
+        with open(text_features_path, 'wb') as tf_file:
+            pickle.dump(text_features, tf_file)
+        print(f"[DEBUG] Saved audio embeddings to {audio_features_path}")
+        print(f"[DEBUG] Saved text embeddings to {text_features_path}")
+
+        return audio_features, text_features
+
+
     def run(self, data_manifest_path, stdev_threshold=3):
-    # Extract embeddings
+        # Extract embeddings and print their shapes
         audio_features, text_features = self.extract_embeddings()
-        print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
+        print(f"[DEBUG] Embeddings extracted: audio_features {audio_features.shape}, text_features {text_features.shape}")
 
-        # Compute similarities
+        # Compute similarities with detailed logging
         self.get_similarities(audio_features, text_features)
+        
+        # Prepare plotting directory and source info
         save_dir = os.path.dirname(data_manifest_path)
-        save_path = os.path.join(save_dir, "dist_fb.png")
-
-        # Load sources
+        dist_plot_path = os.path.join(save_dir, "dist_fb.png")
         sources = [sample["source"] for sample in self.data_loader.dataset.samples]
-
-        # Unique sources and their colors
         unique_sources = list(set(sources))
-        colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Use tab10 for distinct colors
+        colors = plt.cm.get_cmap("viridis", len(unique_sources))
         source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
-
-        # Plot the distribution of similarity values
+        
+        # Plot distribution of similarity values per source with stats printed
         plt.figure(figsize=(12, 8))
         for src in unique_sources:
-            # Get similarity values for this source
             source_similarities = [self.similarities[i] for i in range(len(sources)) if sources[i] == src]
-            
             plt.hist(
                 source_similarities, 
                 bins=30, 
                 color=source_colors[src], 
                 edgecolor="black", 
                 alpha=0.7, 
-                label=src  # Label each source
+                label=src
             )
+            print(f"[DEBUG] Source '{src}': count = {len(source_similarities)}, "
+                f"mean similarity = {np.mean(source_similarities):.4f}")
 
         plt.title("Distribution of Similarity Values", fontsize=16)
         plt.xlabel("Similarity", fontsize=14)
         plt.ylabel("Frequency", fontsize=14)
         plt.grid(axis="y", linestyle="--", alpha=0.7)
-        plt.xticks(fontsize=12)
-        plt.yticks(fontsize=12)
-        plt.legend(title="Source")  # Add legend for source categories
+        plt.legend(title="Source")
         plt.tight_layout()
-        plt.savefig(save_path)
+        plt.savefig(dist_plot_path)
+        print(f"[DEBUG] Distribution plot saved to: {dist_plot_path}")
         plt.close()
 
-        audio_features = audio_features.detach().cpu().numpy()
-        text_features = text_features.detach().cpu().numpy()
-
-        n_samples = min(len(audio_features), len(text_features))
-        perplexity_value = min(30, n_samples - 1)  # Ensure valid perplexity
-
+        # Convert embeddings for t-SNE
+        audio_np = audio_features.detach().cpu().numpy()
+        text_np = text_features.detach().cpu().numpy()
+        n_samples = min(len(audio_np), len(text_np))
+        perplexity_value = min(30, n_samples - 1)
         if n_samples < 2:
-            print("Not enough samples for t-SNE visualization.")
+            print("[DEBUG] Not enough samples for t-SNE visualization.")
             return
 
-        # Apply t-SNE
+        # Apply t-SNE on both audio and text embeddings
         tsne = TSNE(n_components=2, perplexity=perplexity_value, random_state=42)
-        audio_2d = tsne.fit_transform(audio_features)
-        text_2d = tsne.fit_transform(text_features)
+        audio_2d = tsne.fit_transform(audio_np)
+        text_2d = tsne.fit_transform(text_np)
 
-        # Plot t-SNE results
+        # Plot t-SNE results with separate markers for text and audio
         plt.figure(figsize=(8, 6))
         for src in unique_sources:
-            # Get indices for this source
             idx = [j for j, s in enumerate(sources) if s == src]
-            
-            # Plot text embeddings (X markers)
             plt.scatter(
                 text_2d[idx, 0], text_2d[idx, 1], 
                 color=source_colors[src], 
@@ -279,8 +421,6 @@ class FilteringFramework:
                 label=f"Text - {src}", 
                 alpha=0.6, s=20
             )
-
-            # Plot audio embeddings (O markers)
             plt.scatter(
                 audio_2d[idx, 0], audio_2d[idx, 1], 
                 color=source_colors[src], 
@@ -292,10 +432,7 @@ class FilteringFramework:
 
         plt.legend()
         plt.title("t-SNE Visualization of Text & Audio Embeddings")
-
-        # Save to the same directory as `data_manifest_path`
-        save_path = os.path.join(save_dir, "tsne_plot.png")
-        plt.savefig(save_path)
-        print(f"t-SNE plot saved to: {save_path}")
-
+        tsne_plot_path = os.path.join(save_dir, "tsne_plot.png")
+        plt.savefig(tsne_plot_path)
+        print(f"[DEBUG] t-SNE plot saved to: {tsne_plot_path}")
         plt.close()
