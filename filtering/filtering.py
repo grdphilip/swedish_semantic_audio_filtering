@@ -167,7 +167,7 @@ class FilteringFramework:
         
         my_df = []
         for i in range(total_samples_processed):
-            my_df.append({"audio_id": audio_indicies[i].item(), "audio_embedding": audio_features[i].tolist(), "text_embedding": text_features[i].tolist()})
+            my_df.append({"audio_id": audio_indicies[i].item(), "audio_embedding": audio_features[i], "text_embedding": text_features[i]})
 
             
 
