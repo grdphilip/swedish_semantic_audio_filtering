@@ -44,13 +44,16 @@ class FilteringFramework:
         self.device = torch.device(self.config.training.device)
         self.feature_extractor = WhisperFeatureExtractor.from_pretrained("KBLab/kb-whisper-medium")
         self.checkpoint_path = pretrained_model_path
-        print(f"Loading model from: {self.checkpoint_path}")
+        
 
         self.path_to_model = os.path.join(
             self.config.env.experiments_dir,
             self.config.env.experiment_id,
             "best_model.pth.tar",
         )
+        
+        print(f"Loading model from: {self.path_to_model}")
+        raise ValueError
                 
         self.set_seed()
         self.load_dataset()
