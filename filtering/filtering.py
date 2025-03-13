@@ -116,57 +116,65 @@ class FilteringFramework:
 
 
     def extract_embeddings(self):
+        # Create a directory to save the features called "embeddings"
         if not os.path.exists("embeddings"):
             os.makedirs("embeddings")
 
-        embeddings_path = "embeddings/synthetic_embeddings.pkl"
+        audio_features_path = "embeddings/" + "synthetic_audio_features.pkl"
 
+        text_features_path = "embeddings/" + "synthetic_text_features.pkl"
+        
         dataset_size = len(self.data_loader.dataset)
 
         all_audio_features = torch.zeros(dataset_size, 512, device=self.device)
         all_text_features = torch.zeros(dataset_size, 512, device=self.device)
-        all_audio_ids = []
 
         total_samples_processed = 0
         
+        audios = []
+        
+        print(self.model)
+        
         for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
-            print(f"Batch contains: {batch.keys()}")
-            raise ValueError
-            
             original_mel_spectograms = batch["input_audio"].to(self.device)
             text_input_ids = batch["text_input_ids"].to(self.device)
             text_attention_mask = batch["text_attention_mask"].to(self.device)
-            batch_audio_ids = batch["audio_id"].cpu().tolist()
+            audio_pair_index = batch["idx"]
 
             with torch.no_grad():
                 audio_features = self.model.encode_audio(original_mel_spectograms)
                 text_features = self.model.encode_text(text_input_ids, text_attention_mask)
+                print(f"Audio features: {audio_features.shape}, Text features: {text_features.shape}")
 
             batch_size = audio_features.size(0)
+            audios.extend({audio_pair_index, audio_features, text_features})
 
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
-            all_audio_ids.extend(batch_audio_ids)
 
             total_samples_processed += batch_size
 
-        # Convert tensors to CPU
-        all_audio_features = all_audio_features.cpu()
-        all_text_features = all_text_features.cpu()
+        # Convert tensors to CPU before saving to avoid GPU-related issues in the pickle files
+        audio_features = all_audio_features.cpu()
+        text_features = all_text_features.cpu()
 
-        # Store everything in a single dictionary
-        embeddings_data = {
-            "audio_ids": all_audio_ids,
-            "audio_features": all_audio_features,
-            "text_features": all_text_features
-        }
+        print(f"Shapes of audio and text features: {len(audios)}, {audio_features.shape}, {text_features.shape}")
+        print(f"First few audio IDs: {audios[:5]}")
+        print(f"First few audio embeddings: {all_audio_features[:5, :5]}")
+        print(f"First few text embeddings: {all_text_features[:5, :5]}")
+        raise ValueError("Stop here")
 
-        # Save the embeddings dictionary
-        with open(embeddings_path, 'wb') as f:
-            pickle.dump(embeddings_data, f)
+        # Save the features to pickle files
+        with open(audio_features_path, 'wb') as af_file:
+            pickle.dump(audio_features, af_file)
 
-        return embeddings_data
+        with open(text_features_path, 'wb') as tf_file:
+            pickle.dump(text_features, tf_file)
 
+        return audio_features, text_features
+
+
+    
 
     def apply_filtering(self, synthetic_data_manifest, stdev_threshold):
         
@@ -210,39 +218,26 @@ class FilteringFramework:
         
         # Save the updated data manifest
 
-    def run(self, data_manifest_path, stdev_threshold=3):
-        # Load embeddings from a single file
-        embeddings_data = self.extract_embeddings()
-        audio_ids = embeddings_data["audio_ids"]
-        audio_features = embeddings_data["audio_features"]
-        text_features = embeddings_data["text_features"]
 
+    def run(self, data_manifest_path, stdev_threshold=3):
+    # Extract embeddings
+        audio_features, text_features = self.extract_embeddings()
         print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
-        
-        for audio_id, embedding_a, embedding_t in zip(audio_ids, audio_features, text_features):
-            print(audio_id, embedding_a, embedding_t)
-            break
-        
+
         # Compute similarities
-        #self.get_similarities(audio_features, text_features)
+        self.get_similarities(audio_features, text_features)
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
 
         # Load sources
         sources = [sample["source"] for sample in self.data_loader.dataset.samples]
-
-        audio_pairs_with_embeddings = []
-
+        
+        
+        for i in range(5):  # Check first 5 samples
+            print(f"Sample {i}: {self.data_loader.dataset.samples[i]['audio_id']}, {audio_features[i][:5]}")
+            
         for i, sample in enumerate(self.data_loader.dataset.samples):
-            assert audio_ids[i] == sample["audio_id"], f"Mismatch: {audio_ids[i]} != {sample['audio_id']} at index {i}"
-            audio_pairs_with_embeddings.append({
-                "audio_id": audio_ids[i],  
-                "source": sample["source"],  
-                "audio_embedding": audio_features[i],  
-                "text_embedding": text_features[i]
-            })
-
-        print()
+            assert sample["source"] == sources[i], f"Mismatch at index {i}"
 
 
         
