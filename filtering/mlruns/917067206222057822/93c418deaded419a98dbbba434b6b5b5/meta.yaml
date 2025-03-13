@@ -1,0 +1,15 @@
+artifact_uri: file:///home/ec2-user/SageMaker/swedish_semantic_audio_filtering/filtering/mlruns/917067206222057822/93c418deaded419a98dbbba434b6b5b5/artifacts
+end_time: 1741782493997
+entry_point_name: ''
+experiment_id: '917067206222057822'
+lifecycle_stage: active
+run_id: 93c418deaded419a98dbbba434b6b5b5
+run_name: industrious-grub-567
+run_uuid: 93c418deaded419a98dbbba434b6b5b5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741782489399
+status: 4
+tags: []
+user_id: ec2-user

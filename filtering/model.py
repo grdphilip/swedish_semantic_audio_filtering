@@ -13,13 +13,13 @@ def contrastive_loss(logits: torch.Tensor) -> torch.Tensor:
     return nn.functional.cross_entropy(logits, labels)
 
 def weighted_loss(logits, sentence_sim, k=0.01):
-    batch_size = logits.size(0)
-    mask = 1 - torch.eye(batch_size).to(device=logits.device)
+    batch_size = logits.size(0) # För det mesta 32
+    mask = 1 - torch.eye(batch_size).to(device=logits.device) # Skapar en mask som är 32x32 med 1or på diagonalen
 
-    sentence_sim = (sentence_sim * mask).mean(-1)
+    sentence_sim = (sentence_sim * mask).mean(-1) # Tar medelvärdet av sentence_sim längs sista axeln, vilket ger en vektor med 32 element, average similarity per sentence
 
-    normed_sim = sentence_sim / sentence_sim.sum()
-    weight = torch.exp(normed_sim / k)
+    normed_sim = sentence_sim / sentence_sim.sum() # Normaliserar sentence_sim genom att dela varje element med summan av alla element
+    weight = torch.exp(normed_sim / k) # Tar exponenten av varje element i normed_sim delat med temperaturen k
 
     labels = torch.arange(len(logits), device=logits.device)
     loss = weight * nn.functional.cross_entropy(logits, labels, reduction="none")

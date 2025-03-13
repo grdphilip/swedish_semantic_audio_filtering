@@ -1,7 +1,7 @@
  model_config: 
   model_name: muscall
   projection_dim: 512             # dimensionality of the multimodal projection layer
-  temperature: null
+  temperature: 0.01
   audio: 
     model: Whisper         # name of the audio backbone model (ModifiedResNet supported)
     hidden_size: 1024
