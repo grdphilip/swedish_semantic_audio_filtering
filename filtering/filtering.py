@@ -155,6 +155,7 @@ class FilteringFramework:
         text_features = all_text_features.cpu()
 
         print(f"First few audio IDs: {audio_ids[:5]}")
+        print(f"First few audio embeddings: {all_audio_features[:5, :5]}")
         print(f"First few text embeddings: {all_text_features[:5, :5]}")
 
         # Save the features to pickle files
