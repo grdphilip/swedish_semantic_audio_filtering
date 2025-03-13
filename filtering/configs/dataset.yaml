@@ -1,9 +1,9 @@
-dataset_config:
-  dataset_name: common_voice
-  data_dir: data/
-  train_filename: common_voice_train_manifest.json
-  val_filename: common_voice_val_manifest.json
-  to_filter_filename: common_voice_train_manifest.json
+# dataset_config:
+#   dataset_name: common_voice
+#   data_dir: data/
+#   train_filename: common_voice_train_manifest.json
+#   val_filename: common_voice_val_manifest.json
+#   to_filter_filename: common_voice_train_manifest.json
 
   #python apply_filering.py data/common_voice_train_manifest.json
 
@@ -21,10 +21,10 @@ dataset_config:
 
 # python apply_filering.py data/combined_train_manifest.json
 
-# dataset_config:
-#   dataset_name: syndata_fb
-#   data_dir: data/
-#   to_filter_filename: syndata_fb_train_manifest.json
+dataset_config:
+  dataset_name: syndata_fb
+  data_dir: data/
+  to_filter_filename: syndata_fb_train_manifest.json
   # Caption configs
 
   # python apply_filering.py data/syndata_fb_train_manifest.json
