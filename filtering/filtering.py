@@ -224,6 +224,10 @@ class FilteringFramework:
         self.get_similarities(audio_features, text_features)
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
+        
+        print("Min similarity:", self.similarities.min())
+        print("Max similarity:", self.similarities.max())
+        print("Mean similarity:", self.similarities.mean())
 
         # Load sources
         if "source" in self.data_loader.dataset.samples[0]:
@@ -264,6 +268,9 @@ class FilteringFramework:
         plt.tight_layout()
         plt.savefig(save_path)
         plt.close()
+        
+
+
 
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()
