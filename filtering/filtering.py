@@ -156,6 +156,7 @@ class FilteringFramework:
         audio_features = all_audio_features.cpu()
         text_features = all_text_features.cpu()
 
+        print(f"Shapes of audio and text features: {len(audio_ids)}, {audio_features.shape}, {text_features.shape}")
         print(f"First few audio IDs: {audio_ids[:5]}")
         print(f"First few audio embeddings: {all_audio_features[:5, :5]}")
         print(f"First few text embeddings: {all_text_features[:5, :5]}")
