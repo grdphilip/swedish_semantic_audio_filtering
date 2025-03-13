@@ -140,6 +140,8 @@ class FilteringFramework:
             text_input_ids = batch["text_input_ids"].to(self.device)
             text_attention_mask = batch["text_attention_mask"].to(self.device)
             audio_pair_index = batch["idx"]
+            
+            print(audio_pair_index)
 
             with torch.no_grad():
                 audio_features = self.model.encode_audio(original_mel_spectograms)
@@ -147,7 +149,7 @@ class FilteringFramework:
                 print(f"Audio features: {audio_features.shape}, Text features: {text_features.shape}")
 
             batch_size = audio_features.size(0)
-            audios.extend({audio_pair_index, audio_features, text_features})
+
 
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
