@@ -40,3 +40,9 @@ dataset_config:
     p_pitch_shift: 0.4
 
     
+
+# debug
+# Norsk omstart 
+# Se till så att det är rätt modell som laddas in
+# Se till så att den räknar ut cosine similarity mellan rätt ljud och textpar
+# Se till så att embeddings uppdateras korrekt - CHECK

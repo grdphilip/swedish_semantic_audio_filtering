@@ -99,7 +99,9 @@ class FilteringFramework:
 
     def load_model(self):
         self.model = MusCALL(self.config.model_config)
+        print(f"Loading model from: {self.checkpoint_path}")
         self.model.load_state_dict(torch.load(self.checkpoint_path), strict=False)
+        print(self.model)
         self.model.to(self.device)
         self.model.eval()
         
@@ -112,7 +114,7 @@ class FilteringFramework:
         torch.cuda.manual_seed_all(seed)
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
-
+        
 
 
     def extract_embeddings(self):
