@@ -151,7 +151,7 @@ class FilteringFramework:
             
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
-            all_audio_indicies[total_samples_processed:total_samples_processed + batch_size] = audio_pair_index
+            all_audio_indicies[total_samples_processed:total_samples_processed + batch_size] = torch.tensor(audio_pair_index, device=self.device)
 
             total_samples_processed += batch_size
             
