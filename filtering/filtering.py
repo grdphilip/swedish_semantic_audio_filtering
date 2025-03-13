@@ -100,7 +100,11 @@ class FilteringFramework:
     def load_model(self):
         self.model = MusCALL(self.config.model_config)
         print(f"Loading model from: {self.checkpoint_path}")
-        self.model.load_state_dict(torch.load(self.checkpoint_path), strict=False)
+        checkpoint = torch.load(self.checkpoint_path, map_location=self.device)
+        print(checkpoint["epoch"])
+        print(checkpoint.keys())
+        print(checkpoint["epoch"])
+        self.model.load_state_dict(checkpoint, strict=False)
         print(self.model)
         self.model.to(self.device)
         self.model.eval()
@@ -208,9 +212,13 @@ class FilteringFramework:
         return samples_to_delete
     
         
-    def get_similarities(self, audio_features, text_features):
-        similarities_tensor = compute_cosine_similarity(audio_features, text_features)
-        self.similarities = similarities_tensor.numpy() 
+    def get_similarities(self, audio_features, text_features):        
+        similarities = []
+        for embedding_audio, embedding_text in zip(audio_features, text_features):
+            similarities.append(compute_cosine_similarity(embedding_text.unsqueeze(0), embedding_audio.unsqueeze(0)))
+        
+        similarities_tensor = torch.tensor(similarities)
+        self.similarities = similarities_tensor.numpy()
         
         
         # Save the updated data manifest
@@ -225,9 +233,10 @@ class FilteringFramework:
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
         
-        print("Min similarity:", self.similarities.min())
-        print("Max similarity:", self.similarities.max())
-        print("Mean similarity:", self.similarities.mean())
+        print(f"Max similarity: {max(self.similarities)}")
+        print(f"Min similarity: {min(self.similarities)}")
+        print(f"Mean similarity: {np.mean(self.similarities)}")
+        
 
         # Load sources
         if "source" in self.data_loader.dataset.samples[0]:
@@ -268,9 +277,6 @@ class FilteringFramework:
         plt.tight_layout()
         plt.savefig(save_path)
         plt.close()
-        
-
-
 
         audio_features = audio_features.detach().cpu().numpy()
         text_features = text_features.detach().cpu().numpy()

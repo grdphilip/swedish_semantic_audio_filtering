@@ -43,8 +43,9 @@ dataset_config:
 
 # debug
 # Norsk omstart 
-# Se till så att det är rätt model path
-# Se till så att den räknar ut cosine similarity mellan rätt ljud och textpar
+# Se till så att det är rätt model path 
+# Se till så att den räknar ut cosine similarity mellan rätt ljud och textpar - CHECK
 # Se till så att embeddings uppdateras korrekt - CHECK
 # Unlucky seed - CHECK, icke 
 # Se till att modellen som laddas in sparats är rätt 
+

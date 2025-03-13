@@ -65,6 +65,7 @@ class MusCALL(nn.Module):
         if config.text.model == "TextTransformer":
             pretrained_model = config.text.pretrained
             self.textual_head = BertForSequenceClassification.from_pretrained(pretrained_model)
+            
             for param in self.textual_head.bert.encoder.parameters():
                 param.requires_grad = False
             for param in self.textual_head.bert.embeddings.parameters():
