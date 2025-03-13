@@ -16,8 +16,7 @@ from sklearn.manifold import TSNE
 
 def compute_cosine_similarity(audio_features, text_features):
     cosine_sim = F.cosine_similarity(text_features, audio_features, dim=-1)
-    cosine_sim_bounded = (1 + cosine_sim) / 2
-    return cosine_sim_bounded
+    return cosine_sim
 
 def load_embeddings():
     # Check if the embeddings files exist
@@ -245,12 +244,10 @@ class FilteringFramework:
         
         
         for i in range(5):  # Check first 5 samples
-            print(f"Sample {i}: {self.data_loader.dataset.samples[i]['audio_id']}, {audio_features[i][:5]}")
+            print(f"Sample {i}: {self.data_loader.dataset.samples[i]['audio_id']}, {audio_features[i][:5]}, {text_features[i][:5]}")
             
         for i, sample in enumerate(self.data_loader.dataset.samples):
             assert sample["source"] == sources[i], f"Mismatch at index {i}"
-
-
         
 
         # Unique sources and their colors
