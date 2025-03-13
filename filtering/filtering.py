@@ -131,6 +131,7 @@ class FilteringFramework:
 
         total_samples_processed = 0
         
+        my_df = []
         audios = []
         
         print(self.model)
@@ -149,8 +150,8 @@ class FilteringFramework:
                 print(f"Audio features: {audio_features.shape}, Text features: {text_features.shape}")
 
             batch_size = audio_features.size(0)
-
-
+            
+        
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
 
@@ -164,7 +165,11 @@ class FilteringFramework:
         print(f"First few audio IDs: {audios[:5]}")
         print(f"First few audio embeddings: {all_audio_features[:5, :5]}")
         print(f"First few text embeddings: {all_text_features[:5, :5]}")
-        raise ValueError("Stop here")
+        
+        print(len(total_samples_processed))
+        for i in range(len(total_samples_processed)):
+            my_df.append({"audio_id": i, "audio_embedding": audio_features[i], "text_embedding": text_features[i]})
+            
 
         # Save the features to pickle files
         with open(audio_features_path, 'wb') as af_file:
@@ -173,7 +178,7 @@ class FilteringFramework:
         with open(text_features_path, 'wb') as tf_file:
             pickle.dump(text_features, tf_file)
 
-        return audio_features, text_features
+        return audio_features, text_features, my_df
 
 
     
@@ -223,8 +228,10 @@ class FilteringFramework:
 
     def run(self, data_manifest_path, stdev_threshold=3):
     # Extract embeddings
-        audio_features, text_features = self.extract_embeddings()
+        audio_features, text_features, my_df = self.extract_embeddings()
         print(f"Embeddings extracted. {audio_features.shape}, {text_features.shape}")
+        
+        print(my_df[:5])
 
         # Compute similarities
         self.get_similarities(audio_features, text_features)
