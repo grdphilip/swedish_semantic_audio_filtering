@@ -128,19 +128,17 @@ class FilteringFramework:
 
         all_audio_features = torch.zeros(dataset_size, 512, device=self.device)
         all_text_features = torch.zeros(dataset_size, 512, device=self.device)
-        all_audio_indicies = torch.zeros(dataset_size, device=self.device)
+
 
         total_samples_processed = 0
-    
-        
+
         print(self.model)
         
         for batch in tqdm(self.data_loader, desc="Loading data", leave=False):
             original_mel_spectograms = batch["input_audio"].to(self.device)
             text_input_ids = batch["text_input_ids"].to(self.device)
             text_attention_mask = batch["text_attention_mask"].to(self.device)
-            audio_pair_index = batch["idx"]
-        
+            
 
             with torch.no_grad():
                 audio_features = self.model.encode_audio(original_mel_spectograms)
@@ -151,7 +149,7 @@ class FilteringFramework:
             
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
-            all_audio_indicies[total_samples_processed:total_samples_processed + batch_size] = torch.tensor(audio_pair_index, device=self.device)
+            
 
             total_samples_processed += batch_size
             
@@ -159,17 +157,12 @@ class FilteringFramework:
         # Convert tensors to CPU before saving to avoid GPU-related issues in the pickle files
         audio_features = all_audio_features.cpu()
         text_features = all_text_features.cpu()
-        audio_indicies = all_audio_indicies.cpu()
+    
 
         print(f"Total samples processed: {total_samples_processed}")
         print(f"First few audio embeddings: {all_audio_features[:5, :5]}")
         print(f"First few text embeddings: {all_text_features[:5, :5]}")
         
-        my_df = []
-        for i in range(total_samples_processed):
-            my_df.append({"audio_id": audio_indicies[i].item(), "audio_embedding": audio_features[i], "text_embedding": text_features[i]})
-
-            
 
         # Save the features to pickle files
         with open(audio_features_path, 'wb') as af_file:
@@ -178,7 +171,7 @@ class FilteringFramework:
         with open(text_features_path, 'wb') as tf_file:
             pickle.dump(text_features, tf_file)
 
-        return audio_features, text_features, my_df
+        return audio_features, text_features
 
 
     
