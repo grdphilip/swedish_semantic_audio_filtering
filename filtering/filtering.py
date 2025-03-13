@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
 def compute_cosine_similarity(audio_features, text_features):
-    cosine_sim = F.cosine_similarity(text_features, audio_features, dim=-1)
-    cosine_sim_bounded = (1 + cosine_sim) / 2
+    cosine_sim = F.cosine_similarity(text_features, audio_features, dim=1)  # No loop needed
+    cosine_sim_bounded = (1 + cosine_sim) / 2  # Bound to [0, 1]
     return cosine_sim_bounded
 
 def load_embeddings():
@@ -208,13 +208,9 @@ class FilteringFramework:
         return samples_to_delete
     
         
-    def get_similarities(self, audio_features, text_features):        
-        similarities = []
-        for embedding_audio, embedding_text in zip(audio_features, text_features):
-            similarities.append(compute_cosine_similarity(embedding_text.unsqueeze(0), embedding_audio.unsqueeze(0)))
-        
-        similarities_tensor = torch.tensor(similarities)
-        self.similarities = similarities_tensor.numpy()
+    def get_similarities(self, audio_features, text_features):
+        similarities_tensor = compute_cosine_similarity(audio_features, text_features)
+        self.similarities = similarities_tensor.numpy() 
         
         
         # Save the updated data manifest
