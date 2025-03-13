@@ -54,7 +54,7 @@ class FilteringFramework:
         
         print(f"Loading model from: {self.path_to_model}")
                 
-        self.set_seed()
+        #self.set_seed()
         self.load_dataset()
         self.load_model()
         self.similarities = None
@@ -107,13 +107,13 @@ class FilteringFramework:
         
         
 
-    def set_seed(self,seed=42):
-        torch.manual_seed(seed)
-        np.random.seed(seed)
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
+    # def set_seed(self,seed=42):
+    #     torch.manual_seed(seed)
+    #     np.random.seed(seed)
+    #     torch.cuda.manual_seed(seed)
+    #     torch.cuda.manual_seed_all(seed)
+    #     torch.backends.cudnn.deterministic = True
+    #     torch.backends.cudnn.benchmark = False
         
 
 
