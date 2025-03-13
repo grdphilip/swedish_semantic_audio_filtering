@@ -239,18 +239,18 @@ class FilteringFramework:
         
 
         # Load sources
-        if "source" in self.data_loader.dataset.samples[0]:
-            sources = [sample["source"] for sample in self.data_loader.dataset.samples]
-        else: 
-            sources = ["common_voice"]
+        # if "source" not in self.data_loader.dataset.samples[0]:
+        #     sources = [sample["source"] for sample in self.data_loader.dataset.samples]
+        # else: 
+        #     sources = ["common_voice"]
         
-        
+        sources=["common_voice"]
 
         #Unique sources and their colors
         unique_sources = list(set(sources))
         colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Use tab10 for distinct colors
         source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
-
+        print(len(self.similarities))
         # Plot the distribution of similarity values
         plt.figure(figsize=(12, 8))
         for src in unique_sources:
