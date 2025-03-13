@@ -128,11 +128,10 @@ class FilteringFramework:
 
         all_audio_features = torch.zeros(dataset_size, 512, device=self.device)
         all_text_features = torch.zeros(dataset_size, 512, device=self.device)
+        all_audio_indicies = torch.zeros(dataset_size, device=self.device)
 
         total_samples_processed = 0
-        
-        my_df = []
-        audios = []
+    
         
         print(self.model)
         
@@ -141,8 +140,7 @@ class FilteringFramework:
             text_input_ids = batch["text_input_ids"].to(self.device)
             text_attention_mask = batch["text_attention_mask"].to(self.device)
             audio_pair_index = batch["idx"]
-            
-            print(audio_pair_index)
+        
 
             with torch.no_grad():
                 audio_features = self.model.encode_audio(original_mel_spectograms)
@@ -151,24 +149,26 @@ class FilteringFramework:
 
             batch_size = audio_features.size(0)
             
-        
             all_audio_features[total_samples_processed:total_samples_processed + batch_size] = audio_features
             all_text_features[total_samples_processed:total_samples_processed + batch_size] = text_features
+            all_audio_indicies[total_samples_processed:total_samples_processed + batch_size] = audio_pair_index
 
             total_samples_processed += batch_size
+            
 
         # Convert tensors to CPU before saving to avoid GPU-related issues in the pickle files
         audio_features = all_audio_features.cpu()
         text_features = all_text_features.cpu()
+        audio_indicies = all_audio_indicies.cpu()
 
-        print(f"Shapes of audio and text features: {len(audios)}, {audio_features.shape}, {text_features.shape}")
-        print(f"First few audio IDs: {audios[:5]}")
+        print(f"Total samples processed: {total_samples_processed}")
         print(f"First few audio embeddings: {all_audio_features[:5, :5]}")
         print(f"First few text embeddings: {all_text_features[:5, :5]}")
         
-        print(len(total_samples_processed))
-        for i in range(len(total_samples_processed)):
-            my_df.append({"audio_id": i, "audio_embedding": audio_features[i], "text_embedding": text_features[i]})
+        my_df = []
+        for i in range(total_samples_processed):
+            my_df.append({"audio_id": audio_indicies[i].item(), "audio_embedding": audio_features[i].tolist(), "text_embedding": text_features[i].tolist()})
+
             
 
         # Save the features to pickle files
