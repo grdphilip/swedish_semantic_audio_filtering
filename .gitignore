@@ -2,7 +2,7 @@ filtering/data/
 filtering/embeddings/
 filtering/args/
 filtering/checkpoints/
-text_generation/entities/manual
+text_generation/entities/manual/bolagsverket_bulkfil.zip
 
 *.log
 data/

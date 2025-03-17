@@ -33,9 +33,6 @@ audio_path = ""
 with SoundFile(audio_path) as audio_file:
     waveform = torch.tensor(audio_file.read(dtype="float32")).to(device)
     
-
-
-
 with torch.no_grad():
     print(f"Waveform shape {waveform.shape}, text shape {text_tokens['input_ids'].shape}")
     audio_embedding = model.encode_audio(waveform)
