@@ -28,6 +28,7 @@ def generate_swedish_sentences(num_samples):
     sentences = []
     for _ in range(num_samples):
         completion = client.chat.completions.create(
+            temperature=1.0,
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant. Only return the Swedish sentence. Nothing more, nothing less."},
@@ -45,7 +46,7 @@ def generate_swedish_sentences(num_samples):
         
     return sentences
 
-num_sentences = 100
+num_sentences = 10
 swedish_sentences = generate_swedish_sentences(num_sentences)
 
 # Function to extract entities using a Swedish NER model

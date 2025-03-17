@@ -54,7 +54,7 @@ class FilteringFramework:
         
         print(f"Loading model from: {self.path_to_model}")
                 
-        #self.set_seed()
+        self.set_seed()
         self.load_dataset()
         self.load_model()
         self.similarities = None
@@ -111,13 +111,13 @@ class FilteringFramework:
         
         
 
-    # def set_seed(self,seed=42):
-    #     torch.manual_seed(seed)
-    #     np.random.seed(seed)
-    #     torch.cuda.manual_seed(seed)
-    #     torch.cuda.manual_seed_all(seed)
-    #     torch.backends.cudnn.deterministic = True
-    #     torch.backends.cudnn.benchmark = False
+    def set_seed(self,seed=42):
+        torch.manual_seed(seed)
+        np.random.seed(seed)
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
         
 
 
@@ -179,8 +179,6 @@ class FilteringFramework:
         return audio_features, text_features
 
 
-    
-
     def apply_filtering(self, synthetic_data_manifest, stdev_threshold):
         
         mean = np.mean(self.similarities)
@@ -197,7 +195,7 @@ class FilteringFramework:
         audio_durations = 0
         for i, sample in enumerate(synthetic_data_manifest):
             if i in outlier_indices:
-                samples_to_delete.append(sample['audio_id'])    
+                samples_to_delete.append({"id": sample['audio_id'], "path": sample['audio_path']})    
                 audio_path = sample['audio_path']
                 audio, sr = librosa.load(audio_path, sr=None)  # Load the audio file
                 duration = librosa.get_duration(y=audio, sr=sr)  # Get the duration in seconds
@@ -220,8 +218,6 @@ class FilteringFramework:
         similarities_tensor = torch.tensor(similarities)
         self.similarities = similarities_tensor.numpy()
         
-        
-        # Save the updated data manifest
 
 
     def run(self, data_manifest_path, stdev_threshold=3):
@@ -230,6 +226,10 @@ class FilteringFramework:
 
         # Compute similarities
         self.get_similarities(audio_features, text_features)
+        samples_to_delete = self.apply_filtering(data_manifest_path, stdev_threshold)
+        print(f"Total number of samples to delete: {len(samples_to_delete)}")
+        print(f"")
+        
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
         
@@ -253,6 +253,8 @@ class FilteringFramework:
         plt.yticks(fontsize=12)
         plt.tight_layout()
         plt.savefig(save_path)
+        
+        
         
         
         # sources=["common_voice"]
