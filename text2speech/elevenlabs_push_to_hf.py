@@ -51,7 +51,7 @@ def load_audio(audio_path):
 manifest = []
 
 for index, row in df.iterrows():
-    for speaker_id in ['audio_path_speaker_x0u3EW21dbrORJzOq1m9', 'audio_path_speaker_4xkUqaR9MYOJHoaC1Nak', 'audio_path_speaker_kkwvaJeTPw4KK0sBdyvD']:
+    for speaker_id in ['audio_path_speaker_aSLKtNoVBZlxQEMsnGL2', 'audio_path_speaker_7UMEOkIJdI4hjmR2SWNq', 'audio_path_speaker_fFe6F6cCl526GpIxiUxu']:
         if pd.notna(row[speaker_id]):
             audio_path = os.path.join(audio_folder_path, os.path.basename(row[speaker_id]))
             audio_path = audio_path.split('.wav')[0] + '.mp3'
