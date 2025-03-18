@@ -121,21 +121,21 @@ def clean_entities(raw_entities):
     cleaned_entities = []
 
     for entity_string in raw_entities:
-        # Remove surrounding quotes
-        entity_string = entity_string.strip('"')
+        # Fix double escaping issues by replacing `\\"` with `"`, then strip leading/trailing quotes
+        entity_string = entity_string.replace('\\"', '"').strip('"')
 
-        # Convert escaped sequences properly
+        # Convert JSON-like string to a Python list
         try:
-            # Use ast.literal_eval to safely parse the string as a Python list
-            entity_list = ast.literal_eval(entity_string)
-        except (ValueError, SyntaxError):
+            entity_list = json.loads(entity_string)
+        except json.JSONDecodeError:
             continue  # Skip invalid entries
-        
-        # Ensure the result is a list of cleaned strings
-        if isinstance(entity_list, list):
-            cleaned_entities.append([entity.strip() for entity in entity_list])
+
+        # Clean up Unicode escape sequences and split multi-word entities
+        cleaned_group = [re.sub(r'\\u[\dA-Fa-f]{4}', '', entity).strip().split() for entity in entity_list]
+        cleaned_entities.extend(cleaned_group)  # Add each group separately
 
     return cleaned_entities
+
 
 def calculate_and_store_metrics(references, candidates, transform_func, subset_name, results_df):
     """Calculate WER and CER, print and store the results in a DataFrame."""
