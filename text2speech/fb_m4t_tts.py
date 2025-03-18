@@ -21,7 +21,7 @@ print(capes)
 
 
 # The speakers to generate audio
-speakers =  [1,2,3,4,5,6,7,8,9]
+speakers =  [1, 5, 6, 7, 8]
 
 # The target number of hours per speaker
 target_hours_per_speaker = 0
