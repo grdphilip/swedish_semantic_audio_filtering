@@ -50,7 +50,7 @@ def main(args):
 
     # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
     
-    filenames = ["data/manifest_data/finetuning/syndata_11labs_train_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/syndata_11labs_train_manifest.json"]
     prints = ["TEST"]
 
     # Create dataloaders and corresponding dataframes
