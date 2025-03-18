@@ -135,8 +135,15 @@ def clean_entities(raw_entities):
 
     return cleaned_entities
 
-def calculate_entity_preciscion():
-    pass
+def calculate_entity_preciscion(normalized_cands, entities_ref):
+    entities_total = len(entities_ref)
+    correctly_identified_entities = 0
+    
+    print(normalized_cands)
+    print(entities_ref)
+    
+    raise ValueError("Implement the entity precision calculation")
+    
 
 
 def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df):
@@ -144,10 +151,8 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     # Normalize the references and candidates
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
-    print(normalized_refs)
-    print(normalized_cands)
-    entities_ref = [' '.join(transform_func(entity)[0]) for entity in entities]
-    print(entities_ref)
+    
+    calculate_entity_preciscion(normalized_cands, entities)
 
     # Calculate metrics
     wer_score = wer(normalized_refs, normalized_cands)
