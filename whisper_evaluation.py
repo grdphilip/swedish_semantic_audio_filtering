@@ -112,3 +112,5 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     main(args)
+
+# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small syndata_11labs_small 4
