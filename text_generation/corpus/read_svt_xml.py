@@ -9,7 +9,7 @@ nlp = pipeline("ner", model="KBLab/bert-base-swedish-cased-ner", tokenizer="KBLa
 
 # Define input/output files
 xml_file = "svt-2023.xml"
-csv_file = "sentences_entities_bert.csv"
+csv_file = "../dataset/utterances.csv"
 
 def clean_sentence(sentence: str) -> str:
     # Remove leading '-'
