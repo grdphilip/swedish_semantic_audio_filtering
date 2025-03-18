@@ -26,7 +26,7 @@ utterances = pd.read_csv("../text_generation/dataset/utterances.csv")
 # output_wav_path = "resampled_output.wav"
 # save_and_resample_audio(audio, output_mp3_path, output_wav_path)
 
-speakers = ["x0u3EW21dbrORJzOq1m9", "4xkUqaR9MYOJHoaC1Nak", "kkwvaJeTPw4KK0sBdyvD"]
+speakers = ["aSLKtNoVBZlxQEMsnGL2", "7UMEOkIJdI4hjmR2SWNq", "fFe6F6cCl526GpIxiUxu"]
 target_hours_per_speaker = 0
 seconds_needed_per_speaker = 180
 generated_seconds_per_speaker = {speaker: 0 for speaker in speakers}
