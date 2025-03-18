@@ -175,6 +175,7 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     
     entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities)
     print(len(missed_entities))
+    print(missed_entities)
 
     # Calculate metrics
     wer_score = wer(normalized_refs, normalized_cands)
