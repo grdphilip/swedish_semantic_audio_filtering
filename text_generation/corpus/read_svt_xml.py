@@ -127,7 +127,7 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
             elem.clear()
 
             count += 1
-            if count >= 50:  # Limit to 50 sentences for testing
+            if count >= 500:  # Limit to 50 sentences for testing
                 break
 
 print(f"✅ Processed first 50 sentences with BERT! Saved as {csv_file}.")
