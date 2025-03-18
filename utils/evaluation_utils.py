@@ -17,7 +17,6 @@ def create_dataloaders(filenames, batch_size, data_collator):
         # Read JSON file
         manifest_data = read_json_file(filename)
         print(manifest_data)
-        raise ValueError("Stop")
         # Create DataFrame
         df = pd.DataFrame(manifest_data)
         dataframes.append(df)
