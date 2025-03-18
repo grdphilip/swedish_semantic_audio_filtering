@@ -151,7 +151,7 @@ def calculate_total_entities(entities_ref):
             total_entities += 1
     return total_entities
 
-def calculate_entity_precision(normalized_cands, entities_ref):
+def calculate_entity_precision(normalized_cands, entities_ref, normalized):
     entities_total = calculate_total_entities(entities_ref)
     correctly_identified_entities = 0
     print(entities_total)   
@@ -160,6 +160,8 @@ def calculate_entity_precision(normalized_cands, entities_ref):
 
     for idx, val in enumerate(normalized_cands):
         for entity in entities_ref[idx]:
+            if normalized:
+                entity = entity.lower()
             if entity in val:
                 correctly_identified_entities += 1
                 break
@@ -175,13 +177,13 @@ def calculate_entity_precision(normalized_cands, entities_ref):
     
 
 
-def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df):
+def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df, normalized):
     """Calculate WER and CER, print and store the results in a DataFrame."""
     # Normalize the references and candidates
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     
-    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities)
+    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized)
     print(len(missed_entities))
     print(missed_entities)
 
