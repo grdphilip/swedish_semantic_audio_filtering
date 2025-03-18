@@ -46,7 +46,6 @@ Första gången på ett syntetiskt dataset
 Exakt strängmatchning / position? 
 Blir det inte skevt att utvärdera whisper på ett syntetiskt dataset och jämföra med samma dataset efter?
 Referensdatasetet måste ju nästan vara riktigt ljud
-
-
+En idé är att generera syntetiskt ljud med elevenlabs och använda 80 % för träning och 20% för utvärdering
 
 

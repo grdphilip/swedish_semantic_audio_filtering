@@ -40,15 +40,18 @@ def main(args):
     )
 
     # Define data files and subsets (you can customize these paths as per your setup)
-    filenames = [
-        'data/mls_manifest_processed.json',
-        'data/fleurs_manifest_processed.json',
-        'data/bracarense_manifest_processed.json',
-        'data/common_voice_manifest_processed.json',
-        'data/val_manifest_wps_processed.json'
-    ]
+    # filenames = [
+    #     'data/mls_manifest_processed.json',
+    #     'data/fleurs_manifest_processed.json',
+    #     'data/bracarense_manifest_processed.json',
+    #     'data/common_voice_manifest_processed.json',
+    #     'data/val_manifest_wps_processed.json'
+    # ]
 
-    prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
+    # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
+    
+    filenames = ["data/manifest_data/finetuning/syndata_11labs_train_manifest.json"]
+    prints = ["TEST"]
 
     # Create dataloaders and corresponding dataframes
     data_collator = DataCollatorSpeechSeq2SeqWithPadding(
@@ -75,8 +78,8 @@ def main(args):
     ])
 
     # Initialize DataFrames for results
-    normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER"])
-    not_normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER"])
+    normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITIES"])
+    not_normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITIES"])
 
     # Process each subset
     for dataloader, dataframe, subset_name in zip(dataloaders, dataframes, prints):
@@ -86,7 +89,7 @@ def main(args):
             candidates.extend(pipe(batch))
 
         # Get reference texts
-        references = dataframe['text'].to_list()
+        references = dataframe['sentence'].to_list()
 
         # Calculate and store normalized metrics
         normalized_results_df = calculate_and_store_metrics(references, candidates, normalize_transforms, subset_name, normalized_results_df)

@@ -119,10 +119,16 @@ def calculate_and_store_metrics(references, candidates, transform_func, subset_n
     # Normalize the references and candidates
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
+    print(normalized_refs)
+    print(normalized_cands)
+    entities_ref = [ref['entities'] for ref in references]
+    print(entities_ref)
 
     # Calculate metrics
     wer_score = wer(normalized_refs, normalized_cands)
     cer_score = cer(normalized_refs, normalized_cands)
+    print(wer_score)
+    print(cer_score)
 
     # Print results
     print(subset_name)
