@@ -94,6 +94,7 @@ def main(args):
         references = dataframe['text'].to_list()
         reference_entities = dataframe['entities'].to_list()
         # Clean entities
+        print(reference_)
         entities = clean_entities(reference_entities)
         print(references)
         print(entities)

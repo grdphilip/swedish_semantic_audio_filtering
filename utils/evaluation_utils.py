@@ -116,25 +116,34 @@ class MyDataset(Dataset):
         }
          # For safer literal evaluation
 
-def clean_entities(raw_entities):
-    cleaned_entities = []
 
-    for entity_string in raw_entities:
-        # Fix double escaping issues by replacing `\\"` with `"`, then strip leading/trailing quotes
-        entity_string = entity_string.replace('\\"', '"').strip('"')
+    def clean_entities(raw_entities):
+        cleaned_entities = []
 
-        # Convert JSON-like string to a Python list
-        try:
-            entity_list = json.loads(entity_string)
-        except json.JSONDecodeError:
-            continue  # Skip invalid entries
+        for entity_string in raw_entities:
+            # Fix double escaping issues by replacing `\\"` with `"`, then strip leading/trailing quotes
+            entity_string = entity_string.replace('\\"', '"').strip('"')
 
-        # Decode Unicode escape sequences properly and split entities into words
-        cleaned_group = [word for entity in entity_list for word in entity.encode().decode("unicode_escape").strip().split()]
-        
-        cleaned_entities.append(cleaned_group)  # Append the processed group
+            # Convert JSON-like string to a Python list
+            try:
+                entity_list = json.loads(entity_string)
+            except json.JSONDecodeError:
+                continue  # Skip invalid entries
 
-    return cleaned_entities
+            # Decode Unicode escape sequences properly and split entities into words
+            cleaned_group = []
+            for entity in entity_list:
+                # Decode Unicode escape sequences properly
+                decoded_entity = bytes(entity, "utf-8").decode("unicode_escape")
+
+                # Split the entity into individual words
+                words = decoded_entity.strip().split()
+                cleaned_group.extend(words)  # Add all words from the entity
+
+            cleaned_entities.append(cleaned_group)  # Append the processed group
+
+        return cleaned_entities
+
 
 def calculate_total_entities(entities_ref):
     total_entities = 0
