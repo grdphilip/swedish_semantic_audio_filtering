@@ -200,5 +200,5 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     print("Character Error Rate (CER):", cer_score)
 
     # Create a DataFrame with the results and append to the main results DataFrame
-    df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score]})
+    df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score], "ENTITY_ERROR_RATE": [entity_score]})
     return pd.concat([results_df, df], ignore_index=True)

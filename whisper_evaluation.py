@@ -80,8 +80,8 @@ def main(args):
     
 
     # Initialize DataFrames for results
-    normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITIES"])
-    not_normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITIES"])
+    normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITY_ERROR_RATE"])
+    not_normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITY_ERROR_RATE"])
 
     # Process each subset
     for dataloader, dataframe, subset_name in zip(dataloaders, dataframes, prints):
