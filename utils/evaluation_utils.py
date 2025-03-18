@@ -170,7 +170,7 @@ def calculate_entity_precision(normalized_cands, entities_ref):
     if entities_total == 0:
         return 0.0
     
-    return correctly_identified_entities / entities_total, missed_entities
+    return (entities_total - len(missed_entities)) / entities_total, missed_entities
 
     
 
