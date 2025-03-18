@@ -62,6 +62,56 @@ def convert_hf_dataset_to_manifest(dataset, dataset_type, manifest_filename):
 
             json.dump(manifest_line, manifest_f, ensure_ascii=False)
             manifest_f.write('\n')
+            
+def convert_hf_dataset_to_manifest_eval(dataset, dataset_type, manifest_filename):
+
+    manifest_filepath = os.path.join(MANIFEST_RAW_FOLDER, manifest_filename)
+
+    with open(manifest_filepath, 'w') as manifest_f:
+        for sample in tqdm(dataset, desc="Converting HF Dataset to Manifest: "):
+            if dataset_type == 'mls':
+                text_column = 'text'
+            elif dataset_type == 'common_voice':
+                text_column = 'sentence'
+            elif dataset_type == 'customized':
+                text_column = 'text'
+            else:
+                raise ValueError("Dataset type not supported")
+
+            transcription = sample[text_column]
+            audio = sample['audio']
+            audio_name = None
+            
+            #Ändra detta sen när allt funkar 
+            if audio['path'] == None:
+                audio_name = os.path.splitext(os.path.basename(sample['path']))[0]
+            else:
+                audio_name = os.path.splitext(os.path.basename(audio['path']))[0]
+            
+            wav_file_path = os.path.join(WAV_FOLDER, audio_name + '.wav')
+
+            if not os.path.exists(wav_file_path):
+                try:
+                    # Resample to 16kHz
+                    audio_resampled = librosa.resample(y=audio['array'], orig_sr=audio['sampling_rate'], target_sr=16000)
+                    sf.write(wav_file_path, audio_resampled, samplerate=16000)
+                    duration = librosa.get_duration(y=audio_resampled, sr=16000)
+                except sf.LibsndfileError as e:
+                    print("Error:", e, "with audio:", audio_name)
+                    continue
+            else:
+                duration = librosa.get_duration(filename=wav_file_path)
+
+            manifest_line = {
+                'audio_filepath': wav_file_path,
+                'text': transcription,
+                'duration': duration,
+                'entities': sample['entities'],
+                'metadata': sample['metadata']
+            }
+
+            json.dump(manifest_line, manifest_f, ensure_ascii=False)
+            manifest_f.write('\n')
 
 def read_manifest_file(filename, raw=True):
     if raw:
