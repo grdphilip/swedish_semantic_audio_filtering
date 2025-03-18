@@ -64,7 +64,9 @@ for index, row in df.iterrows():
                     'audio': {"array": audio_data, "sampling_rate": sr,'path': audio_path },  # This is actual audio data; for binary you may need to handle differently
                     'text': row['sentence'],
                     'duration': duration,
-                    'path': audio_path
+                    'path': audio_path,
+                    'entities': json.dumps(row['entities']),
+                    'metadata': json.dumps(row['metadata'])
     
                 })
                 
@@ -81,14 +83,20 @@ features = Features({
     "audio": Audio(sampling_rate=16000),
     "text": Value("string"),
     "duration": Value("float32"),
-    "path": Value("string")
+    "path": Value("string"),
+    "entities": Value("string"),
+    "metadata": Value("string")
+    
 })
 
 manifest_dict = {
     "audio": [item["audio"] for item in manifest],
     "text": [item["text"] for item in manifest],
     "duration": [item["duration"] for item in manifest],
-    "path": [item["path"] for item in manifest]
+    "path": [item["path"] for item in manifest],
+    "entities": [item["entities"] for item in manifest],
+    "metadata": [item["metadata"] for item in manifest]
+    
 }
 
 
