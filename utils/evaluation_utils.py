@@ -8,6 +8,7 @@ from torch.utils.data import Dataset
 import pandas as pd
 from jiwer import wer, cer
 import re
+import ast 
 
 def create_dataloaders(filenames, batch_size, data_collator):
     dataloaders = []
@@ -114,27 +115,27 @@ class MyDataset(Dataset):
         return {
             'input_features': data['audio_filepath']
         }
-        
+         # For safer literal evaluation
+
 def clean_entities(raw_entities):
     cleaned_entities = []
-    
+
     for entity_string in raw_entities:
-        # Decode escaped characters and remove extra quotes
+        # Remove surrounding quotes
         entity_string = entity_string.strip('"')
-        
-        # Convert JSON-like string to a Python list
+
+        # Convert escaped sequences properly
         try:
-            entity_list = json.loads(entity_string)
-        except json.JSONDecodeError:
+            # Use ast.literal_eval to safely parse the string as a Python list
+            entity_list = ast.literal_eval(entity_string)
+        except (ValueError, SyntaxError):
             continue  # Skip invalid entries
         
-        # Flatten and clean the entity names
-        cleaned_list = [re.sub(r'\\u\d+', '', entity).strip() for entity in entity_list]
-        cleaned_entities.append(cleaned_list)
-    
-    print(cleaned_entities)
-    return cleaned_entities
+        # Ensure the result is a list of cleaned strings
+        if isinstance(entity_list, list):
+            cleaned_entities.append([entity.strip() for entity in entity_list])
 
+    return cleaned_entities
 
 def calculate_and_store_metrics(references, candidates, transform_func, subset_name, results_df):
     """Calculate WER and CER, print and store the results in a DataFrame."""
