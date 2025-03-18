@@ -101,7 +101,7 @@ def main(args):
         normalized_results_df = calculate_and_store_metrics(references, candidates, entities, normalize_transforms, subset_name, normalized_results_df)
 
         # Calculate and store non-normalized metrics
-        not_normalized_results_df = calculate_and_store_metrics(references, candidates,entities, not_normalize_transforms, subset_name, not_normalized_results_df)
+        #not_normalized_results_df = calculate_and_store_metrics(references, candidates,entities, not_normalize_transforms, subset_name, not_normalized_results_df)
 
     # Save results to CSV files
     normalized_results_df.to_csv(f"results/normalized_results_{save_name}.csv", index=False)
