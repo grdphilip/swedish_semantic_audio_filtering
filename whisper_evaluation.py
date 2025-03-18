@@ -97,6 +97,8 @@ def main(args):
         # Clean entities
         entities = clean_entities(reference_entities)
         print(entities)
+        
+        raise ValueError
 
         # Calculate and store normalized metrics
         normalized_results_df = calculate_and_store_metrics(references, candidates, normalize_transforms, subset_name, normalized_results_df)

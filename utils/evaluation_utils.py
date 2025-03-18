@@ -132,6 +132,7 @@ def clean_entities(raw_entities):
         cleaned_list = [re.sub(r'\\u\d+', '', entity).strip() for entity in entity_list]
         cleaned_entities.append(cleaned_list)
     
+    print(cleaned_entities)
     return cleaned_entities
 
 
