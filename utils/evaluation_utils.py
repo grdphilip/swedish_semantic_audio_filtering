@@ -121,7 +121,7 @@ def clean_entities(raw_entities):
     cleaned_entities = []
 
     for entity_string in raw_entities:
-        # Fix double escaping issues by replacing `\\"` with `"`, then strip leading/trailing quotes
+        # Remove extra escaping, and strip any leading/trailing quotes
         entity_string = entity_string.replace('\\"', '"').strip('"')
 
         # Convert JSON-like string to a Python list
@@ -130,15 +130,14 @@ def clean_entities(raw_entities):
         except json.JSONDecodeError:
             continue  # Skip invalid entries
 
-        # Decode Unicode escape sequences properly and split entities into words
         cleaned_group = []
         for entity in entity_list:
-            # Decode Unicode escape sequences properly
-            decoded_entity = bytes(entity, "utf-8").decode("unicode_escape")
+            # We directly decode the entity from the loaded JSON data to handle unicode escapes correctly
+            decoded_entity = entity.encode('utf-8').decode('utf-8')
 
             # Split the entity into individual words
             words = decoded_entity.strip().split()
-            cleaned_group.extend(words)  # Add all words from the entity
+            cleaned_group.extend(words)
 
         cleaned_entities.append(cleaned_group)  # Append the processed group
 
