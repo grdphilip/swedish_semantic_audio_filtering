@@ -94,11 +94,9 @@ def main(args):
         references = dataframe['text'].to_list()
         print(references)
         reference_entities = dataframe['entities'].to_list()
-        print(reference_entities)
         # Clean entities
-        reference_entities = clean_entities(reference_entities)
-        print(reference_entities)
-        raise ValueError
+        clean_entities = clean_entities(reference_entities)
+        print(clean_entities)
 
         # Calculate and store normalized metrics
         normalized_results_df = calculate_and_store_metrics(references, candidates, normalize_transforms, subset_name, normalized_results_df)
