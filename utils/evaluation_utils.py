@@ -18,7 +18,6 @@ def create_dataloaders(filenames, batch_size, data_collator):
     for filename in filenames:
         # Read JSON file
         manifest_data = read_json_file(filename)
-        print(manifest_data)
         # Create DataFrame
         df = pd.DataFrame(manifest_data)
         dataframes.append(df)
@@ -136,15 +135,18 @@ def clean_entities(raw_entities):
 
     return cleaned_entities
 
+def calculate_entity_preciscion():
+    pass
 
-def calculate_and_store_metrics(references, candidates, transform_func, subset_name, results_df):
+
+def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df):
     """Calculate WER and CER, print and store the results in a DataFrame."""
     # Normalize the references and candidates
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     print(normalized_refs)
     print(normalized_cands)
-    entities_ref = [ref['entities'] for ref in references]
+    entities_ref = [' '.join(transform_func(entity)[0]) for entity in entities]
     print(entities_ref)
 
     # Calculate metrics
