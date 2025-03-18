@@ -129,20 +129,34 @@ def clean_entities(raw_entities):
         except json.JSONDecodeError:
             continue  # Skip invalid entries
 
-        # Clean up Unicode escape sequences and split multi-word entities
-        cleaned_group = [re.sub(r'\\u[\dA-Fa-f]{4}', '', entity).strip().split() for entity in entity_list]
-        cleaned_entities.extend(cleaned_group)  # Add each group separately
+        # Decode Unicode escape sequences properly and split entities into words
+        cleaned_group = [word for entity in entity_list for word in entity.encode().decode("unicode_escape").strip().split()]
+        
+        cleaned_entities.append(cleaned_group)  # Append the processed group
 
     return cleaned_entities
 
-def calculate_entity_preciscion(normalized_cands, entities_ref):
+def calculate_entity_precision(normalized_cands, entities_ref):
     entities_total = len(entities_ref)
     correctly_identified_entities = 0
-    
+
+    # Convert reference entities to a set for fast lookup (lowercased)
+    entities_ref_set = {tuple(entity.lower() for entity in entity_group) for entity_group in entities_ref}
+
+    # Count correctly identified entities
+    for entity_group in normalized_cands:
+        lowercased_entity_group = tuple(entity.lower() for entity in entity_group)
+        if lowercased_entity_group in entities_ref_set:
+            correctly_identified_entities += 1
+
     print(len(normalized_cands))
     print(len(entities_ref))
-    
-    raise ValueError("Implement the entity precision calculation")
+
+    if entities_total == 0:
+        return 0.0  # Avoid division by zero
+
+    precision = correctly_identified_entities / entities_total
+    return precision
     
 
 
@@ -152,13 +166,14 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     
-    calculate_entity_preciscion(normalized_cands, entities)
+    entity_score = calculate_entity_precision(normalized_cands, entities)
 
     # Calculate metrics
     wer_score = wer(normalized_refs, normalized_cands)
     cer_score = cer(normalized_refs, normalized_cands)
-    print(wer_score)
-    print(cer_score)
+    print(f"entity_score {entity_score}")
+    print(f"wer_score {wer_score}") 
+    print(f"cer_score {cer_score}")
 
     # Print results
     print(subset_name)
