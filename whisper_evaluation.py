@@ -89,7 +89,8 @@ def main(args):
             candidates.extend(pipe(batch))
 
         # Get reference texts
-        references = dataframe['sentence'].to_list()
+        references = dataframe['text'].to_list()
+        print(references)
 
         # Calculate and store normalized metrics
         normalized_results_df = calculate_and_store_metrics(references, candidates, normalize_transforms, subset_name, normalized_results_df)
