@@ -139,17 +139,22 @@ def clean_entities(raw_entities):
 def calculate_entity_precision(normalized_cands, entities_ref):
     entities_total = len(entities_ref)
     correctly_identified_entities = 0
+    
+    missed_entities = []    
 
     for idx, val in enumerate(normalized_cands):
         for entity in entities_ref[idx]:
             if entity in val:
                 correctly_identified_entities += 1
                 break
+            else:
+                missed_entities.append({"entity": entity, "candidate": val})    
+                
             
     if entities_total == 0:
         return 0.0
     
-    return correctly_identified_entities / entities_total
+    return correctly_identified_entities / entities_total, missed_entities
 
     
 
@@ -160,7 +165,8 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     
-    entity_score = calculate_entity_precision(normalized_cands, entities)
+    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities)
+    print(missed_entities)
 
     # Calculate metrics
     wer_score = wer(normalized_refs, normalized_cands)
