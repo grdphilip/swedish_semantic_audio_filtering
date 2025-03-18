@@ -136,9 +136,17 @@ def clean_entities(raw_entities):
 
     return cleaned_entities
 
+def calculate_total_entities(entities_ref):
+    total_entities = 0
+    for entities in entities_ref:
+        for entity in entities:
+            total_entities += 1
+    return total_entities
+
 def calculate_entity_precision(normalized_cands, entities_ref):
-    entities_total = len(entities_ref)
+    entities_total = calculate_total_entities(entities_ref)
     correctly_identified_entities = 0
+    print(entities_total)   
     
     missed_entities = []    
 
