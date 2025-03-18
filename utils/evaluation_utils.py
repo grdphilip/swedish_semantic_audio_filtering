@@ -139,8 +139,8 @@ def calculate_entity_preciscion(normalized_cands, entities_ref):
     entities_total = len(entities_ref)
     correctly_identified_entities = 0
     
-    print(normalized_cands)
-    print(entities_ref)
+    print(len(normalized_cands))
+    print(len(entities_ref))
     
     raise ValueError("Implement the entity precision calculation")
     
