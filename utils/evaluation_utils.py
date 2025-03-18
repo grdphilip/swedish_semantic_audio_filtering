@@ -150,8 +150,8 @@ def calculate_entity_precision(normalized_cands, entities_ref):
     # Count correctly identified entities
     for entity_group in normalized_cands:
         # Convert each entity group to lowercase
-        lowercased_entity_group = tuple(entity.lower() for entity in entity_group)
-
+        
+        lowercased_entity_group = entity_group      
         # Print for debugging
         print(f"Checking entity group: {entity_group}")
         print(f"Lowercased entity group: {lowercased_entity_group}")
