@@ -140,36 +140,16 @@ def calculate_entity_precision(normalized_cands, entities_ref):
     entities_total = len(entities_ref)
     correctly_identified_entities = 0
 
-    # Convert reference entities to a set for fast lookup (lowercased)
-    entities_ref_set = {tuple(entity.lower() for entity in entity_group) for entity_group in entities_ref}
-
-    # Print the reference set for debugging
-    print("Entities Reference Set (Lowercased):")
-    print(entities_ref_set)
-
-    # Count correctly identified entities
-    for entity_group in normalized_cands:
-        # Convert each entity group to lowercase
-        
-        lowercased_entity_group = entity_group      
-        # Print for debugging
-        print(f"Checking entity group: {entity_group}")
-        print(f"Lowercased entity group: {lowercased_entity_group}")
-
-        if lowercased_entity_group in entities_ref_set:
-            correctly_identified_entities += 1
-            print(f"Correctly identified: {lowercased_entity_group}")
-        else:
-            print(f"Not identified: {lowercased_entity_group}")
-
-    print(f"\nTotal Entities in Reference: {entities_total}")
-    print(f"Correctly Identified Entities: {correctly_identified_entities}")
-
+    for idx, val in enumerate(normalized_cands):
+        for entity in entities_ref[idx]:
+            if entity in val:
+                correctly_identified_entities += 1
+                break
+            
     if entities_total == 0:
-        return 0.0  # Avoid division by zero
-
-    precision = correctly_identified_entities / entities_total
-    return precision
+        return 0.0
+    
+    return correctly_identified_entities / entities_total
 
     
 
