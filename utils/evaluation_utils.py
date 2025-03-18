@@ -113,6 +113,25 @@ class MyDataset(Dataset):
         return {
             'input_features': data['audio_filepath']
         }
+        
+def clean_entities(raw_entities):
+    cleaned_entities = []
+    
+    for entity_string in raw_entities:
+        # Decode escaped characters and remove extra quotes
+        entity_string = entity_string.strip('"')
+        
+        # Convert JSON-like string to a Python list
+        try:
+            entity_list = json.loads(entity_string)
+        except json.JSONDecodeError:
+            continue  # Skip invalid entries
+        
+        # Flatten and clean the entity names
+        cleaned_list = [re.sub(r'\\u\d+', '', entity).strip() for entity in entity_list]
+        cleaned_entities.append(cleaned_list)
+    
+    return cleaned_entities
 
 
 def calculate_and_store_metrics(references, candidates, transform_func, subset_name, results_df):

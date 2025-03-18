@@ -3,7 +3,7 @@ import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 from datasets import load_dataset
 from jiwer import Compose, RemoveEmptyStrings, ToLowerCase, RemoveMultipleSpaces, Strip, RemovePunctuation, ReduceToListOfListOfWords
-from utils.evaluation_utils import create_dataloaders, DataCollatorSpeechSeq2SeqWithPadding, calculate_and_store_metrics
+from utils.evaluation_utils import create_dataloaders, DataCollatorSpeechSeq2SeqWithPadding, calculate_and_store_metrics, clean_entities
 from tqdm import tqdm
 import pandas as pd
 
@@ -76,6 +76,8 @@ def main(args):
         Strip(),
         ReduceToListOfListOfWords(),
     ])
+    
+    
 
     # Initialize DataFrames for results
     normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITIES"])
@@ -92,6 +94,9 @@ def main(args):
         references = dataframe['text'].to_list()
         print(references)
         reference_entities = dataframe['entities'].to_list()
+        print(reference_entities)
+        # Clean entities
+        reference_entities = clean_entities(reference_entities)
         print(reference_entities)
         raise ValueError
 
