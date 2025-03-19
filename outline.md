@@ -36,7 +36,7 @@ TODO:
 3. Facebook ljud-datasetet / 
 4. Utvärdera whisper på 
 
-
+- Byt ut entiteten {x} i denna mening till {y}
 # Whisper finetuning
 
 
@@ -46,6 +46,31 @@ Första gången på ett syntetiskt dataset
 Exakt strängmatchning / position? 
 Blir det inte skevt att utvärdera whisper på ett syntetiskt dataset och jämföra med samma dataset efter?
 Referensdatasetet måste ju nästan vara riktigt ljud
-En idé är att generera syntetiskt ljud med elevenlabs och använda 80 % för träning och 20% för utvärdering
+
+1. En idé är att generera syntetiskt ljud med elevenlabs och använda 80 % för träning och 20% för utvärdering
+- Försöka vikta detta för att träningsdatan och utvärderingen skall innehålla samma entiteter men olika meningar
+
+Går det att utvärdera ENTITETER på NST? I och med att dem bara har utvärderat på WER.
+- Ett extra steg som kan bli fel - Extraherade entiteter kan vara fel
+- Återigen problemet med text-generering
+
+Annars 
+- Hitta ett dataset med riktigt ljud som innehåller entiteter som whisper inte är tränad på
+- Utvärdera på dem entiteterna 
+- Syntetisera meningar med dem entiteterna 
+
+
+Pipeline: 
+1. Kör NST, Commonvoice och Fleurs igenom KBLabs entitetsmodell, behåll endast de med entiteter // Evaluerar KB på test eller allt? Farhåga: Fel entiteter
+2. Evaluera på entity score
+3. Behåll en lista på entiterna som de ej sätter.
+4. Gå igenom nyhets-korpuset med GPT och listan - Byt ut entiteten {x} i denna mening till {y}, möjligt att man behöver gruppera efter entitetstyp
+5. Skapa ljud via elevenlabs
+6. Dra detta genom filtreringsmodellen
+7. Ta bort dåliga syntetiska ljud och text par
+8. Fine-tunea whisper på de nya meningarna
+9. Kör evalueringen igen 
+
+
 
 

@@ -122,3 +122,38 @@ if __name__ == "__main__":
     main(args)
 
 # python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small syndata_11labs_small 4
+
+#normalized
+# entity_score 0.9597701149425287
+# wer_score 0.051224944320712694
+# cer_score 0.015815370196813495
+
+#not normalized
+# entity_score 0.9540229885057471
+# wer_score 0.19481429572529782
+# cer_score 0.03455004591368228
+
+# python whisper_evaluation.py KBLab/kb-whisper-medium KBLab/kb-whisper-medium syndata_11labs_medium 4
+
+#normalized
+# entity_score 0.9655172413793104
+# wer_score 0.0400890868596882
+# cer_score 0.012769447047797563
+
+#not normalized
+# entity_score 0.9425287356321839
+# wer_score 0.1920112123335669
+# cer_score 0.03213957759412305
+
+# python whisper_evaluation.py KBLab/kb-whisper-large KBLab/kb-whisper-large syndata_11labs_medium 4
+
+#normalized
+# entity_score 0.9712643678160919
+# wer_score 0.042316258351893093
+# cer_score 0.009840674789128397
+
+#not normalized
+
+# entity_score 0.9655172413793104
+# wer_score 0.18990889978976874
+# cer_score 0.02835169880624426

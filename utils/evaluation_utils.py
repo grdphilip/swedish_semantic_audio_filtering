@@ -152,6 +152,8 @@ def calculate_total_entities(entities_ref):
     return total_entities
 
 def calculate_entity_precision(normalized_cands, entities_ref, normalized):
+    # Kan det finnas någon mening med att kolla CER inne i entiteten
+    # Exempel: Jwan - Jovan / Jwan - Jowan, Jakob - Jacob
     entities_total = calculate_total_entities(entities_ref)
     correctly_identified_entities = 0
     print(entities_total)   
@@ -174,8 +176,6 @@ def calculate_entity_precision(normalized_cands, entities_ref, normalized):
     return (entities_total - len(missed_entities)) / entities_total, missed_entities
 
     
-
-
 def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df, normalized):
     """Calculate WER and CER, print and store the results in a DataFrame."""
     # Normalize the references and candidates
@@ -201,3 +201,4 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     # Create a DataFrame with the results and append to the main results DataFrame
     df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score], "ENTITY_ACCURACY": [entity_score]})
     return pd.concat([results_df, df], ignore_index=True)
+
