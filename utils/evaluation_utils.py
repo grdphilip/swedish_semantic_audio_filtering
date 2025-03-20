@@ -148,7 +148,7 @@ def calculate_total_entities(entities_ref):
             total_entities += 1
     return total_entities
 
-def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, normalized):
+def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, metadata, normalized):
     # Kan det finnas någon mening med att kolla CER inne i entiteten
     # Exempel: Jwan - Jovan / Jwan - Jowan, Jakob - Jacob
     entities_total = calculate_total_entities(entities_ref)
@@ -158,13 +158,13 @@ def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, 
     missed_entities = []    
 
     for idx, val in enumerate(normalized_cands):
-        for entity in entities_ref[idx]:
+        for i, entity in enumerate(entities_ref[idx]):
             if normalized:
                 entity = entity.lower()
             if entity in val:
                 correctly_identified_entities += 1
             else:
-                missed_entities.append({"entity": entity, "candidate": val, "ground_truth": normalized_refs[idx]})    
+                missed_entities.append({"entity": entity, "candidate": val, "ground_truth": normalized_refs[idx], "type": metadata[idx]['entity_type'][i]})    
                 
             
     if entities_total == 0:
@@ -174,13 +174,13 @@ def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, 
     
 
     
-def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df, normalized):
+def calculate_and_store_metrics(references, candidates, entities, metadata, transform_func, subset_name, results_df, normalized):
     """Calculate WER and CER, print and store the results in a DataFrame."""
     # Normalize the references and candidates
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     
-    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized_refs ,normalized)
+    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized_refs, metadata, normalized)
     print(len(missed_entities))
     print(missed_entities)
 

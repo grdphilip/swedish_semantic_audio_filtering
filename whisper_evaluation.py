@@ -95,6 +95,8 @@ def main(args):
         # Get reference texts
         references = dataframe['text'].to_list()
         reference_entities = dataframe['entities'].to_list()
+        metadata = dataframe['metadata'].to_list()
+        
         # Clean entities
         print(reference_entities)
         #entities = clean_entities(reference_entities)
@@ -102,10 +104,10 @@ def main(args):
         #print(entities)
 
         # Calculate and store normalized metrics
-        normalized_results_df, missed_entities_df_norm = calculate_and_store_metrics(references, candidates, reference_entities, normalize_transforms, subset_name, normalized_results_df, normalized=True)
+        normalized_results_df, missed_entities_df_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, normalize_transforms, subset_name, normalized_results_df, normalized=True)
 
         # Calculate and store non-normalized metrics
-        not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
+        not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
 
     # Save results to CSV files
     normalized_results_df.to_csv(f"results/normalized_results_{save_name}.csv", index=False)
