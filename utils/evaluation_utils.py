@@ -197,5 +197,6 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
 
     # Create a DataFrame with the results and append to the main results DataFrame
     df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score], "ENTITY_ACCURACY": [entity_score]})
-    return pd.concat([results_df, df], ignore_index=True)
+    missed_entities_df = pd.DataFrame(missed_entities)
+    return pd.concat([results_df, df], ignore_index=True), missed_entities_df
 

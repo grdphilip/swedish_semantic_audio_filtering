@@ -102,14 +102,16 @@ def main(args):
         #print(entities)
 
         # Calculate and store normalized metrics
-        normalized_results_df = calculate_and_store_metrics(references, candidates, reference_entities, normalize_transforms, subset_name, normalized_results_df, normalized=True)
+        normalized_results_df, missed_entities_df_norm = calculate_and_store_metrics(references, candidates, reference_entities, normalize_transforms, subset_name, normalized_results_df, normalized=True)
 
         # Calculate and store non-normalized metrics
-        not_normalized_results_df = calculate_and_store_metrics(references, candidates, reference_entities, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
+        not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
 
     # Save results to CSV files
     normalized_results_df.to_csv(f"results/normalized_results_{save_name}.csv", index=False)
     not_normalized_results_df.to_csv(f"results/not_normalized_results_{save_name}.csv", index=False)
+    missed_entities_df_norm.to_csv(f"results/missed_entities_norm_{save_name}.csv", index=False)
+    missed_entities_df_not_norm.to_csv(f"results/missed_entities_not_norm_{save_name}.csv", index=False)
 
 if __name__ == "__main__":
     
