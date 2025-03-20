@@ -87,7 +87,7 @@ def group_entities(tokens):
         grouped_entities.append(current_entity)
         metadata.append({"entity": current_entity, "entity_type": current_label})
 
-    return grouped_entities
+    return grouped_entities, metadata
 
 
 # Open CSV file for writing
