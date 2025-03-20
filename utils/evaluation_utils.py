@@ -134,10 +134,7 @@ def clean_entities(raw_entities):
         for entity in entity_list:
             # We directly decode the entity from the loaded JSON data to handle unicode escapes correctly
             decoded_entity = entity.encode('utf-8').decode('utf-8')
-
-            # Split the entity into individual words
-            words = decoded_entity.strip().split()
-            cleaned_group.extend(words)
+            cleaned_group.extend(decoded_entity.strip()) 
 
         cleaned_entities.append(cleaned_group)  # Append the processed group
 
