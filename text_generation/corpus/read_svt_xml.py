@@ -99,6 +99,10 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
     context = ET.iterparse(xml_file, events=("start", "end"))
     count = 0
 
+    # Get total number of sentences for progress tracking
+    total_sentences = sum(1 for event, elem in ET.iterparse(xml_file, events=("end",)) if elem.tag == "sentence")
+    progress_interval = total_sentences // 10
+
     for event, elem in context:
         if event == "end" and elem.tag == "sentence":
             # Extract sentence text
@@ -129,5 +133,12 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
 
             # Free memory
             elem.clear()
+            
+            count += 1
 
-print(f"✅ Processed first 50 sentences with BERT! Saved as {csv_file}.")
+            # Print progress every 10%
+            if count % progress_interval == 0:
+                print(f"Progress: {count / total_sentences * 100:.0f}%")
+
+print(f"✅ Processed sentences with BERT! Saved as {csv_file}.")
+
