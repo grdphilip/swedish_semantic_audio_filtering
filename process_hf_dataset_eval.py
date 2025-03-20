@@ -57,4 +57,5 @@ if __name__ == "__main__":
     main(args)
 
     #python process_hf_dataset_eval.py grdphilip/elevenlabs_syndata default train customized syndata_11labs_eval_manifest.json 
+    # python process_hf_dataset_eval.py grdphilip/fleurs_swedish_with_entities_corrected default train customized cv_swedish_with_entities_eval_manifest.json 
 

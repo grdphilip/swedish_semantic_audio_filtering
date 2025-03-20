@@ -50,7 +50,9 @@ def main(args):
 
     # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
     
-    filenames = ["data/manifest_data/finetuning/raw/syndata_11labs_eval_manifest.json"]
+    #"data/manifest_data/finetuning/raw/fleurs_with_swedish_entities_eval_manifest.json"
+    filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
+    
     prints = ["TEST"]
 
     # Create dataloaders and corresponding dataframes
@@ -121,7 +123,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(args)
 
-# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small syndata_11labs_small 4
+# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small entities_benchmark_cv_small 4
 
 #normalized
 # entity_score 0.9597701149425287
