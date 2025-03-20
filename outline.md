@@ -72,5 +72,18 @@ Pipeline:
 9. Kör evalueringen igen 
 
 
+Att få gjort idag: ✅
+Få till felfri entity extraction från CV och Fluers ✅
+Kör igenom hela dataseten och lägg upp på huggingface ✅
+Rätta eventuella fel i entiteterna genom en LLM
+Evaluera whisper på dataseten och få ut en lista på alla entiteter som inte sitter med tillhörande entitetstyp
+Få till scriptet som byter ut entiteterna i svt-meningarna
+Starta syntetiseringen av den nya svt datan // Intressanta är hur meningar man genererar per entitet
+
+Att få gjort den här veckan:
+Fine-tunea whisper på det nya datasetet
+Utvärdera på entiteterna från commonvoice och fleurs
+
+
 
 
