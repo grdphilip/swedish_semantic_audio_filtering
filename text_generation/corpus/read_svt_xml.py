@@ -40,6 +40,7 @@ def group_entities(tokens):
     3. Ensure subword tokens (starting with '##') are correctly merged only if they belong to the same entity type.
     """
     grouped_entities = []
+    metadata = []
     current_entity = ""
     current_label = None
     previous_end = -1  # Tracks end position of the last processed token
@@ -60,6 +61,7 @@ def group_entities(tokens):
                 # Treat subword as a new entity if it doesn't match the current entity type
                 if current_entity and current_label in ["PER", "ORG", "LOC", "EVN"]:
                     grouped_entities.append(current_entity)
+                    metadata.append({"entity": current_entity, "entity_type": current_label})
                 current_entity = word[2:]  # Start new entity from subword
                 current_label = label
         else:
@@ -70,6 +72,7 @@ def group_entities(tokens):
                 # Add the previous entity to the list before starting a new one
                 if current_label in ["PER", "ORG", "LOC", "EVN"]:
                     grouped_entities.append(current_entity)
+                    metadata.append({"entity": current_entity, "entity_type": current_label})
                 current_entity = word  # Start new entity
                 current_label = label
             else:
@@ -82,6 +85,7 @@ def group_entities(tokens):
     # Append the last entity if valid
     if current_entity and current_label in ["PER", "ORG", "LOC", "EVN"]:
         grouped_entities.append(current_entity)
+        metadata.append({"entity": current_entity, "entity_type": current_label})
 
     return grouped_entities
 
@@ -109,7 +113,7 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
             tokens = nlp(sentence)
 
             # Process the tokens to handle subword grouping
-            grouped_entities = group_entities(tokens)
+            grouped_entities, metadata = group_entities(tokens)
 
             # Only write if there are entities to write
             if len(grouped_entities) > 0:
@@ -119,7 +123,7 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
 
             # Write to CSV
             sentence = clean_sentence(sentence)
-            metadata = [{"source": "SVT"}]
+        
             row = [sentence, all_entities_str, metadata]
             writer.writerow(row)
 
@@ -127,7 +131,7 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
             elem.clear()
 
             count += 1
-            if count >= 500:  # Limit to 50 sentences for testing
+            if count >= 50:  # Limit to 50 sentences for testing
                 break
 
 print(f"✅ Processed first 50 sentences with BERT! Saved as {csv_file}.")
