@@ -148,7 +148,7 @@ def calculate_total_entities(entities_ref):
             total_entities += 1
     return total_entities
 
-def calculate_entity_precision(normalized_cands, entities_ref, normalized):
+def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, normalized):
     # Kan det finnas någon mening med att kolla CER inne i entiteten
     # Exempel: Jwan - Jovan / Jwan - Jowan, Jakob - Jacob
     entities_total = calculate_total_entities(entities_ref)
@@ -164,13 +164,14 @@ def calculate_entity_precision(normalized_cands, entities_ref, normalized):
             if entity in val:
                 correctly_identified_entities += 1
             else:
-                missed_entities.append({"entity": entity, "candidate": val})    
+                missed_entities.append({"entity": entity, "candidate": val, "ground_truth": normalized_refs[idx]})    
                 
             
     if entities_total == 0:
         return 0.0
     
     return (entities_total - len(missed_entities)) / entities_total, missed_entities
+    
 
     
 def calculate_and_store_metrics(references, candidates, entities, transform_func, subset_name, results_df, normalized):
@@ -179,7 +180,7 @@ def calculate_and_store_metrics(references, candidates, entities, transform_func
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     
-    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized)
+    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized_refs ,normalized)
     print(len(missed_entities))
     print(missed_entities)
 
