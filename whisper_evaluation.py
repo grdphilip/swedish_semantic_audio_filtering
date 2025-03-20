@@ -97,15 +97,15 @@ def main(args):
         reference_entities = dataframe['entities'].to_list()
         # Clean entities
         print(reference_entities)
-        entities = clean_entities(reference_entities)
+        #entities = clean_entities(reference_entities)
         print(references)
-        print(entities)
+        #print(entities)
 
         # Calculate and store normalized metrics
-        normalized_results_df = calculate_and_store_metrics(references, candidates, entities, normalize_transforms, subset_name, normalized_results_df, normalized=True)
+        normalized_results_df = calculate_and_store_metrics(references, candidates, reference_entities, normalize_transforms, subset_name, normalized_results_df, normalized=True)
 
         # Calculate and store non-normalized metrics
-        not_normalized_results_df = calculate_and_store_metrics(references, candidates,entities, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
+        not_normalized_results_df = calculate_and_store_metrics(references, candidates, reference_entities, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
 
     # Save results to CSV files
     normalized_results_df.to_csv(f"results/normalized_results_{save_name}.csv", index=False)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(args)
 
-# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small entities_benchmark_cv_small 4
+# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small entities_benchmark_cv_small 32
 
 #normalized
 # entity_score 0.9597701149425287
