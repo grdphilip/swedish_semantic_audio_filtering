@@ -101,7 +101,10 @@ with open(csv_file, "w", encoding="utf-8", newline="") as f:
 
     # Get total number of sentences for progress tracking
     total_sentences = sum(1 for event, elem in ET.iterparse(xml_file, events=("end",)) if elem.tag == "sentence")
+
     progress_interval = total_sentences // 10
+    
+    print(f"Processing {total_sentences} sentences...")
 
     for event, elem in context:
         if event == "end" and elem.tag == "sentence":
