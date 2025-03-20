@@ -51,7 +51,7 @@ def main(args):
     # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
     
     #"data/manifest_data/finetuning/raw/fleurs_with_swedish_entities_eval_manifest.json"
-    filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
     
     prints = ["TEST"]
 
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(args)
 
-# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small entities_benchmark_cv_small 32
+# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small entities_benchmark_fleurs_small 32
 
 #normalized
 # entity_score 0.9597701149425287
