@@ -60,7 +60,7 @@ class AudioCaptionDataset(Dataset):
             self.audio_ids = [i["audio_id"] for i in self.samples]
             self.captions = [i["caption"].strip() for i in self.samples]
             self.audio_paths = [i["audio_path"] for i in self.samples]
-            self.sources = [i["source"] for i in self.samples] 
+            self.sources = ["11labs" for i in self.samples] 
             
 
     def _build_tokenizer(self):
