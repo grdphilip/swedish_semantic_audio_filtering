@@ -17,11 +17,14 @@ def main(args):
     # Torch configuration
     device = "cuda" if torch.cuda.is_available() else "cpu"
     torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+    checkpoint_path = "/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/checkpoint-471/model.safetensors"
 
     # Load model and processor
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
         pretrained_model, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
     )
+    
+    model.load_state_dict(torch.load(checkpoint_path, map_location=device))
     model.to(device)
 
     processor = AutoProcessor.from_pretrained(base_model)
