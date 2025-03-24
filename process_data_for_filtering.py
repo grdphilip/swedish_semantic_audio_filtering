@@ -28,5 +28,5 @@ if __name__ == "__main__":
     
     main(args)
     
-#python process_data_for_filtering.py common_voice_test_manifest.json ./
+#python process_data_for_filtering.py syn11labs_train_manifest.json ./
 
