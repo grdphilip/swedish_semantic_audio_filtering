@@ -1,6 +1,6 @@
 import json
 
-path = "filtering/data/yn11labs_train_manifest.json"
+path = "filtering/data/syn11labs_train_manifest.json"
 source = "11labs"
 
 filepaths = [
