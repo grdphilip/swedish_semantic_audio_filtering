@@ -228,7 +228,6 @@ class FilteringFramework:
         self.get_similarities(audio_features, text_features)
         samples_to_delete = self.apply_filtering(data_manifest_path, stdev_threshold)
         print(f"Total number of samples to delete: {len(samples_to_delete)}")
-        print(f"")
         
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
@@ -237,106 +236,86 @@ class FilteringFramework:
         print(f"Min similarity: {min(self.similarities)}")
         print(f"Mean similarity: {np.mean(self.similarities)}")
         
+        sources=["11labs"]
 
-        # Load sources
-        # if "source" not in self.data_loader.dataset.samples[0]:
-        #     sources = [sample["source"] for sample in self.data_loader.dataset.samples]
-        # else: 
-        #     sources = ["common_voice"]
-        
-        plt.hist(self.similarities, bins=30, color="blue", edgecolor="black", alpha=0.7)
+        #Unique sources and their colors
+        unique_sources = list(set(sources))
+        colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Use tab10 for distinct colors
+        source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
+        print(len(self.similarities))
+        # Plot the distribution of similarity values
+        plt.figure(figsize=(12, 8))
+        for src in unique_sources:
+            # Get similarity values for this source
+            source_similarities = [self.similarities[i] for i in range(len(sources)) if sources[i] == src]
+            
+            
+            plt.hist(
+                source_similarities, 
+                bins=30, 
+                color=source_colors[src], 
+                edgecolor="black", 
+                alpha=0.7, 
+                label=src  # Label each source
+            )
+
         plt.title("Distribution of Similarity Values", fontsize=16)
         plt.xlabel("Similarity", fontsize=14)
         plt.ylabel("Frequency", fontsize=14)
         plt.grid(axis="y", linestyle="--", alpha=0.7)
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=12)
+        plt.legend(title="Source")  # Add legend for source categories
         plt.tight_layout()
         plt.savefig(save_path)
-        
-        
-        
-        
-        # sources=["common_voice"]
+        plt.close()
 
-        # #Unique sources and their colors
-        # unique_sources = list(set(sources))
-        # colors = plt.cm.get_cmap("viridis", len(unique_sources))  # Use tab10 for distinct colors
-        # source_colors = {src: colors(i) for i, src in enumerate(unique_sources)}
-        # print(len(self.similarities))
-        # # Plot the distribution of similarity values
-        # plt.figure(figsize=(12, 8))
-        # for src in unique_sources:
-        #     # Get similarity values for this source
-        #     source_similarities = [self.similarities[i] for i in range(len(sources)) if sources[i] == src]
+        audio_features = audio_features.detach().cpu().numpy()
+        text_features = text_features.detach().cpu().numpy()
+
+        n_samples = min(len(audio_features), len(text_features))
+        perplexity_value = min(30, n_samples - 1)  # Ensure valid perplexity
+
+        if n_samples < 2:
+            print("Not enough samples for t-SNE visualization.")
+            return
+
+        # Apply t-SNE
+        tsne = TSNE(n_components=2, perplexity=perplexity_value, random_state=42)
+        audio_2d = tsne.fit_transform(audio_features)
+        text_2d = tsne.fit_transform(text_features)
+
+        # Plot t-SNE results
+        plt.figure(figsize=(8, 6))
+        for src in unique_sources:
+            # Get indices for this source
+            idx = [j for j, s in enumerate(sources) if s == src]
             
-            
-        #     plt.hist(
-        #         source_similarities, 
-        #         bins=30, 
-        #         color=source_colors[src], 
-        #         edgecolor="black", 
-        #         alpha=0.7, 
-        #         label=src  # Label each source
-        #     )
+            # Plot text embeddings (X markers)
+            plt.scatter(
+                text_2d[idx, 0], text_2d[idx, 1], 
+                color=source_colors[src], 
+                marker='x', 
+                label=f"Text - {src}", 
+                alpha=0.6, s=20
+            )
 
-        # plt.title("Distribution of Similarity Values", fontsize=16)
-        # plt.xlabel("Similarity", fontsize=14)
-        # plt.ylabel("Frequency", fontsize=14)
-        # plt.grid(axis="y", linestyle="--", alpha=0.7)
-        # plt.xticks(fontsize=12)
-        # plt.yticks(fontsize=12)
-        # plt.legend(title="Source")  # Add legend for source categories
-        # plt.tight_layout()
-        # plt.savefig(save_path)
-        # plt.close()
+            # Plot audio embeddings (O markers)
+            plt.scatter(
+                audio_2d[idx, 0], audio_2d[idx, 1], 
+                color=source_colors[src], 
+                marker='o', 
+                label=f"Audio - {src}", 
+                edgecolors='black', 
+                alpha=0.6, s=20
+            )
 
-        # audio_features = audio_features.detach().cpu().numpy()
-        # text_features = text_features.detach().cpu().numpy()
+        plt.legend()
+        plt.title("t-SNE Visualization of Text & Audio Embeddings")
 
-        # n_samples = min(len(audio_features), len(text_features))
-        # perplexity_value = min(30, n_samples - 1)  # Ensure valid perplexity
+        # Save to the same directory as `data_manifest_path`
+        save_path = os.path.join(save_dir, "tsne_plot.png")
+        plt.savefig(save_path)
+        print(f"t-SNE plot saved to: {save_path}")
 
-        # if n_samples < 2:
-        #     print("Not enough samples for t-SNE visualization.")
-        #     return
-
-        # # Apply t-SNE
-        # tsne = TSNE(n_components=2, perplexity=perplexity_value, random_state=42)
-        # audio_2d = tsne.fit_transform(audio_features)
-        # text_2d = tsne.fit_transform(text_features)
-
-        # # Plot t-SNE results
-        # plt.figure(figsize=(8, 6))
-        # for src in unique_sources:
-        #     # Get indices for this source
-        #     idx = [j for j, s in enumerate(sources) if s == src]
-            
-        #     # Plot text embeddings (X markers)
-        #     plt.scatter(
-        #         text_2d[idx, 0], text_2d[idx, 1], 
-        #         color=source_colors[src], 
-        #         marker='x', 
-        #         label=f"Text - {src}", 
-        #         alpha=0.6, s=20
-        #     )
-
-        #     # Plot audio embeddings (O markers)
-        #     plt.scatter(
-        #         audio_2d[idx, 0], audio_2d[idx, 1], 
-        #         color=source_colors[src], 
-        #         marker='o', 
-        #         label=f"Audio - {src}", 
-        #         edgecolors='black', 
-        #         alpha=0.6, s=20
-        #     )
-
-        # plt.legend()
-        # plt.title("t-SNE Visualization of Text & Audio Embeddings")
-
-        # # Save to the same directory as `data_manifest_path`
-        # save_path = os.path.join(save_dir, "tsne_plot.png")
-        # plt.savefig(save_path)
-        # print(f"t-SNE plot saved to: {save_path}")
-
-        # plt.close()
+        plt.close()
