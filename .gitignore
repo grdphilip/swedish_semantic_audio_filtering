@@ -4,6 +4,7 @@ filtering/args/
 filtering/checkpoints/
 text_generation/entities/manual/bolagsverket_bulkfil.zip
 text_generation/corpus/svt-2023.xml
+*.safetensors
 
 *.log
 data/

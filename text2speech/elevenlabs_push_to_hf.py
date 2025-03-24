@@ -48,31 +48,37 @@ def load_audio(audio_path):
 
 # Process each row and collect data
 #speakers = ["x0u3EW21dbrORJzOq1m9", "4xkUqaR9MYOJHoaC1Nak", "kkwvaJeTPw4KK0sBdyvD"]
+
 manifest = []
+total_duration = 0.0
 
 for index, row in df.iterrows():
-    for speaker_id in ['audio_path_speaker_aSLKtNoVBZlxQEMsnGL2', 'audio_path_speaker_7UMEOkIJdI4hjmR2SWNq', 'audio_path_speaker_fFe6F6cCl526GpIxiUxu']:
-        if pd.notna(row[speaker_id]):
-            audio_path = os.path.join(audio_folder_path, os.path.basename(row[speaker_id]))
-            audio_path = audio_path.split('.wav')[0] + '.mp3'
-            print(audio_path)
-            try:
-                
-                audio_data, duration, sr = load_audio(audio_path)
-                # Convert audio data to binary format if needed, or use directly
-                manifest.append({
-                    'audio': {"array": audio_data, "sampling_rate": sr,'path': audio_path },  # This is actual audio data; for binary you may need to handle differently
-                    'text': row['sentence'],
-                    'duration': duration,
-                    'path': audio_path,
-                    'entities': json.dumps(row['entities']),
-                    'metadata': json.dumps(row['metadata'])
-    
-                })
-                
-            except Exception as e:
-                print(f"Failed to process audio {audio_path}: {str(e)}")
-            break  # Process only the first non-empty speaker path
+    if pd.notna(row['audio_path']):
+        audio_path = os.path.join(audio_folder_path, os.path.basename(row['audio_path']))
+        audio_path = audio_path.split('.wav')[0] + '.mp3'
+        print(audio_path)
+        try:
+            audio_data, duration, sr = load_audio(audio_path)
+            total_duration += duration  # accumulate duration
+
+            manifest.append({
+                'audio': {
+                    "array": audio_data,
+                    "sampling_rate": sr,
+                    'path': audio_path
+                },
+                'text': row['sentence'],
+                'duration': duration,
+                'path': audio_path,
+                'entities': json.dumps(row['entity']),
+                'metadata': json.dumps(row['entity_type'])
+            })
+        except Exception as e:
+            print(f"Failed to process audio {audio_path}: {str(e)}")
+
+print(f"Total duration of all audio: {total_duration} seconds")
+print(f"Total duration in hours: {total_duration/3600:.2f} hrs")
+
 
 # Optionally save or process your manifest data further
 with open('manifest.json', 'w') as f:

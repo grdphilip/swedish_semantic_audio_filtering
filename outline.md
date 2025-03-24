@@ -26,15 +26,10 @@ Ok speakers: 1, 5, 6, 7, 8
 Hög temperatur
 Structured output
 
+Gick inte bra - (
 Lång lista av bolag / namn / platser - Tänk på om det är värt att ha med metadata om företagen 
 Generera en mening med spontantal innahållande.
-Flera meningar upp till 30 sekunder
-
-TODO:
-1. Få till entitetslistan och metadata som beskriver entiteterna / Stort litet företag, Fejk företag, förkortningar 
-2. Generera text datasetet / Behövs API token - 
-3. Facebook ljud-datasetet / 
-4. Utvärdera whisper på 
+Flera meningar upp till 30 sekunder )
 
 - Byt ut entiteten {x} i denna mening till {y}
 # Whisper finetuning
@@ -61,10 +56,10 @@ Annars
 
 
 Pipeline: 
-1. Kör NST, Commonvoice och Fleurs igenom KBLabs entitetsmodell, behåll endast de med entiteter // Evaluerar KB på test eller allt? Farhåga: Fel entiteter
-2. Evaluera på entity score
-3. Behåll en lista på entiterna som de ej sätter.
-4. Gå igenom nyhets-korpuset med GPT och listan - Byt ut entiteten {x} i denna mening till {y}, möjligt att man behöver gruppera efter entitetstyp
+1. Kör NST, Commonvoice och Fleurs igenom KBLabs entitetsmodell, behåll endast de med entiteter // Evaluerar KB på test eller allt? Farhåga: Fel entiteter ✅
+2. Evaluera på entity score✅
+3. Behåll en lista på entiterna som de ej sätter. ✅
+4. Gå igenom nyhets-korpuset med GPT och listan - Byt ut entiteten {x} i denna mening till {y}, möjligt att man behöver gruppera efter entitetstyp ✅
 5. Skapa ljud via elevenlabs
 6. Dra detta genom filtreringsmodellen
 7. Ta bort dåliga syntetiska ljud och text par
@@ -75,15 +70,22 @@ Pipeline:
 Att få gjort idag: ✅
 Få till felfri entity extraction från CV och Fluers ✅
 Kör igenom hela dataseten och lägg upp på huggingface ✅
-Rätta eventuella fel i entiteterna genom en LLM
-Evaluera whisper på dataseten och få ut en lista på alla entiteter som inte sitter med tillhörande entitetstyp
-Få till scriptet som byter ut entiteterna i svt-meningarna
+Rätta eventuella fel i entiteterna genom en LLM ✅
+Evaluera whisper på dataseten och få ut en lista på alla entiteter som inte sitter med tillhörande entitetstyp ✅
+Få till scriptet som byter ut entiteterna i svt-meningarna ✅
 Starta syntetiseringen av den nya svt datan // Intressanta är hur meningar man genererar per entitet
 
 Att få gjort den här veckan:
 Fine-tunea whisper på det nya datasetet
 Utvärdera på entiteterna från commonvoice och fleurs
 
+Något att tänka på: Hur WER och CER påverkas av nya entiteterna
+Möjlig förklaring, problem med kontext 
+
+# Lärdomar:
+Det är krångligt att få ihop ett rimligt text-dataset 
+Om man skall göra detta för domain adaptation och riktade insatser fungerar det bäst om det finns stora mängder text
+Rimligtvis så hade man scrapeat text-meningarna om företag etc.
 
 
 

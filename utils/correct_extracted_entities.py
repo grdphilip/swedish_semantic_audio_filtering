@@ -42,7 +42,7 @@ df = load_dataset(dataset_map[dataset])['train']
 
 logging.basicConfig(filename='entity_correction.log', level=logging.INFO, format='%(asctime)s %(message)s')
 api_key = os.getenv("TOMAS_OPENAI_KEY")
-client = AsyncOpenAI(api_key=api_key)
+client = OpenAI(api_key=api_key)
 
 
 def correct_extracted_entities(df: Dataset) -> Dataset:
