@@ -13,20 +13,22 @@ def main(args):
     base_model = args.base_model
     save_name = args.save_name
     batch_size = args.batch_size
+    checkpoint_path = "/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/checkpoint-471/"
 
     # Torch configuration
     device = "cuda" if torch.cuda.is_available() else "cpu"
     torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
-    checkpoint_path = "/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/checkpoint-471/model.safetensors"
 
-    # Load model and processor
+    # Load model from checkpoint
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        pretrained_model, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
+        checkpoint_path,  # Instead of `pretrained_model`, use the checkpoint directory
+        torch_dtype=torch_dtype, 
+        low_cpu_mem_usage=True, 
+        use_safetensors=True
     )
-    
-    model.load_state_dict(torch.load(checkpoint_path, map_location=device))
     model.to(device)
 
+    # Load processor
     processor = AutoProcessor.from_pretrained(base_model)
 
     # Define the pipeline
@@ -131,7 +133,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(args)
 
-# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small entities_benchmark_cv_small 32
+# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small finetuned_benchmark_cv_small 32
 
 #normalized
 # entity_score 0.9597701149425287
