@@ -88,13 +88,9 @@ def main(model_pretrained, train_manifest, val_manifest):
     
     # Used for 4 GPUs
     config_json['output_dir'] = checkpoint_folder
-    # config_json['warmup_steps'] = int(0.5 * len(train_dataset) * 3 / (32 * 4) / 10)
-    # config_json['save_steps'] = int(len(train_dataset) * 3 / (32 * 4) / 10)
-    # config_json['eval_steps'] = int(len(train_dataset) * 3 / (32 * 4) / 10)
-    config_json['warmup_steps'] = 0
-    config_json['save_steps'] = 0
-    config_json['eval_steps'] = 0
-
+    config_json['warmup_steps'] = int(0.5 * len(train_dataset) * 3 / (32 * 4) / 10)
+    config_json['save_steps'] = int(len(train_dataset) * 3 / (32 * 4) / 10)
+    config_json['eval_steps'] = int(len(train_dataset) * 3 / (32 * 4) / 10)
 
     # the trainer expects a dataset with the following keys: input_features, labels
     # the input_features key should contain the path to the audio file

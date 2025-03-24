@@ -228,6 +228,7 @@ class FilteringFramework:
         self.get_similarities(audio_features, text_features)
         samples_to_delete = self.apply_filtering(data_manifest_path, stdev_threshold)
         print(f"Total number of samples to delete: {len(samples_to_delete)}")
+
         
         save_dir = os.path.dirname(data_manifest_path)
         save_path = os.path.join(save_dir, "dist_fb.png")
@@ -236,7 +237,7 @@ class FilteringFramework:
         print(f"Min similarity: {min(self.similarities)}")
         print(f"Mean similarity: {np.mean(self.similarities)}")
         
-        sources=["11labs"]
+        sources=["11labs"] * len(self.similarities)
 
         #Unique sources and their colors
         unique_sources = list(set(sources))
