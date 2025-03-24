@@ -56,8 +56,8 @@ def main(args):
     # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
     
    
-    #filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
-    filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
+    #filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
     
     prints = ["TEST"]
 
@@ -120,6 +120,7 @@ def main(args):
     not_normalized_results_df.to_csv(f"results/not_normalized_results_{save_name}.csv", index=False)
     missed_entities_df_norm.to_csv(f"results/missed_entities_norm_{save_name}.csv", index=False)
     missed_entities_df_not_norm.to_csv(f"results/missed_entities_not_norm_{save_name}.csv", index=False)
+    print(f"Results saved to CSV {save_name}")
 
 if __name__ == "__main__":
     
