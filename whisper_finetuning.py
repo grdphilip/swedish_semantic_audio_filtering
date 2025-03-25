@@ -113,6 +113,7 @@ def main(model_pretrained, train_manifest, val_manifest):
     with mlflow.start_run() as run:
         trainer.train()
         trainer.save_model(checkpoint_folder)
+        print(f"Model saved to {checkpoint_folder}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning script for Seq2Seq model with Whisper processor")

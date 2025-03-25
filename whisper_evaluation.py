@@ -56,8 +56,8 @@ def main(args):
     # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
     
    
-    filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
-    #filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
+    #filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
     
     prints = ["TEST"]
 
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 # wer_score 0.19481429572529782
 # cer_score 0.03455004591368228
 
-# python whisper_evaluation.py KBLab/kb-whisper-medium KBLab/kb-whisper-medium syndata_11labs_medium 4
+# python whisper_evaluation.py KBLab/kb-whisper-medium KBLab/kb-whisper-medium finetuned_cv_medium 32
 
 #normalized
 # entity_score 0.9655172413793104
