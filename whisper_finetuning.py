@@ -16,7 +16,7 @@ def main(model_pretrained, train_manifest, val_manifest):
     os.makedirs("finetuning/experiments", exist_ok=True)
     os.makedirs("finetuning/args", exist_ok=True)
 
-    if model_pretrained == 'KBWhisper/whisper-large-v3':
+    if model_pretrained == 'KBLab/whisper-large-v3':
         config_file = "finetuning/args/whisper_large_args.json"
         deepspeed_config_file = "finetuning/args/deepspeed_config.json"
         with open(deepspeed_config_file, 'r') as f:
@@ -135,7 +135,7 @@ First run process_hf_dataset.py to create manifest files
 Then run whisper_finetuning.py to start training
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-medium --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
-python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
+python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large-v3 --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 
 After training 
 Go to terminal and run mlflow ui to see loss and other metrics
