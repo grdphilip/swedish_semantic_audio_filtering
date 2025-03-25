@@ -45,6 +45,8 @@ def main(model_pretrained, train_manifest, val_manifest):
 
     checkpoint_name = model_pretrained.split("/")[-1]
     checkpoint_folder = os.path.join("finetuning/checkpoints", checkpoint_name)
+    print(f"Checkpoint folder: {checkpoint_folder}")
+    raise ValueError("Checkpoint folder")
     experiment_folder = os.path.join("finetuning/experiments", checkpoint_name)
 
     model = load_model(model_pretrained)
@@ -133,6 +135,7 @@ First run process_hf_dataset.py to create manifest files
 Then run whisper_finetuning.py to start training
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-medium --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
+python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large-v3 --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 
 After training 
 Go to terminal and run mlflow ui to see loss and other metrics
