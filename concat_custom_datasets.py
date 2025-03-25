@@ -18,6 +18,7 @@ def concat_datasets(filepaths):
                 for line in f:
                     data = json.loads(line)  # Read each JSON object from a line
                     combined_train_manifest.append(data)
+                print(len(combined_train_manifest))
             except json.JSONDecodeError as e:
                 print(f"Error reading {filepath}: {e}")
                 continue
