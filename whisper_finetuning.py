@@ -10,7 +10,7 @@ import soundfile as sf
 import uuid
 
 
-def main(model_pretrained, train_manifest, val_manifest):
+def main(model_pretrained, train_manifest, val_manifest,data_type):
     # Create necessary directories
     os.makedirs("finetuning/checkpoints", exist_ok=True)
     os.makedirs("finetuning/experiments", exist_ok=True)
@@ -52,6 +52,7 @@ def main(model_pretrained, train_manifest, val_manifest):
         config_json = json.load(f)
 
     checkpoint_name = model_pretrained.split("/")[-1]
+    checkpoint_name = f"{checkpoint_name}_{data_type}"
     checkpoint_folder = os.path.join("finetuning/checkpoints", checkpoint_name)
     experiment_folder = os.path.join("finetuning/experiments", checkpoint_name)
 
@@ -131,15 +132,16 @@ if __name__ == "__main__":
                         help="Path to the training manifest file")
     parser.add_argument("--val_manifest", type=str, required=True,
                         help="Path to the validation manifest file")
+    parser.add_argument("--data_type", type=str, required=True, default="elevenlabs", choices=['elevenlabs-common_voice', 'elevenlabs-fleurs', 'elevenlabs'],)
     args = parser.parse_args()
     
-    main(args.model_pretrained, args.train_manifest, args.val_manifest)
+    main(args.model_pretrained, args.train_manifest, args.val_manifest, args.data_type)
 
 
 """
 First run process_hf_dataset.py to create manifest files
 Then run whisper_finetuning.py to start training
-python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
+python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_manifest syndata_11labs_train_manifest.json --val_manifest combined_elevenlabs_fleurs_train_manifest.json --data_type elevenlabs-fleurs
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-medium --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 
