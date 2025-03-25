@@ -20,9 +20,12 @@ def main(model_pretrained, train_manifest, val_manifest):
     if model_pretrained == 'KBLab/kb-whisper-large':
         config_file = "finetuning/args/whisper_large_args.json"
         deepspeed_config_file = "finetuning/args/deepspeed_config.json"
+        with open(config_file, 'r') as f:
+            config_json = json.load
+            
         with open(deepspeed_config_file, 'r') as f:
             deepspeed_config = json.load(f)
-        training_args = Seq2SeqTrainingArguments(deepspeed_config, **config_file)
+        training_args = Seq2SeqTrainingArguments(deepspeed_config, **config_json)
 
     elif model_pretrained == 'KBLab/kb-whisper-medium':
         config_file = "finetuning/args/whisper_medium_args.json"
