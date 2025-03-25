@@ -11,6 +11,5 @@
 "predict_with_generate": true,
 "logging_steps": 10,
 "report_to": ["mlflow"],
-"push_to_hub": false,
-"output_dir": "whisper_small_output"
+"push_to_hub": false
 }
