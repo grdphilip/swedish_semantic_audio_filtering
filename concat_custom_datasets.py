@@ -32,7 +32,7 @@ print(f"Total entries: {len(combined_data)}")
 # Save the combined data back in the same JSONL format (one JSON object per line)
 output_filepath = "data/manifest_data/finetuning/preprocessed/"
 combinations = "_".join([source for _, source in filepaths])
-output_filepath += f"combined_{combinations}_train_manifest.jsonl"
+output_filepath += f"combined_{combinations}_train_manifest.json"
 
 with open(output_filepath, 'w', encoding='utf-8') as out_file:
     for item in combined_data:
