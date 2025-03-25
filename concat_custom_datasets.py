@@ -24,7 +24,7 @@ combined_data = concat_datasets(filepaths)
 print(len(combined_data))
 # Save the combined data to a JSON file
 
-output_filepath = "filtering/data/"
+output_filepath = "data/manifest_data/finetuning/preprocessed/"
 combinations = "_".join([source for _, source in filepaths])
 print(combinations)
 output_filepath += f"combined_{combinations}_train_manifest.json"
