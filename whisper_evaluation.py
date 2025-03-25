@@ -13,7 +13,7 @@ def main(args):
     base_model = args.base_model
     save_name = args.save_name
     batch_size = args.batch_size
-    checkpoint_path = "/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/checkpoint-471/"
+    checkpoint_path = f"/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/{pretrained_model}/model.safetensors"
 
     # Torch configuration
     device = "cuda" if torch.cuda.is_available() else "cpu"

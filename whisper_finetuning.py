@@ -55,8 +55,6 @@ def main(model_pretrained, train_manifest, val_manifest):
 
     checkpoint_name = model_pretrained.split("/")[-1]
     checkpoint_folder = os.path.join("finetuning/checkpoints", checkpoint_name)
-    print(f"Checkpoint folder: {checkpoint_folder}")
-    raise ValueError("Checkpoint folder")
     experiment_folder = os.path.join("finetuning/experiments", checkpoint_name)
 
     model = load_model(model_pretrained)
