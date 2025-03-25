@@ -16,7 +16,7 @@ def main(model_pretrained, train_manifest, val_manifest):
     os.makedirs("finetuning/experiments", exist_ok=True)
     os.makedirs("finetuning/args", exist_ok=True)
 
-    if model_pretrained == 'KBLab/whisper-large-v3':
+    if model_pretrained == 'KBLab/kb-whisper-large-v3':
         config_file = "finetuning/args/whisper_large_args.json"
         deepspeed_config_file = "finetuning/args/deepspeed_config.json"
         with open(deepspeed_config_file, 'r') as f:
