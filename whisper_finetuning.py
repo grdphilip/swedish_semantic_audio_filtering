@@ -17,7 +17,7 @@ def main(model_pretrained, train_manifest, val_manifest):
     os.makedirs("finetuning/args", exist_ok=True)
 
 
-    if model_pretrained == 'KBLab/kb-whisper-large-v3':
+    if model_pretrained == 'KBLab/kb-whisper-large':
         config_file = "finetuning/args/whisper_large_args.json"
         with open(config_file, 'r') as f:
             config_json = json.load(f)
@@ -127,7 +127,7 @@ def main(model_pretrained, train_manifest, val_manifest):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning script for Seq2Seq model with Whisper processor")
-    parser.add_argument("--model_pretrained", type=str, default="whisper", choices=['KBLab/kb-whisper-large-v3', 'KBLab/kb-whisper-medium', 'KBLab/kb-whisper-small'],
+    parser.add_argument("--model_pretrained", type=str, default="whisper", choices=['KBLab/kb-whisper-large', 'KBLab/kb-whisper-medium', 'KBLab/kb-whisper-small'],
                         help="Pretrained model to fine-tune")
     parser.add_argument("--train_manifest", type=str, required=True,
                         help="Path to the training manifest file")
@@ -143,7 +143,7 @@ First run process_hf_dataset.py to create manifest files
 Then run whisper_finetuning.py to start training
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-medium --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
-python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large-v3 --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
+python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 
 After training 
 Go to terminal and run mlflow ui to see loss and other metrics
