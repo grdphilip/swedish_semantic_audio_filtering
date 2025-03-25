@@ -56,5 +56,5 @@ if __name__ == "__main__":
     
     main(args)
 
-    #python process_hf_dataset.py grdphilip/elevenlabs_syndata default train customized syndata_11labs_train_manifest.json 
-    #python process_hf_dataset.py google/fleurs sv train customized fleurs_train_manifest.json 
+    #python process_hf_dataset.py grdphilip/elevenlabs_syndata default tcustomized syndata_11labs_train_manifest.json 
+    #python process_hf_dataset.py google/fleurs sv-se test fleurs fleurs_val_manifest.json 
