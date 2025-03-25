@@ -13,7 +13,7 @@ def main(args):
     base_model = args.base_model
     save_name = args.save_name
     batch_size = args.batch_size
-    checkpoint_path = f"/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/{pretrained_model}/model.safetensors"
+    checkpoint_path = f"/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/{pretrained_model}"
 
     # Torch configuration
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 # wer_score 0.19481429572529782
 # cer_score 0.03455004591368228
 
-# python whisper_evaluation.py KBLab/kb-whisper-medium KBLab/kb-whisper-medium finetuned_cv_medium 32
+# python whisper_evaluation.py kb-whisper-medium KBLab/kb-whisper-medium finetuned_cv_medium 32
 
 #normalized
 # entity_score 0.9655172413793104
