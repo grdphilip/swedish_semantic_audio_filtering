@@ -8,29 +8,36 @@ filepaths = [
 ]
 
 def concat_datasets(filepaths):
-    
     # Concatenate datasets
     combined_train_manifest = []
     
     for filepath, source in filepaths:
         with open(filepath) as f:
-            data = json.load(f)
-            combined_train_manifest.extend(data)
+            try:
+                # If file has multiple JSON objects, handle it line by line
+                for line in f:
+                    data = json.loads(line)  # Read each JSON object from a line
+                    combined_train_manifest.append(data)
+            except json.JSONDecodeError as e:
+                print(f"Error reading {filepath}: {e}")
+                continue
     
     return combined_train_manifest
 
 # Example usage
 combined_data = concat_datasets(filepaths)
 print(len(combined_data))
-# Save the combined data to a JSON file
 
+# Save the combined data to a JSON file
 output_filepath = "data/manifest_data/finetuning/preprocessed/"
 combinations = "_".join([source for _, source in filepaths])
 print(combinations)
 output_filepath += f"combined_{combinations}_train_manifest.json"
 
-raise ValueError("Stop here")
+raise Exception("Stop here")
+
+# Save to file
+with open(output_filepath, 'w') as out_file:
+    json.dump(combined_data, out_file, indent=4)
 
 
-with open(output_filepath, 'w') as outfile:
-    json.dump(combined_data, outfile, indent=4)
