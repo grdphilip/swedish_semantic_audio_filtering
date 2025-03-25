@@ -27,6 +27,8 @@ def convert_hf_dataset_to_manifest(dataset, dataset_type, manifest_filename):
                 text_column = 'sentence'
             elif dataset_type == 'customized':
                 text_column = 'text'
+            elif dataset_type == 'fleurs':
+                text_column = 'transcription'
             else:
                 raise ValueError("Dataset type not supported")
 
