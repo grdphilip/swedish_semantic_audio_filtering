@@ -104,9 +104,9 @@ def main(args):
         metadata = dataframe['metadata'].to_list()
         
         # Clean entities
-        print(reference_entities)
+        #print(reference_entities)
         #entities = clean_entities(reference_entities)
-        print(references)
+        #print(references)
         #print(entities)
 
         # Calculate and store normalized metrics
