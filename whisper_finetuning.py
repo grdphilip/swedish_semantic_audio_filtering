@@ -20,7 +20,6 @@ def main(model_pretrained, train_manifest, val_manifest):
         config_file = "finetuning/args/whisper_large_args.json"
         with open(config_file, 'r') as f:
             config_json = json.load(f)
-        config_json['output_dir'] = "finetuning/checkpoints"
             
         deepspeed_config_file = "finetuning/args/deepspeed_config.json"
         with open(deepspeed_config_file, 'r') as f:
