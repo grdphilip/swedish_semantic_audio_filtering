@@ -19,6 +19,4 @@ num2words==0.5.14
 omegaconf>=2.3.0
 sentence-transformers==3.0
 jiwer==3.1.0
-
-
-
+deepspeed>=0.9.3
