@@ -22,12 +22,12 @@ def main(model_pretrained, train_manifest, val_manifest):
         with open(config_file, 'r') as f:
             config_json = json.load(f)
         
-        deepspeed_config_file = "finetuning/args/deepspeed_config.json"
-        with open(deepspeed_config_file, 'r') as f:
-            deepspeed_config = json.load(f)
+        # deepspeed_config_file = "finetuning/args/deepspeed_config.json"
+        # with open(deepspeed_config_file, 'r') as f:
+        #     deepspeed_config = json.load(f)
         
         # Combine config_json and additional arguments while avoiding duplicates
-        config_json['deepspeed'] = deepspeed_config
+        #config_json['deepspeed'] = deepspeed_config
         config_json['output_dir'] = "finetuning/checkpoints" # Add output_dir explicitly if needed
 
         # If you want to merge the arguments dictionaries and avoid conflicts:
