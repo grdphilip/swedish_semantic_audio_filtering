@@ -18,6 +18,9 @@ def main(model_pretrained, train_manifest, val_manifest):
 
     if model_pretrained == 'KBLab/kb-whisper-large-v3':
         config_file = "finetuning/args/whisper_large_args.json"
+        with open(config_file, 'r') as f:
+            config_json = json.load(f)
+            
         deepspeed_config_file = "finetuning/args/deepspeed_config.json"
         with open(deepspeed_config_file, 'r') as f:
             deepspeed_config = json.load(f)
