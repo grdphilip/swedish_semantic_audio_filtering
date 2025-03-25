@@ -13,5 +13,6 @@
 "logging_steps": 10,
 "report_to": ["mlflow"],
 "gradient_checkpointing_kwargs": {"use_reentrant": false},
-"push_to_hub": false
+"push_to_hub": false,
+"output_dir": "kb-large"
 }
