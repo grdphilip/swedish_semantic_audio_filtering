@@ -6,8 +6,8 @@ filepaths = [
     #("data/manifest_data/finetuning/preprocessed/common_voice_train_manifest.json", "common_voice"),
     #("data/manifest_data/finetuning/preprocessed/fleurs_train_manifest.json", "fleurs"),
     ("data/manifest_data/finetuning/preprocessed/syndata_11labs_val_manifest.json", "elevenlabs"),
-    #("data/manifest_data/finetuning/preprocessed/common_voice_val_manifest.json", "common_voice"),
-    ("data/manifest_data/finetuning/preprocessed/fleurs_val_manifest.json", "fleurs")
+    ("data/manifest_data/finetuning/preprocessed/common_voice_val_manifest.json", "common_voice"),
+    #("data/manifest_data/finetuning/preprocessed/fleurs_val_manifest.json", "fleurs")
     
 ]
 
