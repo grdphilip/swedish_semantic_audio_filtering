@@ -18,7 +18,6 @@ def concat_datasets(filepaths):
                 for line in f:
                     data = json.loads(line)  # Read each JSON object from a line
                     combined_train_manifest.append(data)
-                print(len(combined_train_manifest))
             except json.JSONDecodeError as e:
                 print(f"Error reading {filepath}: {e}")
                 continue
@@ -35,7 +34,6 @@ combinations = "_".join([source for _, source in filepaths])
 print(combinations)
 output_filepath += f"combined_{combinations}_train_manifest.json"
 
-raise Exception("Stop here")
 
 # Save to file
 with open(output_filepath, 'w') as out_file:
