@@ -110,6 +110,9 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
     config_json['save_steps'] = int(len(train_dataset) * 3 / (32 * 4) / 10)
     config_json['eval_steps'] = int(len(train_dataset) * 3 / (32 * 4) / 10)
 
+
+    print(f"Warming up for {config_json['warmup_steps']} steps")
+    
     # the trainer expects a dataset with the following keys: input_features, labels
     # the input_features key should contain the path to the audio file
     # the labels key should contain the text transcription of the audio file
