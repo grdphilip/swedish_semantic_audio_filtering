@@ -27,7 +27,7 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
         training_args = Seq2SeqTrainingArguments(# Correctly pass deepspeed config
             **config_json  # Unpack config_json for other arguments like batch_size, etc.
         )
-        config_json['output_dir'] = "finetuning/checkpoints"
+       
 
     elif model_pretrained == 'KBLab/kb-whisper-medium':
         config_file = "finetuning/args/whisper_medium_args.json"
@@ -56,8 +56,9 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
 
     model = load_model(model_pretrained)
 
-    # config = LoraConfig(r=32, lora_alpha=64, target_modules = ["q_proj", "v_proj", "k_proj"], lora_dropout=0.05, bias="none")
-    # model = get_peft_model(model, config)
+    config = LoraConfig(r=32, lora_alpha=64, target_modules = ["q_proj", "v_proj"], lora_dropout=0.05, bias="none")
+    model = get_peft_model(model, config)
+    print(model.print_trainable_parameters())
         
     
     # the Whisper feature extractor performs two operations. 
