@@ -8,6 +8,7 @@ from datasets import load_dataset, concatenate_datasets
 #from utils.manifest_utils import apply_preprocessors
 import soundfile as sf
 import uuid
+from peft import LoraConfig, get_peft_model
 
 
 def main(model_pretrained, train_manifest, val_manifest,data_type):
@@ -57,6 +58,10 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
     experiment_folder = os.path.join("finetuning/experiments", checkpoint_name)
 
     model = load_model(model_pretrained)
+    if model_pretrained == 'KBLab/kb-whisper-large':
+        config = LoraConfig(r=32, lora_alpha=64, target_modules=["q_proj", "v_proj"], lora_dropout=0.05, bias="none")
+        model = get_peft_model(model, config)
+        
     
     # the Whisper feature extractor performs two operations. 
     # 1. pads/truncates a batch of audio samples such that all samples have an input length of 30s.

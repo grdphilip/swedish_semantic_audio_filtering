@@ -21,3 +21,4 @@ sentence-transformers==3.0
 jiwer==3.1.0
 deepspeed>=0.9.3
 mpi4py==4.0.3
+peft==0.15.0
