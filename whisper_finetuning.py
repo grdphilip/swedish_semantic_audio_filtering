@@ -56,9 +56,23 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
 
     model = load_model(model_pretrained)
 
-    config = LoraConfig(r=32, lora_alpha=64, target_modules = ["q_proj", "v_proj", "k_proj"], lora_dropout=0.05, bias="none")
-    model = get_peft_model(model, config)
-        
+    lora_config = LoraConfig(
+        r=16,
+        lora_alpha=32,
+        lora_dropout=0.1,
+        bias="none",
+        target_modules=["q_proj", "v_proj", "k_proj"]  # Ensure correct modules
+    )
+
+    model = get_peft_model(model, lora_config)
+
+    # Print trainable parameters
+    for name, param in model.named_parameters():
+        if param.requires_grad:
+            print(name, param.shape)
+            
+    raise ValueError("Stop here")
+            
     
     # the Whisper feature extractor performs two operations. 
     # 1. pads/truncates a batch of audio samples such that all samples have an input length of 30s.
