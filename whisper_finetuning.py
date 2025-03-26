@@ -55,9 +55,9 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
     experiment_folder = os.path.join("finetuning/experiments", checkpoint_name)
 
     model = load_model(model_pretrained)
-    if model_pretrained == 'KBLab/kb-whisper-large':
-        config = LoraConfig(r=32, lora_alpha=64, target_modules=["q_proj", "v_proj"], lora_dropout=0.05, bias="none")
-        model = get_peft_model(model, config)
+
+    config = LoraConfig(r=32, lora_alpha=64, target_modules=["q_proj", "v_proj"], lora_dropout=0.05, bias="none")
+    model = get_peft_model(model, config)
         
     
     # the Whisper feature extractor performs two operations. 
