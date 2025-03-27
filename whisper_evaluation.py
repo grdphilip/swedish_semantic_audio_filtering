@@ -158,7 +158,7 @@ if __name__ == "__main__":
 # wer_score 0.1920112123335669
 # cer_score 0.03213957759412305
 
-# python whisper_evaluation.py KBLab/kb-whisper-large KBLab/kb-whisper-large syndata_11labs_medium 4
+# python whisper_evaluation.py kb-whisper-large_elevenlabs KBLab/kb-whisper-large syndata_11labs_fleurs_large 4
 
 #normalized
 # entity_score 0.9712643678160919

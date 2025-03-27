@@ -8,7 +8,7 @@
 "gradient_checkpointing": true,
 "fp16": true,
 "num_train_epochs": 3,
-"evaluation_strategy": "epoch",
+"evaluation_strategy": "steps",
 "generation_max_length": 448,
 "predict_with_generate": true,
 "logging_steps": 25,
