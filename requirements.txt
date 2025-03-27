@@ -1,7 +1,7 @@
 torch==2.2.0
 torchvision==0.17.0
 transformers==4.42.4
-accelerate==0.21.0
+accelerate==0.27.2
 peft==0.6.0
 soundfile==0.13.1
 pandas==2.1.3

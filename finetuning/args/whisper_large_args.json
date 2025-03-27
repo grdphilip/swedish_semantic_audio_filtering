@@ -11,7 +11,7 @@
 "evaluation_strategy": "steps",
 "generation_max_length": 448,
 "predict_with_generate": true,
-"logging_steps": 10,
+"logging_steps": 100,
 "report_to": ["mlflow"],
 "gradient_checkpointing_kwargs": {"use_reentrant": false},
 "push_to_hub": false

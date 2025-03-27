@@ -154,7 +154,7 @@ Then run whisper_finetuning.py to start training
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_manifest combined_elevenlabs_common_voice_train_manifest.json --val_manifest combined_elevenlabs_common_voice_val_manifest.json --data_type elevenlabs-common_voice
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-medium --train_manifest combined_elevenlabs_fleurs_train_manifest.json --val_manifest combined_elevenlabs_fleurs_val_manifest.json --data_type elevenlabs-fleurs
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
-python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest combined_elevenlabs_common_voice_train_manifest.json --val_manifest combined_elevenlabs_common_voice_val_manifest.json --data_type elevenlabs-common_voice
+python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest combined_elevenlabs_fleurs_train_manifest.json --val_manifest combined_elevenlabs_fleurs_val_manifest.json --data_type elevenlabs-fleurs
 
 After training 
 Go to terminal and run mlflow ui to see loss and other metrics
