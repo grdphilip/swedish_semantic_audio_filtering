@@ -148,14 +148,11 @@ def calculate_total_entities(entities_ref):
             total_entities += 1
     return total_entities
 
-    
-
 def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, metadata, normalized):
     # Kan det finnas någon mening med att kolla CER inne i entiteten
     # Exempel: Jwan - Jovan / Jwan - Jowan, Jakob - Jacob
     entities_total = calculate_total_entities(entities_ref)
     correctly_identified_entities = 0
-    entities_cer = []
     print(entities_total)   
     
     missed_entities = []    
@@ -167,20 +164,13 @@ def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, 
             if entity in val:
                 correctly_identified_entities += 1
             else:
-                print("missed entity", entity, "in", val)
-                entity_cer = cer([entity], [val])
-                print("entity_cer", entity_cer)
-                entities_cer.append(entity_cer)
                 missed_entities.append({"entity": entity, "candidate": val, "ground_truth": normalized_refs[idx], "type": metadata[idx]['entity_type'][i]})    
                 
             
     if entities_total == 0:
         return 0.0
     
-    return_entities_cer = np.mean(entities_cer) if entities_cer else 0.0
-    print("entities_cer", return_entities_cer)
-    
-    return (entities_total - len(missed_entities)) / entities_total, missed_entities, return_entities_cer
+    return (entities_total - len(missed_entities)) / entities_total, missed_entities
     
 
     
@@ -190,7 +180,7 @@ def calculate_and_store_metrics(references, candidates, entities, metadata, tran
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
     
-    entity_score, missed_entities, return_entities_cer = calculate_entity_precision(normalized_cands, entities, normalized_refs, metadata, normalized)
+    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized_refs, metadata, normalized)
     print(len(missed_entities))
 
     # Calculate metrics
@@ -206,7 +196,7 @@ def calculate_and_store_metrics(references, candidates, entities, metadata, tran
     print("Character Error Rate (CER):", cer_score)
 
     # Create a DataFrame with the results and append to the main results DataFrame
-    df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score], "ENTITY_ACCURACY": [entity_score], "ENTITY_CER": [return_entities_cer]})
+    df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score], "ENTITY_ACCURACY": [entity_score]})
     missed_entities_df = pd.DataFrame(missed_entities)
     return pd.concat([results_df, df], ignore_index=True), missed_entities_df
 
