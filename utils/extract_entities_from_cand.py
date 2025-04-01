@@ -11,9 +11,14 @@ import json
 import asyncio 
 from dotenv import load_dotenv
 from jiwer import cer as jiwer_cer
+import argparse
 
-file = "missed_entities_not_norm_entities_benchmark_cv_small.csv"
-filepath = f"../results/{file}"
+parser = argparse.ArgumentParser(description="Process the input file.")
+parser.add_argument("file", type=str, help="The input CSV file name.")
+args = parser.parse_args()
+
+file = args.file
+filepath = f"../results/{file}.csv"
 
 df = pd.read_csv(filepath)
 print(df.head())
