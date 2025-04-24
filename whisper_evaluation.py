@@ -114,7 +114,7 @@ def main(args):
         #print(entities)
 
         # Calculate and store normalized metrics
-        normalized_results_df, missed_entities_df_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, normalize_transforms, subset_name, normalized_results_df, normalized=True)
+        normalized_results_df, missed_entities_df_norm, = calculate_and_store_metrics(references, candidates, reference_entities, metadata, normalize_transforms, subset_name, normalized_results_df, normalized=True)
 
         # Calculate and store non-normalized metrics
         not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
@@ -143,8 +143,27 @@ if __name__ == "__main__":
 # =============================================================================================================
 """
 Run with openai whisper model as base model on the commonvoice dataset for eval
+python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
 
-python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_fleurs_large 32
+CV! 
+#normalized
+entity_score 0.758 (0.05 Sämre) 
+wer: 0.112 (0.05 Sämre) 
+
+#not normalized
+entity_score 0.708 (Sämre)
+wer: 0.157 (0.053 sämre)
+
+FLEURS!
+#normalized
+entity_score 0.710 (Bättre)
+wer: 0.0941 (Bättre)
+
+#not_normalized
+entity_score 0.6725 (Bättre)
+wer: 0.1578 (Sämre)
+
+python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
 """
 
 

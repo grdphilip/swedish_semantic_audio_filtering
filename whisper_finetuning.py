@@ -18,7 +18,7 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
     os.makedirs("finetuning/args", exist_ok=True)
 
 
-    if model_pretrained == 'KBLab/kb-whisper-large':
+    if model_pretrained == 'KBLab/kb-whisper-large' or model_pretrained == 'openai/whisper-large-v3':
         config_file = "finetuning/args/whisper_large_args.json"
         with open(config_file, 'r') as f:
             config_json = json.load(f)
@@ -42,6 +42,7 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
             config_json = json.load(f)
         config_json['output_dir'] = "finetuning/checkpoints"
         training_args = Seq2SeqTrainingArguments(**config_json)
+        
 
     else:
         raise ValueError("Model not supported")
@@ -155,6 +156,7 @@ python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-small --train_m
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-medium --train_manifest combined_elevenlabs_fleurs_train_manifest.json --val_manifest combined_elevenlabs_fleurs_val_manifest.json --data_type elevenlabs-fleurs
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json
 python whisper_finetuning.py --model_pretrained KBLab/kb-whisper-large --train_manifest combined_elevenlabs_fleurs_train_manifest.json --val_manifest combined_elevenlabs_fleurs_val_manifest.json --data_type elevenlabs-fleurs
+python whisper_finetuning.py --model_pretrained openai/whisper-large-v3 --train_manifest syndata_11labs_train_manifest.json --val_manifest syndata_11labs_val_manifest.json --data_type elevenlabs 
 
 After training 
 Go to terminal and run mlflow ui to see loss and other metrics
