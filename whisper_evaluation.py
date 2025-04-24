@@ -6,6 +6,7 @@ from jiwer import Compose, RemoveEmptyStrings, ToLowerCase, RemoveMultipleSpaces
 from utils.evaluation_utils import create_dataloaders, DataCollatorSpeechSeq2SeqWithPadding, calculate_and_store_metrics, clean_entities
 from tqdm import tqdm
 import pandas as pd
+import os
 
 def main(args):
 
@@ -13,7 +14,10 @@ def main(args):
     base_model = args.base_model
     save_name = args.save_name
     batch_size = args.batch_size
-    checkpoint_path = f"/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/{pretrained_model}"
+    if os.path.exists(f"/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/{pretrained_model}"):
+        model_path = f"/home/ec2-user/SageMaker/swedish_semantic_audio_filtering/finetuning/checkpoints/{pretrained_model}"
+    else:
+        model_path = pretrained_model
 
     # Torch configuration
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -21,7 +25,7 @@ def main(args):
 
     # Load model from checkpoint
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        checkpoint_path,  # Instead of `pretrained_model`, use the checkpoint directory
+        model_path,  # Instead of `pretrained_model`, use the checkpoint directory
         torch_dtype=torch_dtype, 
         low_cpu_mem_usage=True, 
         use_safetensors=True
@@ -116,10 +120,10 @@ def main(args):
         not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
 
     # Save results to CSV files
-    normalized_results_df.to_csv(f"results/normalized_results_{save_name}.csv", index=False)
-    not_normalized_results_df.to_csv(f"results/not_normalized_results_{save_name}.csv", index=False)
-    missed_entities_df_norm.to_csv(f"results/missed_entities_norm_{save_name}.csv", index=False)
-    missed_entities_df_not_norm.to_csv(f"results/missed_entities_not_norm_{save_name}.csv", index=False)
+    normalized_results_df.to_csv(f"tonar_results/normalized_results_{save_name}.csv", index=False)
+    not_normalized_results_df.to_csv(f"tonar_results/not_normalized_results_{save_name}.csv", index=False)
+    missed_entities_df_norm.to_csv(f"tonar_results/missed_entities_norm_{save_name}.csv", index=False)
+    missed_entities_df_not_norm.to_csv(f"tonar_results/missed_entities_not_norm_{save_name}.csv", index=False)
     print(f"Results saved to CSV {save_name}")
 
 if __name__ == "__main__":
@@ -133,7 +137,21 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     main(args)
+    
+    
+    
+# =============================================================================================================
+"""
+Run with openai whisper model as base model on the commonvoice dataset for eval
 
+python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
+"""
+
+
+
+
+
+# =============================================================================================================
 # python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small finetuned_benchmark_cv_small 32
 
 #normalized

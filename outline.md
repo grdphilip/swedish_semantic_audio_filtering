@@ -89,3 +89,20 @@ Rimligtvis så hade man scrapeat text-meningarna om företag etc.
 
 
 
+# Sista TODO
+Skriv om introduktionen för att passa vad experimentet blev ✅
+Skriv om metodens validitet och reliabilitet ✅
+Skriv mer ingående om resultat
+Skriv conclusion & future work kapitlet
+Skriv abstrakt och subtitel
+Skriv keywords
+Läs igenom 100 gånger 
+Klart! 
+
+Kap 1 Introduktion:
+Kap 2 Bakgrund:
+Kap 3 Experiment design:
+Kap 4 Implementation:
+Kap 5 Resultat:
+Kap 6 Future work:
+Kap 7 Referenser: ✅
