@@ -137,7 +137,7 @@ def main(model_pretrained, train_manifest, val_manifest,data_type):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tuning script for Seq2Seq model with Whisper processor")
-    parser.add_argument("--model_pretrained", type=str, default="whisper", choices=['KBLab/kb-whisper-large', 'KBLab/kb-whisper-medium', 'KBLab/kb-whisper-small'],
+    parser.add_argument("--model_pretrained", type=str, default="whisper", choices=['KBLab/kb-whisper-large', 'KBLab/kb-whisper-medium', 'KBLab/kb-whisper-small', 'openai/whisper-large-v3'],
                         help="Pretrained model to fine-tune")
     parser.add_argument("--train_manifest", type=str, required=True,
                         help="Path to the training manifest file")
