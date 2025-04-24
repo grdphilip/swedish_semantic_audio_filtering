@@ -60,8 +60,8 @@ def main(args):
     # prints = ["MLS", "FLEURS", "BRACARENSE", "CV", "VALIDATION"]
     
    
-    #filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
-    filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
+    #filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
     
     prints = ["TEST"]
 
@@ -144,7 +144,7 @@ if __name__ == "__main__":
 """
 Run with openai whisper model as base model on the commonvoice dataset for eval
 
-python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
+python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_fleurs_large 32
 """
 
 
@@ -152,7 +152,7 @@ python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 ton
 
 
 # =============================================================================================================
-# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small finetuned_benchmark_cv_small 32
+# python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small finetuned_benchmark__small 32
 
 #normalized
 # entity_score 0.9597701149425287
