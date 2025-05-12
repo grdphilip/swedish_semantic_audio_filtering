@@ -163,6 +163,16 @@ wer: 0.0941 (Bättre)
 entity_score 0.6725 (Bättre)
 wer: 0.1578 (Sämre)
 
+FINE TUNED
+#normalized
+entity_score 0.6981327800829875
+wer_score 0.18090783319059225
+
+#not normalied
+entity_score 0.673582295988935
+wer_score 0.23778201670722884
+
+
 python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
 """
 
