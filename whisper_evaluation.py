@@ -104,9 +104,16 @@ def main(args):
 
         # Get reference texts
         references = dataframe['text'].to_list()
-        reference_entities = dataframe['entities'].to_list()
-        metadata = dataframe['metadata'].to_list()
         
+        has_entities = 'entities' in dataframe.columns and 'metadata' in dataframe.columns
+        if has_entities:
+            reference_entities = dataframe['entities'].to_list()
+            metadata = dataframe['metadata'].to_list()
+        else:
+            reference_entities = None
+            metadata = None
+
+            
         # Clean entities
         #print(reference_entities)
         #entities = clean_entities(reference_entities)
@@ -122,8 +129,11 @@ def main(args):
     # Save results to CSV files
     normalized_results_df.to_csv(f"tonar_results/normalized_results_{save_name}.csv", index=False)
     not_normalized_results_df.to_csv(f"tonar_results/not_normalized_results_{save_name}.csv", index=False)
-    missed_entities_df_norm.to_csv(f"tonar_results/missed_entities_norm_{save_name}.csv", index=False)
-    missed_entities_df_not_norm.to_csv(f"tonar_results/missed_entities_not_norm_{save_name}.csv", index=False)
+    
+    if 'entities' in dataframe.columns:
+        missed_entities_df_norm.to_csv(f"tonar_results/missed_entities_norm_{save_name}.csv", index=False)
+        missed_entities_df_not_norm.to_csv(f"tonar_results/missed_entities_not_norm_{save_name}.csv", index=False)
+        
     print(f"Results saved to CSV {save_name}")
 
 if __name__ == "__main__":

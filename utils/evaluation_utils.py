@@ -176,11 +176,18 @@ def calculate_entity_precision(normalized_cands, entities_ref, normalized_refs, 
     
 def calculate_and_store_metrics(references, candidates, entities, metadata, transform_func, subset_name, results_df, normalized):
     """Calculate WER and CER, print and store the results in a DataFrame."""
+
     # Normalize the references and candidates
     normalized_refs = [' '.join(transform_func(ref)[0]) for ref in references]
     normalized_cands = [' '.join(transform_func(cand['text'])[0]) for cand in candidates]
-    
-    entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized_refs, metadata, normalized)
+
+    # Handle cases when entities or metadata is None
+    if entities is not None and metadata is not None:
+        entity_score, missed_entities = calculate_entity_precision(normalized_cands, entities, normalized_refs, metadata, normalized)
+    else:
+        entity_score = None
+        missed_entities = []
+
     print(len(missed_entities))
 
     # Calculate metrics
@@ -196,7 +203,14 @@ def calculate_and_store_metrics(references, candidates, entities, metadata, tran
     print("Character Error Rate (CER):", cer_score)
 
     # Create a DataFrame with the results and append to the main results DataFrame
-    df = pd.DataFrame({"SUBSET": [subset_name], "WER": [wer_score], "CER": [cer_score], "ENTITY_ACCURACY": [entity_score]})
+    df = pd.DataFrame({
+        "SUBSET": [subset_name],
+        "WER": [wer_score],
+        "CER": [cer_score],
+        "ENTITY_ACCURACY": [entity_score if entity_score is not None else 'N/A']
+    })
+
     missed_entities_df = pd.DataFrame(missed_entities)
     return pd.concat([results_df, df], ignore_index=True), missed_entities_df
+
 
