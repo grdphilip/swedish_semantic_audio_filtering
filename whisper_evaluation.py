@@ -128,12 +128,12 @@ def main(args):
         not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
 
     # Save results to CSV files
-    normalized_results_df.to_csv(f"tonar_results/normalized_results_{save_name}.csv", index=False)
-    not_normalized_results_df.to_csv(f"tonar_results/not_normalized_results_{save_name}.csv", index=False)
+    normalized_results_df.to_csv(f"benchmark_results/normalized_results_{save_name}.csv", index=False)
+    not_normalized_results_df.to_csv(f"benchmark_results/not_normalized_results_{save_name}.csv", index=False)
     
     if 'entities' in dataframe.columns:
-        missed_entities_df_norm.to_csv(f"tonar_results/missed_entities_norm_{save_name}.csv", index=False)
-        missed_entities_df_not_norm.to_csv(f"tonar_results/missed_entities_not_norm_{save_name}.csv", index=False)
+        missed_entities_df_norm.to_csv(f"benchmark_results/missed_entities_norm_{save_name}.csv", index=False)
+        missed_entities_df_not_norm.to_csv(f"benchmark_results/missed_entities_not_norm_{save_name}.csv", index=False)
         
     print(f"Results saved to CSV {save_name}")
 
@@ -216,7 +216,7 @@ python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 ton
 # wer_score 0.1920112123335669
 # cer_score 0.03213957759412305
 
-# python whisper_evaluation.py kb-whisper-large_elevenlabs KBLab/kb-whisper-large syndata_11labs_cv_large 4
+# python whisper_evaluation.py kb-whisper-large_elevenlabs KBLab/kb-whisper-large save_name 4
 
 #normalized
 # entity_score 0.9712643678160919
