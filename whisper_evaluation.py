@@ -64,7 +64,7 @@ def main(args):
     #filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
     #filenames = ["data/manifest_data/finetuning/raw/common_voice_test_manifest.json"]
     #filenames = ["data/manifest_data/finetuning/raw/fleurs_val_manifest.json"]
-    filenames = ["data/manifest_data/finetuning/raw/northvolt_train_mainfest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/northvolt_train_manifest.json"]
     
     prints = ["TEST"]
 
