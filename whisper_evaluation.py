@@ -143,6 +143,19 @@ def main(args):
     print(f"Results saved to CSV {save_name}")
     
     
+if __name__ == "__main__":
+    
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="Speech recognition model evaluation script")
+    parser.add_argument("pretrained_model", type=str, help="Path to the pretrained model")
+    parser.add_argument("base_model", type=str, help="Path to the base model")
+    parser.add_argument("save_name", type=str, help="Name to save the results")
+    parser.add_argument("batch_size", type=int, help="Batch size for processing")
+    
+    args = parser.parse_args()
+    main(args)
+    
+    
 # =============================================================================================================
 """
 Run with openai whisper model as base model on the commonvoice dataset for eval
