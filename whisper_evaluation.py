@@ -188,10 +188,6 @@ wer_score 0.23778201670722884
 python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
 """
 
-
-
-
-
 # =============================================================================================================
 # python whisper_evaluation.py KBLab/kb-whisper-small KBLab/kb-whisper-small finetuned_benchmark__small 32
 
