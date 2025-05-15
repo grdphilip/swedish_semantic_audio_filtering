@@ -93,10 +93,10 @@ def main(args):
     ])
     
     
-
     # Initialize DataFrames for results
     normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITY_ACCURACY"])
     not_normalized_results_df = pd.DataFrame(columns=["SUBSET", "WER", "CER", "ENTITY_ACCURACY"])
+    all_candidates_references_df = pd.DataFrame(columns=["SUBSET", "REFERENCE", "CANDIDATE", "REFERENCE_ENTITIES"])
 
     # Process each subset
     for dataloader, dataframe, subset_name in zip(dataloaders, dataframes, prints):
@@ -116,15 +116,17 @@ def main(args):
             reference_entities = None
             metadata = None
 
-            
-        # Clean entities
-        #print(reference_entities)
-        #entities = clean_entities(reference_entities)
-        #print(references)
-        #print(entities)
+        # Store all candidates, references, and reference entities
+        subset_df = pd.DataFrame({
+            "SUBSET": [subset_name] * len(references),
+            "REFERENCE": references,
+            "CANDIDATE": candidates,
+            "REFERENCE_ENTITIES": reference_entities if has_entities else [None] * len(references)
+        })
+        all_candidates_references_df = pd.concat([all_candidates_references_df, subset_df], ignore_index=True)
 
         # Calculate and store normalized metrics
-        normalized_results_df, missed_entities_df_norm, = calculate_and_store_metrics(references, candidates, reference_entities, metadata, normalize_transforms, subset_name, normalized_results_df, normalized=True)
+        normalized_results_df, missed_entities_df_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, normalize_transforms, subset_name, normalized_results_df, normalized=True)
 
         # Calculate and store non-normalized metrics
         not_normalized_results_df, missed_entities_df_not_norm = calculate_and_store_metrics(references, candidates, reference_entities, metadata, not_normalize_transforms, subset_name, not_normalized_results_df, normalized=False)
@@ -132,25 +134,13 @@ def main(args):
     # Save results to CSV files
     normalized_results_df.to_csv(f"benchmark_results/normalized_results_{save_name}.csv", index=False)
     not_normalized_results_df.to_csv(f"benchmark_results/not_normalized_results_{save_name}.csv", index=False)
+    all_candidates_references_df.to_csv(f"benchmark_results/all_candidates_references_{save_name}.csv", index=False)
     
     if 'entities' in dataframe.columns:
         missed_entities_df_norm.to_csv(f"benchmark_results/missed_entities_norm_{save_name}.csv", index=False)
         missed_entities_df_not_norm.to_csv(f"benchmark_results/missed_entities_not_norm_{save_name}.csv", index=False)
         
     print(f"Results saved to CSV {save_name}")
-
-if __name__ == "__main__":
-    
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Speech recognition model evaluation script")
-    parser.add_argument("pretrained_model", type=str, help="Path to the pretrained model")
-    parser.add_argument("base_model", type=str, help="Path to the base model")
-    parser.add_argument("save_name", type=str, help="Name to save the results")
-    parser.add_argument("batch_size", type=int, help="Batch size for processing")
-    
-    args = parser.parse_args()
-    main(args)
-    
     
     
 # =============================================================================================================
