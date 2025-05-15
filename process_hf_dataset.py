@@ -58,4 +58,4 @@ if __name__ == "__main__":
 
     #python process_hf_dataset.py grdphilip/elevenlabs_syndata default customized syndata_11labs_train_manifest.json 
     #python process_hf_dataset.py google/fleurs sv-se test fleurs fleurs_val_manifest.json 
-    #python process_hf_dataset.py grdphilip/northvolt_syndata default customized northvolt_train_manifest.json 
+    #python process_hf_dataset.py grdphilip/northvolt_syndata default train customized northvolt_train_manifest.json 

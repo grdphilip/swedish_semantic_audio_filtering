@@ -63,7 +63,8 @@ def main(args):
     #filenames = ["data/manifest_data/finetuning/raw/fleurs_swedish_with_entities_eval_manifest.json"]
     #filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
     #filenames = ["data/manifest_data/finetuning/raw/common_voice_test_manifest.json"]
-    filenames = ["data/manifest_data/finetuning/raw/fleurs_val_manifest.json"]
+    #filenames = ["data/manifest_data/finetuning/raw/fleurs_val_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/northvolt_train_mainfest.json"]
     
     prints = ["TEST"]
 
@@ -185,7 +186,7 @@ entity_score 0.673582295988935
 wer_score 0.23778201670722884
 
 
-python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 tonar_res_cv_large 32
+python whisper_evaluation.py openai/whisper-large-v3 openai/whisper-large-v3 northvolt_res_cv_large 32
 """
 
 # =============================================================================================================
