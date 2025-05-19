@@ -38,3 +38,9 @@ Northvolt har sålt sin fabrik i San Leandro, Kalifornien, till det amerikanska 
 Northvolt har meddelat att de grundläggande plattformarna på Northvolt Labs i Västerås kommer att vara kvar trots pausad verksamhet.                                                                               
 Northvolt har meddelat att de kommer att sälja sin elektriska industribatteridivision för att minska kostnaderna.                                                                                                                                                                                                                                                                                                                                   |
 Northvolt har säkrat 100 miljoner dollar i finansiering för interimistisk drift efter konkursansökan.                                                                                                               
+
+
+Did you manually inspect the synthetic queries? 
+What rank did you use for the LoRA re-ranking? Roughly how many parameters were tuned? How much lower dimension? 
+How much reduction in fine-tuning time? Did you do any fine-tuning without LoRA? 
+What would this automate? How do 

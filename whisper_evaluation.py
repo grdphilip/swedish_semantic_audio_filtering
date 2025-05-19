@@ -64,7 +64,8 @@ def main(args):
     #filenames = ["data/manifest_data/finetuning/raw/cv_swedish_with_entities_eval_manifest.json"]
     #filenames = ["data/manifest_data/finetuning/raw/common_voice_test_manifest.json"]
     #filenames = ["data/manifest_data/finetuning/raw/fleurs_val_manifest.json"]
-    filenames = ["data/manifest_data/finetuning/raw/northvolt_train_manifest.json"]
+    #filenames = ["data/manifest_data/finetuning/raw/northvolt_train_manifest.json"]
+    filenames = ["data/manifest_data/finetuning/raw/mixed_train_manifest.json"]
     
     prints = ["TEST"]
 
@@ -109,9 +110,13 @@ def main(args):
         references = dataframe['text'].to_list()
         
         has_entities = 'entities' in dataframe.columns and 'metadata' in dataframe.columns
+        has_entity = 'entity' in dataframe.columns
         if has_entities:
             reference_entities = dataframe['entities'].to_list()
             metadata = dataframe['metadata'].to_list()
+        elif has_entity:
+            reference_entities = dataframe['entity'].to_list()
+            metadata = None
         else:
             reference_entities = None
             metadata = None
